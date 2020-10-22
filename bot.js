@@ -295,4 +295,4 @@ function mute(message, setMute) {
   }
 }
 
-client.login('NzYyNzUyMDY3ODU2NzYwODUy.X3tuOA.3mgmUuad8m2t8zXqksQBF_h1l2M');
+client.login(process.env.BOT_TOKEN);
