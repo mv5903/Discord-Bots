@@ -275,7 +275,8 @@ function formatAMPM(date) {
 async function getWeather(zip) {
 	const weath = await fetch('http://api.openweathermap.org/data/2.5/weather?zip=' + zip + ',us&appid=' + process.env.WEATHER_API_KEY + '&units=imperial');
 	let response = await weath.json();
-	const weatherEmbed = new Discord.MessageEmbed()
+	try {
+		const weatherEmbed = new Discord.MessageEmbed()
 		.setColor('001aff')
 		.setTitle('Weather Info for ' + response.name)
 		.setThumbnail("http://openweathermap.org/img/wn/" + response.weather[0].icon + "@2x.png")
@@ -288,7 +289,11 @@ async function getWeather(zip) {
 			{name: 'Wind: ', value: response.wind.speed + ' mph at ' + response.wind.deg + '°'},
 			{name: 'Humidity: ', value: response.main.humidity + '%'},
 		);
-	sendEmbed(weatherEmbed);
+		sendEmbed(weatherEmbed);
+	} catch (e) {
+		send("I couldn't find the weather for that zip code because it doesn't exist. Please try again.");
+	}
+	
 }
 
 function mute(message, setMute) {
