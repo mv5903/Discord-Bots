@@ -18,12 +18,13 @@ client.on('guildMemberAdd', member => {
 });
 
 client.on('guildMemberAdd', member => {
-    member.guild.channels.cache.get('548579154824527892').send('**' + member.user.username + '** has joined the server! :slight_smile: '); 
+	infoChannel = process.env.WELCOME_CHANNEL;
+    member.guild.channels.cache.get(infoChannel).send('**' + member.user.username + '** has joined the server! :slight_smile: '); 
 });
 
 client.on('guildMemberRemove', member => {
-    member.guild.channels.cache.get('548579154824527892').send('**' + member.user.username + '** has left the server! :sob: ');
-    //
+	infoChannel = process.env.WELCOME_CHANNEL;
+    member.guild.channels.cache.get(infoChannel).send('**' + member.user.username + '** has left the server! :sob: ');
 });
 
 
@@ -66,7 +67,7 @@ client.on('message', message => {
 	    	sendMessage("info");
 	    	break;
 	    case 'website':
-	    	send("View Matthew Vandeneberg's website at http://www.mattvandenberg.com");
+	    	send("View Matthew Vandeneberg's website at http://" + process.env.WEBSITE);
 	    	break;
 	    case 'random':
 	    	sendMessage("random");
@@ -107,10 +108,10 @@ client.on('message', message => {
 	    	sendMessage("status");
 	    	break;
 	    case 'how':
-	    	send("This bot was created by <@401505856870678529> using the Discord.js module in the JavaScript programming language. Want more commands? Please dm <@401505856870678529>, he's always looking for suggestions.");
+	    	send("This bot was created by <@401505856870678529> using the Discord.js dependency in the JavaScript programming language. Want more commands? Please dm <@401505856870678529>, he's always looking for suggestions!");
 	    	break;
 	    case 'website':
-	    	send("View Matthew Vandeneberg's website at http://www.mattvandenberg.com");
+	    	send("View Matthew Vandeneberg's website at http://" + process.env.WEBSITE);
 	    	break;
 	    default:
 	    	sendMessage("invalid");
@@ -119,7 +120,7 @@ client.on('message', message => {
 });
 
 function sendEmbed(toSend) {
-	channel = client.channels.cache.get('762754228464517171');
+	channel = client.channels.cache.get(process.env.BOT_CHANNEL);
 	channel.send(toSend);
 }
 
@@ -168,7 +169,7 @@ function sendMessage(msg) {
 	} else if (msg === "time") {
 		toSend = formatAMPM(new Date);
 	} else if (msg === "info") {
-		toSend = "Welcome to the kwikmatt Server. In this server, we talk and play many different games! If you have any questions, please contact <@401505856870678529>, <@314887230302715905>, or <@426182599799734273>.";
+		toSend = "Welcome to the kwikmatt Server. In this server, we talk and play many different games! If you have any questions, please contact <@401505856870678529>.";
 	} else if (msg === "invalid") {
 		toSend = "Sorry, you either do not have permission to use this command or it does not exist.";
 	} else if (msg.includes('random')) {
@@ -185,12 +186,12 @@ function sendMessage(msg) {
 }
 
 function send(toSend) {
-	channel = client.channels.cache.get('762754228464517171');
+	channel = client.channels.cache.get(process.env.BOT_CHANNEL);
     channel.send(toSend);
 }
 
 async function mc() {
-	const response = await fetch('https://api.mcsrvstat.us/2/mattvandenberg.com');
+	const response = await fetch('https://api.mcsrvstat.us/2/' + process.env.WEBSITE);
 	let data = await response.json();
 	var status = data.online;
 	var state = "";
@@ -208,14 +209,14 @@ async function mc() {
 		}	
 	}
 	
-	
+	var website = process.env.WEBSITE;
 	var version = data.version;
 	const mcEmbed = new Discord.MessageEmbed()
 		.setColor('0ead58')
 		.setTitle('Minecraft Server')
 		.setThumbnail("https://store-images.s-microsoft.com/image/apps.45782.9007199266731945.debbc4f1-cde0-491b-8c6f-b6b015eecab6.4716cccc-5f37-4bb5-9db1-0c1dbc99003f?mode=scale&q=90&h=200&w=200&background=%23000000")
 		.addFields(
-			{name: 'Server', value: 'mattvandenberg.com'},
+			{name: 'Server', value: website},
 			{name: 'Version', value: version},
 			{name: 'Status', value: state},
 			{name: 'Players Online', value: data.players.online + '/' + data.players.max},
@@ -266,7 +267,7 @@ function formatAMPM(date) {
 }
 
 async function getWeather(zip) {
-	const weath = await fetch('http://api.openweathermap.org/data/2.5/weather?zip=' + zip + ',us&appid=214164ec971a2392bc3bd503b9174fff&units=imperial');
+	const weath = await fetch('http://api.openweathermap.org/data/2.5/weather?zip=' + zip + ',us&appid= ' + process.env.WEATHER_API_KEY + '&units=imperial');
 	let response = await weath.json();
 	const weatherEmbed = new Discord.MessageEmbed()
 		.setColor('001aff')
