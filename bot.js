@@ -225,7 +225,7 @@ async function mc() {
 			);
 		sendEmbed(mcEmbed);
 	} catch (e) {
-		send("The server currently offline.");
+		send("The server is currently offline.");
 	}
 	
 
