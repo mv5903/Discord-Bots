@@ -191,7 +191,7 @@ function send(toSend) {
 }
 
 async function mc() {
-	const response = await fetch('https://api.mcsrvstat.us/2/' + process.env.WEBSITE);
+	const response = await fetch('https://api.mcsrvstat.us/2/mattvandenberg.com');
 	let data = await response.json();
 	var status = data.online;
 	var state = "";
@@ -267,7 +267,6 @@ function formatAMPM(date) {
 }
 
 async function getWeather(zip) {
-	console.log(process.env.WEATHER_API_KEY);
 	const weath = await fetch('http://api.openweathermap.org/data/2.5/weather?zip=' + zip + ',us&appid=' + process.env.WEATHER_API_KEY + '&units=imperial');
 	let response = await weath.json();
 	const weatherEmbed = new Discord.MessageEmbed()
