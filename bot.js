@@ -7,6 +7,7 @@ const prefix = '-';
 
 client.once('ready', () => {
   console.log('Kwikmatt bot is online!');
+  client.user.setActivity("-help for commands!"); 
 });
 
 client.on('guildMemberAdd', member => {
