@@ -7,9 +7,9 @@
     "start": "node bot.js"
   },
   "dependencies": {
-    "discord.js": "^12.4.0",
-    "node-fetch": "^2.6.1",
-    "openweather-apis": "^4.3.1",
+    "discord.js": "12.4.0",
+    "node-fetch": "2.6.1",
+    "openweather-apis": "4.3.1",
     "request": "2.81.0"
   }
 }
