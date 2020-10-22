@@ -27,4 +27,4 @@ Using this bot, you can make it perform a wide variety of tasks! Here are a list
 * -website
 	* View Matthew Vandenberg's website.
 <br>  
-The possibilities are endless! I use [Heroku]  (https://www.heroku.com/home)  to host my bot, so that when I make a change to my bot.js file and commit the changes to GitHub, it will automatically restart to bot to reflect the new changes!
+The possibilities are endless! I use [Heroku](https://www.heroku.com/home) to host my bot, so that when I make a change to my bot.js file and commit the changes to GitHub, it will automatically restart to bot to reflect the new changes!
