@@ -201,13 +201,14 @@ async function mc() {
 		state = "Offline";
 	}
 	var playersList = "";
-	if (!("players" in data)) {
-		playersList = "No one!";
-	} else {
+	try {
 		for (var i = 0; i < data.players.list.length; i++) {
-		playersList+=data.players.list[i] + "\n";
+			playersList+=data.players.list[i] + "\n";
 		}	
+	} catch(e) {
+		playersList = "No one is online!";
 	}
+	
 	
 	var website = process.env.WEBSITE;
 	var version = data.version;
