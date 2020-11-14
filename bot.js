@@ -212,7 +212,9 @@ async function currency(info) {
 	console.log(toCode);
 	console.log(price);
 	try {
-		
+		if (info.length < 9) {
+			throw "Command incorrectly formatted";
+		}
 		const response = await fetch('https://api.exchangeratesapi.io/latest?base=' + fromCode);
 		let data = await response.json();
 		let toPriceRate = data.rates[toCode];
