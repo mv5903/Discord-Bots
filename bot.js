@@ -260,8 +260,8 @@ async function currency(info) {
 			.setColor('0ead58')
 			.setTitle('Currency Exchage')
 			.addFields(
-				{name: 'From: ', value: currencyMap[fromCode]},
-				{name: 'To: ', value: currencyMap[toCode]},
+				{name: 'From: ', value: currencyMap.get(fromCode)},
+				{name: 'To: ', value: currencyMap.get(toCode)},
 				{name: 'Initial Amount: ', value: price},
 				{name: 'Multiplier: ', value: data.rates[toCode]},
 				{name: 'Converted Amount: ', value: finalPrice},
