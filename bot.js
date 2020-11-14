@@ -213,6 +213,12 @@ async function currency(info) {
 		let toPriceRate = data.rates.toCode;
 		let finalPrice = price * toPriceRate;
 
+		console.log(fromCode);
+		console.log(toCode);
+		console.log(price);
+		console.log(toPriceRate);
+		console.log(finalPrice);
+
 		let currencyMap = new Map();
 		currencyMap.set('CAD', 'Canadian Dollar');
 		currencyMap.set('HKD', 'Hong Kong Dollar');
