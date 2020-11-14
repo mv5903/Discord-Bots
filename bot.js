@@ -207,10 +207,10 @@ async function currency(info) {
 	try {
 		let fromCode = info.substring(8, 11);
 		let toCode = info.substring(11, 14);
-		let price = info.substring(14);
+		let price = parseFloat(info.substring(14));
 		const response = await fetch('https://api.exchangeratesapi.io/latest?base=' + fromCode);
 		let data = await response.json();
-		let toPriceRate = data.rates.toCode;
+		let toPriceRate = data.rates[toCode];
 		let finalPrice = price * toPriceRate;
 
 		console.log(fromCode);
@@ -253,8 +253,17 @@ async function currency(info) {
 		currencyMap.set('ILS', 'Israeli New Shekel');
 		currencyMap.set('KRW', 'South Korean Yuan');
 		currencyMap.set('PLN', 'Poland Zloty');
-		
-		send(price + ' ' + currencyMap[fromCode] + ' is ' + finalPrice + ' in ' + currencyMap[toCode] + '.'); 
+		const currencyEmbed = new Discord.MessageEmbed()
+			.setColor('0ead58')
+			.setTitle('Currency Exchage')
+			.addFields(
+				{name: 'From: ', value: currencyMap[fromCode]},
+				{name: 'To: ', value: currencyMap[toCode]},
+				{name: 'Initial Amount: ', value: price},
+				{name: 'Multiplier: ', value: data.rates[toCode]},
+				{name: 'Converted Amount: ', value: finalPrice},
+				);
+			sendEmbed(currencyEmbed);
 	} catch(e) {
 		send('Sorry, please check your input and try again. Valid codes can be found at https://api.exchangeratesapi.io/latest?base=USD');
 	}
