@@ -204,6 +204,7 @@ function send(toSend) {
 }
 
 async function currency(info) {
+	console.log(info);
 	let fromCode = info.substring(8, 11);
 	let toCode = info.substring(11, 14);
 	let price = parseFloat(info.substring(14));
