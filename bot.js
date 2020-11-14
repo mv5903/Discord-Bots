@@ -241,7 +241,7 @@ async function currency(info) {
 				{name: 'BGN', value: 'Bulgarian Lev'},
 				{name: 'TRY', value: 'Turkish Lira'},
 				{name: 'CNY', value: 'Chinese Yuan'},
-				{name: 'NOK', value: 'Norwegian Krone'}.
+				{name: 'NOK', value: 'Norwegian Krone'},
 				{name: 'NZD', value: 'New Zealand Dollar'},
 				{name: 'ZAR', value: 'South African Rand'},
 				{name: 'USD', value: 'United States Dollar'},
