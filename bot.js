@@ -204,6 +204,9 @@ function send(toSend) {
 }
 
 async function currency(info) {
+	console.log(fromCode);
+	console.log(toCode);
+	console.log(price);
 	try {
 		let fromCode = info.substring(8, 11);
 		let toCode = info.substring(11, 14);
@@ -213,9 +216,7 @@ async function currency(info) {
 		let toPriceRate = data.rates[toCode];
 		let finalPrice = price * toPriceRate;
 
-		console.log(fromCode);
-		console.log(toCode);
-		console.log(price);
+		
 		console.log(toPriceRate);
 		console.log(finalPrice);
 
