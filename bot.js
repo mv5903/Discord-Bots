@@ -142,7 +142,7 @@ function sendMessage(msg) {
 		.setTitle('Help')
 		.setDescription('Hi! I am kwikmatt\'s Discord bot! Here is the list of commands that I can do: ')
 		.addFields(
-			{name: '-currency', value: 'Get current currency exchange information, formatted as \"-currency[from code][to code][price]\", example: \"-currencyUSDCAD10.68\".'}
+			{name: '-currency', value: 'Get current currency exchange information, formatted as \"-currency[from code][to code][price]\", example: \"-currencyUSDCAD10.68\".'},
 			{name: '-date', value: 'Displays the current date.'},
 			{name: '-help', value: 'Open this help message again.'},
 			{name: '-how', value: 'How was this bot created?'},
