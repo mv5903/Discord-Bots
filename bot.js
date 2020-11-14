@@ -45,7 +45,7 @@ client.on('message', message => {
   	base = command;
   }
   if (command.include('gay')) {
-  	command = 'gay';
+  	base = command;
   }
     adminRole = message.guild.roles.cache.find(role => role.name === "Assistant");
   	console.log("Command is sending.");
@@ -151,7 +151,7 @@ function sendMessage(msg) {
 		.setTitle('Help')
 		.setDescription('Hi! I am kwikmatt\'s Discord bot! Here is the list of commands that I can do: ')
 		.addFields(
-			{name: '-currency', value: 'Get current currency exchange information, formatted as \"-currency[from code][to code][price]\", example: \"-currencyUSDCAD10.68\".'},
+			{name: '-currency', value: 'Get current currency exchange information, formatted as \"-currency[from code][to code][price]\", example: \"-currencyUSDCAD10.68\" Use -currencycodes for a list of codes.'},
 			{name: '-date', value: 'Displays the current date.'},
 			{name: '-help', value: 'Open this help message again.'},
 			{name: '-how', value: 'How was this bot created?'},
@@ -213,13 +213,51 @@ function send(toSend) {
 }
 
 async function currency(info) {
-	console.log(info);
+	if (info === 'currencycodes') {
+		const mapEmbed = new Discord.MessageEmbed();
+			.setColor('800000')
+			.setTitle('Exchange Codes')
+			.addFields(
+				{name: 'CAD', value: 'Canadian Dollar'},
+				{name: 'HKD', value: 'Hong Kong Dollar'},
+				{name: 'ISK', value: 'Icelandic Krona'},
+				{name: 'PHP', value: 'Philippine Peso'},
+				{name: 'DKK', value: 'Danish Krone'},
+				{name: 'HUF', value: 'Hungarian Forint'},
+				{name: 'CZK', value: 'Czech Koruna'},
+				{name: 'GBP', value: 'Pound Sterling'},
+				{name: 'RON', value: 'Romanian Leu'},
+				{name: 'SEK', value: 'Swedish Krona'},
+				{name: 'IDR', value: 'Indonesian Rupiah'},
+				{name: 'INR', value: 'Indian Rupee'},
+				{name: 'BRL', value: 'Brazilian Real'},
+				{name: 'RUB', value: 'Russian Ruble'},
+				{name: 'HRK', value: 'Croatian Kuna'},
+				{name: 'JPY', value: 'Japanese Yen'},
+				{name: 'THB', value: 'Thai Baht'},
+				{name: 'CHF', value: 'Swiss Franc'},
+				{name: 'EUR', value: 'Euro'},
+				{name: 'MYR', value: 'Malaysian Ringgit'},
+				{name: 'BGN', value: 'Bulgarian Lev'},
+				{name: 'TRY', value: 'Turkish Lira'},
+				{name: 'CNY', value: 'Chinese Yuan'},
+				{name: 'NOK', value: 'Norwegian Krone'}.
+				{name: 'NZD', value: 'New Zealand Dollar'},
+				{name: 'ZAR', value: 'South African Rand'},
+				{name: 'USD', value: 'United States Dollar'},
+				{name: 'MXN', value: 'Mexican Peso'},
+				{name: 'SGD', value: 'Singapore Dollar'},
+				{name: 'AUD', value: 'Australian Dollar'},
+				{name: 'ILS', value: 'Israeli New Shekel'},
+				{name: 'KRW', value: 'South Korean Yuan'},
+				{name: 'PLN', value: 'Poland Zloty'},
+			);
+		sendEmbed(mapEmbed);
+		return;
+	}
 	let fromCode = (info.substring(8, 11)).toUpperCase();
 	let toCode = (info.substring(11, 14)).toUpperCase();
 	let price = parseFloat(info.substring(14));
-	console.log(fromCode);
-	console.log(toCode);
-	console.log(price);
 	try {
 		if (info.length < 9) {
 			throw "Command incorrectly formatted";
@@ -228,11 +266,6 @@ async function currency(info) {
 		let data = await response.json();
 		let toPriceRate = data.rates[toCode];
 		let finalPrice = price * toPriceRate;
-
-		
-		console.log(toPriceRate);
-		console.log(finalPrice);
-
 		let currencyMap = new Map();
 		currencyMap.set('CAD', 'Canadian Dollar');
 		currencyMap.set('HKD', 'Hong Kong Dollar');
@@ -269,7 +302,7 @@ async function currency(info) {
 		currencyMap.set('PLN', 'Poland Zloty');
 		const currencyEmbed = new Discord.MessageEmbed()
 			.setColor('0ead58')
-			.setTitle('Currency Exchage')
+			.setTitle('Currency Exchange')
 			.addFields(
 				{name: 'From: ', value: currencyMap.get(fromCode)},
 				{name: 'To: ', value: currencyMap.get(toCode)},
