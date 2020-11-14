@@ -262,9 +262,9 @@ async function currency(info) {
 			.addFields(
 				{name: 'From: ', value: currencyMap.get(fromCode)},
 				{name: 'To: ', value: currencyMap.get(toCode)},
-				{name: 'Initial Amount: ', value: price},
+				{name: 'Initial Amount: ', value: price.toFixed(3)},
 				{name: 'Multiplier: ', value: data.rates[toCode]},
-				{name: 'Converted Amount: ', value: finalPrice},
+				{name: 'Converted Amount: ', value: finalPrice.toFixed(3)},
 				);
 			sendEmbed(currencyEmbed);
 	} catch(e) {
