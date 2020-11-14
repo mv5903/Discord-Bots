@@ -214,7 +214,7 @@ function send(toSend) {
 
 async function currency(info) {
 	if (info === 'currencycodes') {
-		const mapEmbed = new Discord.MessageEmbed();
+		const mapEmbed = new Discord.MessageEmbed()
 			.setColor('800000')
 			.setTitle('Exchange Codes')
 			.addFields(
