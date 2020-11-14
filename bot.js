@@ -204,13 +204,14 @@ function send(toSend) {
 }
 
 async function currency(info) {
+	let fromCode = info.substring(8, 11);
+	let toCode = info.substring(11, 14);
+	let price = parseFloat(info.substring(14));
 	console.log(fromCode);
 	console.log(toCode);
 	console.log(price);
 	try {
-		let fromCode = info.substring(8, 11);
-		let toCode = info.substring(11, 14);
-		let price = parseFloat(info.substring(14));
+		
 		const response = await fetch('https://api.exchangeratesapi.io/latest?base=' + fromCode);
 		let data = await response.json();
 		let toPriceRate = data.rates[toCode];
