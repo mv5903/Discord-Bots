@@ -41,6 +41,9 @@ client.on('message', message => {
   if (command.includes('random')) {
   	base = command;
   }
+  if (command.includes('currency')) {
+  	base = command;
+  }
     adminRole = message.guild.roles.cache.find(role => role.name === "Assistant");
   	console.log("Command is sending.");
   	//Commands executable by anyone with the admin role name
@@ -82,6 +85,9 @@ client.on('message', message => {
 	    case 'minecraft':
 	    	sendMessage("status");
 	    	break;
+	    case 'currency':
+	    	sendMessage("currency");
+	    	break;
 	    default:
 	    	sendMessage("invalid");
  		}
@@ -114,6 +120,9 @@ client.on('message', message => {
 	    case 'website':
 	    	send("View Matthew Vandeneberg's website at http://" + process.env.WEBSITE);
 	    	break;
+    	case 'currency':
+	    	sendMessage("currency");
+	    	break;
 	    default:
 	    	sendMessage("invalid");
   		}
@@ -133,6 +142,7 @@ function sendMessage(msg) {
 		.setTitle('Help')
 		.setDescription('Hi! I am kwikmatt\'s Discord bot! Here is the list of commands that I can do: ')
 		.addFields(
+			{name: '-currency', value: 'Get current currency exchange information, formatted as \"-currency[from code][to code][price]\", example: \"-currencyUSDCAD10.68\".'}
 			{name: '-date', value: 'Displays the current date.'},
 			{name: '-help', value: 'Open this help message again.'},
 			{name: '-how', value: 'How was this bot created?'},
@@ -181,6 +191,8 @@ function sendMessage(msg) {
 		toSend = 'I have been waiting for your commands for ' + time + "!";
 	} else if (msg === "status") {
 		mc();
+	} else if (msg.includes('currency')) {
+		currency(msg);
 	}
 	console.log("about to send");
 	send(toSend);
@@ -189,6 +201,60 @@ function sendMessage(msg) {
 function send(toSend) {
 	channel = client.channels.cache.get(process.env.BOT_CHANNEL);
     channel.send(toSend);
+}
+
+async function currency(info) {
+	try {
+		let fromCode = info.substring(8, 11);
+		let toCode = info.substring(11, 14);
+		let price = info.substring(14);
+		const response = await fetch('https://api.exchangeratesapi.io/latest?base=' + fromCode);
+		let data = await response.json();
+		let toPriceRate = data.rates.toCode;
+		let finalPrice = price * toPriceRate;
+
+		let currencyMap = new Map();
+		currencyMap.set('CAD', 'Canadian Dollar');
+		currencyMap.set('HKD', 'Hong Kong Dollar');
+		currencyMap.set('ISK', 'Icelandic Krona');
+		currencyMap.set('PHP', 'Philippine Peso');
+		currencyMap.set('DKK', 'Danish Krone');
+		currencyMap.set('HUF', 'Hungarian Forint');
+		currencyMap.set('CZK', 'Czech Koruna');
+		currencyMap.set('GBP', 'Pound Sterling');
+		currencyMap.set('RON', 'Romanian Leu');
+		currencyMap.set('SEK', 'Swedish Krona');
+		currencyMap.set('IDR', 'Indonesian Rupiah');
+		currencyMap.set('INR', 'Indian Rupee');
+		currencyMap.set('BRL', 'Brazilian Real');
+		currencyMap.set('RUB', 'Russian Ruble');
+		currencyMap.set('HRK', 'Croatian Kuna');
+		currencyMap.set('JPY', 'Japanese Yen');
+		currencyMap.set('THB', 'Thai Baht');
+		currencyMap.set('CHF', 'Swiss Franc');
+		currencyMap.set('EUR', 'Euro');
+		currencyMap.set('MYR', 'Malaysian Ringgit');
+		currencyMap.set('BGN', 'Bulgarian Lev');
+		currencyMap.set('TRY', 'Turkish Lira');
+		currencyMap.set('CNY', 'Chinese Yuan');
+		currencyMap.set('NOK', 'Norwegian Krone');
+		currencyMap.set('NZD', 'New Zealand Dollar');
+		currencyMap.set('ZAR', 'South African Rand');
+		currencyMap.set('USD', 'United States Dollar');
+		currencyMap.set('MXN', 'Mexican Peso');
+		currencyMap.set('SGD', 'Singapore Dollar');
+		currencyMap.set('AUD', 'Australian Dollar');
+		currencyMap.set('ILS', 'Israeli New Shekel');
+		currencyMap.set('KRW', 'South Korean Yuan');
+		currencyMap.set('PLN', 'Poland Zloty');
+		
+		send(price + ' ' + currencyMap[fromCode] + ' is ' + finalPrice + ' in ' + currencyMap[toCode] + '.'); 
+	} catch(e) {
+		send('Sorry, please check your input and try again. Valid codes can be found at https://api.exchangeratesapi.io/latest?base=USD');
+	}
+	
+
+
 }
 
 async function mc() {
