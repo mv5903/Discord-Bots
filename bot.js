@@ -44,7 +44,7 @@ client.on('message', message => {
   if (command.includes('currency')) {
   	base = command;
   }
-  if (command.include('gay')) {
+  if (command.includes('gay')) {
   	base = command;
   }
     adminRole = message.guild.roles.cache.find(role => role.name === "Assistant");
