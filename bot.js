@@ -45,7 +45,10 @@ client.on('message', message => {
   	base = command;
   }
   if (command.includes('gay')) {
-  	base = command;
+  	sendMessage('Shut the fuck up :)');
+  } 
+  if (command.includes('nigga')) {
+  	sendMessage('No you a nigga ;)');
   }
     adminRole = message.guild.roles.cache.find(role => role.name === "Assistant");
   	console.log("Command is sending.");
@@ -91,9 +94,6 @@ client.on('message', message => {
 	    case 'currency':
 	    	sendMessage("currency");
 	    	break;
-	    case 'gay':
-	    	sendMessage("Shut the fuck up.");
-	    	break;
 	    default:
 	    	sendMessage("invalid");
  		}
@@ -128,9 +128,6 @@ client.on('message', message => {
 	    	break;
     	case 'currency':
 	    	sendMessage("currency");
-	    	break;
-    	case 'gay':
-	    	sendMessage("Shut the fuck up.");
 	    	break;
 	    default:
 	    	sendMessage("invalid");
