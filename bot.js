@@ -44,12 +44,6 @@ client.on('message', message => {
   if (command.includes('currency')) {
   	base = command;
   }
-  if (command.includes('gay')) {
-  	sendMessage('Shut the fuck up :)');
-  } 
-  if (command.includes('nigga')) {
-  	sendMessage('No you a nigga ;)');
-  }
     adminRole = message.guild.roles.cache.find(role => role.name === "Assistant");
   	console.log("Command is sending.");
   	//Commands executable by anyone with the admin role name
