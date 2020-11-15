@@ -178,7 +178,8 @@ function sendMessage(msg) {
 		var dayOfWeek = weekday[today.getDay()];
 		toSend = "Today is " + dayOfWeek + ", " + (today.getMonth()+1) + "-" + today.getDate() + "-" + today.getFullYear() + "."
 	} else if (msg === "time") {
-		toSend = formatAMPM(new Date);
+		var usaTime = new Date().toLocaleString("en-US", {timeZone: "America/New_York"});
+		toSend = formatAMPM(new Date(usaTime));
 	} else if (msg === "info") {
 		toSend = "Welcome to the kwikmatt Server. In this server, we talk and play many different games! If you have any questions, please contact <@401505856870678529>.";
 	} else if (msg === "invalid") {
