@@ -2,6 +2,8 @@
 
 Using this bot, you can make it perform a wide variety of tasks! Here are a list of commands that I have implemented for my Discord bot:  
 <br>
+* -currency
+	* Get current currency exchange information, formatted as "-currency[from code][to code][price]", example: "-currencyUSDCAD10.68" Use -currencycodes for a list of codes.
 * -date
 	* Displays the current date.
 * -help
@@ -23,7 +25,7 @@ Using this bot, you can make it perform a wide variety of tasks! Here are a list
 * -uptime
 	* Gets my uptime.
 * -weather
-	* Get weather for any zip code, for example, "-weather&10001" will show the weather for New York City.
+	* Get weather for any zip code, for example, "-weather10001" will show the weather for New York City.
 * -website
 	* View Matthew Vandenberg's website.
 <br>  
