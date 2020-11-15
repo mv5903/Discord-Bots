@@ -153,16 +153,16 @@ function sendMessage(msg) {
 			{name: '-random', value: 'Generate a random number using the following scheme: \"-random(min,max)int\". Use \"int\" for integer, or \"double\" for decimal number.'},
 			{name: '-u', value: 'Unmute all in a voice channel (Admins only).'},
 			{name: '-uptime', value: 'Gets my uptime.'},
-			{name: '-weather', value: 'Get weather for any zip code, for example, \"-weather&10001\" will show the weather for New York City.'},
+			{name: '-weather', value: 'Get weather for any zip code, for example, \"-weather10001\" will show the weather for New York City.'},
 			{name: '-website', value: 'View Matthew Vandenberg\'s website.'},
 		);
 		sendEmbed(helpEmbed);
 	} else if (msg.includes("weather")) {
-		if (msg.length != 13) {
+		if (msg.length != 12) {
 			send("Please check your formatting and try typing that again.");
 			return;
 		}
-		var zip = msg.substring(8);
+		var zip = msg.substring(7);
 		getWeather(zip);
 		return;
 	} else if (msg === "date") {
