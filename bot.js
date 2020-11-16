@@ -246,28 +246,28 @@ async function getStock(info) {
 		let whatToSend = "";
 		switch (responseType) {
 			case 'open':
-				whatToSend = "The open price for " + symbol + " is " + data["Time Series (Daily)"]["open"] + ".";
+				whatToSend = "The open price for " + symbol + " is " + data["Time Series (Daily)"]["1. open"] + ".";
 				break;
 			case 'close':
-				whatToSend = "The close price for " + symbol + " is " + data["Time Series (Daily)"]["close"] + ".";
+				whatToSend = "The close price for " + symbol + " is " + data["Time Series (Daily)"]["2. close"] + ".";
 				break;
 			case 'high':
-				whatToSend = "The high price for " + symbol + " is " + data["Time Series (Daily)"]["high"] + ".";
+				whatToSend = "The high price for " + symbol + " is " + data["Time Series (Daily)"]["3. high"] + ".";
 				break;
 			case 'low':
-				whatToSend = "The low price for " + symbol + " is " + data["Time Series (Daily)"]["low"] + ".";
+				whatToSend = "The low price for " + symbol + " is " + data["Time Series (Daily)"]["4. low"] + ".";
 				break;
 			case 'adjclose':
-				whatToSend = "The Adjusted Close price for " + symbol + " is " + data["Time Series (Daily)"]["adjusted close"] + ".";
+				whatToSend = "The Adjusted Close price for " + symbol + " is " + data["Time Series (Daily)"]["5. adjusted close"] + ".";
 				break;
 			case 'volume':
-				whatToSend = "The volume price for " + symbol + " is " + data["Time Series (Daily)"]["volume"] + ".";
+				whatToSend = "The volume price for " + symbol + " is " + data["Time Series (Daily)"]["6. volume"] + ".";
 				break;
 			case 'divamount':
-				whatToSend = "The dividend amount for " + symbol + " is " + data["Time Series (Daily)"]["dividend amount"] + ".";
+				whatToSend = "The dividend amount for " + symbol + " is " + data["Time Series (Daily)"]["7. dividend amount"] + ".";
 				break;
 			case 'splitcof':
-				whatToSend = "The split coefficient for " + symbol + " is " + data["Time Series (Daily)"]["split coefficient"] + ".";
+				whatToSend = "The split coefficient for " + symbol + " is " + data["Time Series (Daily)"]["8. split coefficient"] + ".";
 				break;
 		}
 		send(whatToSend);
