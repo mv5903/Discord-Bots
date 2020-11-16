@@ -203,6 +203,7 @@ function sendMessage(msg) {
 			stockInfo();
 		} else {
 			getStock(msg);
+			return;
 		}
 	}
 	console.log("about to send");
