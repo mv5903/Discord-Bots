@@ -94,9 +94,6 @@ client.on('message', message => {
 	    case 'stock':
 	    	sendMessage("stock");
 	    	break;
-	    case 'stockinfo':
-	    	stockInfo();
-	    	break;
 	    default:
 	    	sendMessage("invalid");
  		}
@@ -134,9 +131,6 @@ client.on('message', message => {
 	    	break;
 	    case 'stock':
 	    	sendMessage("stock");
-	    	break;
-	    case 'stockinfo':
-	    	stockInfo();
 	    	break;
 	    default:
 	    	sendMessage("invalid");
@@ -205,7 +199,11 @@ function sendMessage(msg) {
 	} else if (msg.includes('currency')) {
 		currency(msg);
 	} else if (msg.includes('stock')) {
-		getStock(msg);
+		if (msg === 'stockinfo') {
+			stockInfo();
+		} else {
+			getStock(msg);
+		}
 	}
 	console.log("about to send");
 	send(toSend);
