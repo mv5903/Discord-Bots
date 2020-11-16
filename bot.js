@@ -269,6 +269,8 @@ async function getStock(info) {
 			case 'splitcof':
 				whatToSend = "The split coefficient for " + symbol + " is " + data["Time Series (Daily)"]["8. split coefficient"] + ".";
 				break;
+			default:
+				whatToSend = "Sorry, try again";
 		}
 		send(whatToSend);
 	} catch (e) {
