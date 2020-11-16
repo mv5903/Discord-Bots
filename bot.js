@@ -249,13 +249,13 @@ async function getStock(info) {
 				whatToSend = "The open price for " + symbol + " is " + data["Time Series (Daily)"][date]["1. open"] + ".";
 				break;
 			case 'close':
-				whatToSend = "The close price for " + symbol + " is " + data["Time Series (Daily)"][date]["2. close"] + ".";
+				whatToSend = "The close price for " + symbol + " is " + data["Time Series (Daily)"][date]["4. close"] + ".";
 				break;
 			case 'high':
-				whatToSend = "The high price for " + symbol + " is " + data["Time Series (Daily)"][date]["3. high"] + ".";
+				whatToSend = "The high price for " + symbol + " is " + data["Time Series (Daily)"][date]["2. high"] + ".";
 				break;
 			case 'low':
-				whatToSend = "The low price for " + symbol + " is " + data["Time Series (Daily)"][date]["4. low"] + ".";
+				whatToSend = "The low price for " + symbol + " is " + data["Time Series (Daily)"][date]["3. low"] + ".";
 				break;
 			case 'adjclose':
 				whatToSend = "The Adjusted Close price for " + symbol + " is " + data["Time Series (Daily)"][date]["5. adjusted close"] + ".";
