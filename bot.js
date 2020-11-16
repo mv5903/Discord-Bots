@@ -242,33 +242,32 @@ async function getStock(info) {
 		const response = await fetch('https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=' + symbol + '&apikey=' + process.env.STOCKS_API_KEY);
 		const data = await response.json();
 		console.log(response.ok);
-		let dateToCheck = data["Meta Data"]["3. Last Refreshed"];
-		console.log(dateToCheck);
+		let date = data["Meta Data"]["3. Last Refreshed"];
 		let whatToSend = "";
 		switch (responseType) {
 			case 'open':
-				whatToSend = "The open price for " + symbol + " is " + data["Time Series (Daily)"]["1. open"] + ".";
+				whatToSend = "The open price for " + symbol + " is " + data["Time Series (Daily)"][date]["1. open"] + ".";
 				break;
 			case 'close':
-				whatToSend = "The close price for " + symbol + " is " + data["Time Series (Daily)"]["2. close"] + ".";
+				whatToSend = "The close price for " + symbol + " is " + data["Time Series (Daily)"][date]["2. close"] + ".";
 				break;
 			case 'high':
-				whatToSend = "The high price for " + symbol + " is " + data["Time Series (Daily)"]["3. high"] + ".";
+				whatToSend = "The high price for " + symbol + " is " + data["Time Series (Daily)"][date]["3. high"] + ".";
 				break;
 			case 'low':
-				whatToSend = "The low price for " + symbol + " is " + data["Time Series (Daily)"]["4. low"] + ".";
+				whatToSend = "The low price for " + symbol + " is " + data["Time Series (Daily)"][date]["4. low"] + ".";
 				break;
 			case 'adjclose':
-				whatToSend = "The Adjusted Close price for " + symbol + " is " + data["Time Series (Daily)"]["5. adjusted close"] + ".";
+				whatToSend = "The Adjusted Close price for " + symbol + " is " + data["Time Series (Daily)"][date]["5. adjusted close"] + ".";
 				break;
 			case 'volume':
-				whatToSend = "The volume price for " + symbol + " is " + data["Time Series (Daily)"]["6. volume"] + ".";
+				whatToSend = "The volume price for " + symbol + " is " + data["Time Series (Daily)"][date]["6. volume"] + ".";
 				break;
 			case 'divamount':
-				whatToSend = "The dividend amount for " + symbol + " is " + data["Time Series (Daily)"]["7. dividend amount"] + ".";
+				whatToSend = "The dividend amount for " + symbol + " is " + data["Time Series (Daily)"][date]["7. dividend amount"] + ".";
 				break;
 			case 'splitcof':
-				whatToSend = "The split coefficient for " + symbol + " is " + data["Time Series (Daily)"]["8. split coefficient"] + ".";
+				whatToSend = "The split coefficient for " + symbol + " is " + data["Time Series (Daily)"][date]["8. split coefficient"] + ".";
 				break;
 			default:
 				whatToSend = "Sorry, try again";
