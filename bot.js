@@ -239,7 +239,7 @@ async function getStock(info) {
 		let responseType = info.substring(info.indexOf(':') + 1);
 		console.log(symbol);
 		console.log(responseType);
-		const reponse = await fetch('https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=' + symbol + '&apikey=' + process.env.STOCKS_API_KEY);
+		const response = await fetch('https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=' + symbol + '&apikey=' + process.env.STOCKS_API_KEY);
 		const data = await response.json();
 		console.log(response.ok);
 		let dateToCheck = data["Meta Data"]["3. Last Refreshed"];
