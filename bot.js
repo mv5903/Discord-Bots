@@ -44,6 +44,9 @@ client.on('message', message => {
   if (command.includes('currency')) {
   	base = command;
   }
+  if (command.includes('stock')) {
+  	base = command;
+  }
     adminRole = message.guild.roles.cache.find(role => role.name === "Assistant");
   	console.log("Command is sending.");
   	//Commands executable by anyone with the admin role name
@@ -88,6 +91,12 @@ client.on('message', message => {
 	    case 'currency':
 	    	sendMessage("currency");
 	    	break;
+	    case 'stock':
+	    	sendMessage("stock");
+	    	break;
+	    case 'stockinfo':
+	    	stockInfo();
+	    	break;
 	    default:
 	    	sendMessage("invalid");
  		}
@@ -123,6 +132,12 @@ client.on('message', message => {
     	case 'currency':
 	    	sendMessage("currency");
 	    	break;
+	    case 'stock':
+	    	sendMessage("stock");
+	    	break;
+	    case 'stockinfo':
+	    	stockInfo();
+	    	break;
 	    default:
 	    	sendMessage("invalid");
   		}
@@ -151,6 +166,7 @@ function sendMessage(msg) {
 			{name: '-minecraft', value: 'Displays the kwikmatt server ip if you are a part of the minecraft server.'},
 			{name: '-time', value: 'Displays the current time.'},
 			{name: '-random', value: 'Generate a random number using the following scheme: \"-random(min,max)int\". Use \"int\" for integer, or \"double\" for decimal number.'},
+			{name: '-stock', value: 'Gets stock info for a given symbol. Use -stockhelp to get the info you want; be sure to follow the format -stock[symbol]:[info].'},
 			{name: '-u', value: 'Unmute all in a voice channel (Admins only).'},
 			{name: '-uptime', value: 'Gets my uptime.'},
 			{name: '-weather', value: 'Get weather for any zip code, for example, \"-weather10001\" will show the weather for New York City.'},
@@ -166,15 +182,9 @@ function sendMessage(msg) {
 		getWeather(zip);
 		return;
 	} else if (msg === "date") {
-		var today = new Date();
-		var weekday = new Array(7);
-		weekday[0] = "Sunday";
-		weekday[1] = "Monday";
-		weekday[2] = "Tuesday";
-		weekday[3] = "Wednesday";
-		weekday[4] = "Thursday";
-		weekday[5] = "Friday";
-		weekday[6] = "Saturday";
+		var usaTime = new Date().toLocaleString("en-US", {timeZone: "America/New_York"});
+		var today = new Date(usaTime);
+		var weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 		var dayOfWeek = weekday[today.getDay()];
 		toSend = "Today is " + dayOfWeek + ", " + (today.getMonth()+1) + "-" + today.getDate() + "-" + today.getFullYear() + "."
 	} else if (msg === "time") {
@@ -194,6 +204,8 @@ function sendMessage(msg) {
 		mc();
 	} else if (msg.includes('currency')) {
 		currency(msg);
+	} else if (msg.includes('stock')) {
+		getStock(msg);
 	}
 	console.log("about to send");
 	send(toSend);
@@ -202,6 +214,59 @@ function sendMessage(msg) {
 function send(toSend) {
 	channel = client.channels.cache.get(process.env.BOT_CHANNEL);
     channel.send(toSend);
+}
+
+function stockInfo() {
+	const currencyEmbed = new Discord.MessageEmbed()
+		.setColor('800000')
+		.setTitle('Stock Info Codes')
+		.addFields(
+			{name: 'Open', value: 'open'},
+			{name: 'Close', value: 'close'},
+			{name: 'High', value: 'high'},
+			{name: 'Low', value: 'low'},
+			{name: 'Adjusted Close', value: 'adjclose'},
+			{name: 'Volume', value: 'volume'},
+			{name: 'Dividend Amount', value: 'divamount'},
+			{name: 'Split Coefficient', value: 'splitcof'},
+		);
+	sendEmbed(currencyEmbed);
+}
+
+async function getStock(info) {
+	let symbol = info.substring(5, info.indexOf(':')).toUpperCase();
+	let responseType = info.substring(info.indexOf(':') + 1);
+	const reponse = await fetch('https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=' + symbol + '&apikey=' + process.env.STOCKS_API_KEY);
+	const data = await response.json();
+	let dateToCheck = data["Meta Data"]["3. Last Refreshed"];
+	let whatToSend = "";
+	switch (responseType) {
+		case 'open':
+			whatToSend = "The open price for " + symbol + " is " + data["Time Series (Daily)"]["open"] + ".";
+			break;
+		case 'close':
+			whatToSend = "The close price for " + symbol + " is " + data["Time Series (Daily)"]["close"] + ".";
+			break;
+		case 'high':
+			whatToSend = "The high price for " + symbol + " is " + data["Time Series (Daily)"]["high"] + ".";
+			break;
+		case 'low':
+			whatToSend = "The low price for " + symbol + " is " + data["Time Series (Daily)"]["low"] + ".";
+			break;
+		case 'adjclose':
+			whatToSend = "The Adjusted Close price for " + symbol + " is " + data["Time Series (Daily)"]["adjusted close"] + ".";
+			break;
+		case 'volume':
+			whatToSend = "The volume price for " + symbol + " is " + data["Time Series (Daily)"]["volume"] + ".";
+			break;
+		case 'divamount':
+			whatToSend = "The dividend amount for " + symbol + " is " + data["Time Series (Daily)"]["dividend amount"] + ".";
+			break;
+		case 'splitcof':
+			whatToSend = "The split coefficient for " + symbol + " is " + data["Time Series (Daily)"]["split coefficient"] + ".";
+			break;
+	}
+	semd(whatToSend);
 }
 
 async function currency(info) {
