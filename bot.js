@@ -236,37 +236,44 @@ function stockInfo() {
 async function getStock(info) {
 	let symbol = info.substring(5, info.indexOf(':')).toUpperCase();
 	let responseType = info.substring(info.indexOf(':') + 1);
-	const reponse = await fetch('https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=' + symbol + '&apikey=' + process.env.STOCKS_API_KEY);
-	const data = await response.json();
-	let dateToCheck = data["Meta Data"]["3. Last Refreshed"];
-	let whatToSend = "";
-	switch (responseType) {
-		case 'open':
-			whatToSend = "The open price for " + symbol + " is " + data["Time Series (Daily)"]["open"] + ".";
-			break;
-		case 'close':
-			whatToSend = "The close price for " + symbol + " is " + data["Time Series (Daily)"]["close"] + ".";
-			break;
-		case 'high':
-			whatToSend = "The high price for " + symbol + " is " + data["Time Series (Daily)"]["high"] + ".";
-			break;
-		case 'low':
-			whatToSend = "The low price for " + symbol + " is " + data["Time Series (Daily)"]["low"] + ".";
-			break;
-		case 'adjclose':
-			whatToSend = "The Adjusted Close price for " + symbol + " is " + data["Time Series (Daily)"]["adjusted close"] + ".";
-			break;
-		case 'volume':
-			whatToSend = "The volume price for " + symbol + " is " + data["Time Series (Daily)"]["volume"] + ".";
-			break;
-		case 'divamount':
-			whatToSend = "The dividend amount for " + symbol + " is " + data["Time Series (Daily)"]["dividend amount"] + ".";
-			break;
-		case 'splitcof':
-			whatToSend = "The split coefficient for " + symbol + " is " + data["Time Series (Daily)"]["split coefficient"] + ".";
-			break;
+	console.log(symbol);
+	console.log(responseType);
+	try {
+		const reponse = await fetch('https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=' + symbol + '&apikey=' + process.env.STOCKS_API_KEY);
+		const data = await response.json();
+		let dateToCheck = data["Meta Data"]["3. Last Refreshed"];
+		let whatToSend = "";
+		switch (responseType) {
+			case 'open':
+				whatToSend = "The open price for " + symbol + " is " + data["Time Series (Daily)"]["open"] + ".";
+				break;
+			case 'close':
+				whatToSend = "The close price for " + symbol + " is " + data["Time Series (Daily)"]["close"] + ".";
+				break;
+			case 'high':
+				whatToSend = "The high price for " + symbol + " is " + data["Time Series (Daily)"]["high"] + ".";
+				break;
+			case 'low':
+				whatToSend = "The low price for " + symbol + " is " + data["Time Series (Daily)"]["low"] + ".";
+				break;
+			case 'adjclose':
+				whatToSend = "The Adjusted Close price for " + symbol + " is " + data["Time Series (Daily)"]["adjusted close"] + ".";
+				break;
+			case 'volume':
+				whatToSend = "The volume price for " + symbol + " is " + data["Time Series (Daily)"]["volume"] + ".";
+				break;
+			case 'divamount':
+				whatToSend = "The dividend amount for " + symbol + " is " + data["Time Series (Daily)"]["dividend amount"] + ".";
+				break;
+			case 'splitcof':
+				whatToSend = "The split coefficient for " + symbol + " is " + data["Time Series (Daily)"]["split coefficient"] + ".";
+				break;
+		}
+		send(whatToSend);
+	} catch (e) {
+		send("Couldn't retrieve stock info, check your input and try again.");
 	}
-	semd(whatToSend);
+	
 }
 
 async function currency(info) {
