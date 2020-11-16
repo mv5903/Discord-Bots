@@ -242,6 +242,7 @@ async function getStock(info) {
 		const reponse = await fetch('https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=' + symbol + '&apikey=' + process.env.STOCKS_API_KEY);
 		const data = await response.json();
 		let dateToCheck = data["Meta Data"]["3. Last Refreshed"];
+		console.log(dateToCheck);
 		let whatToSend = "";
 		switch (responseType) {
 			case 'open':
