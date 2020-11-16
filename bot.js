@@ -275,6 +275,7 @@ async function getStock(info) {
 		}
 		send(whatToSend);
 	} catch (e) {
+		console.error(e);
 		send("Couldn't retrieve stock info, check your input and try again.");
 	}
 	
