@@ -234,11 +234,12 @@ function stockInfo() {
 }
 
 async function getStock(info) {
-	let symbol = info.substring(5, info.indexOf(':')).toUpperCase();
-	let responseType = info.substring(info.indexOf(':') + 1);
-	console.log(symbol);
-	console.log(responseType);
+	
 	try {
+		let symbol = info.substring(5, info.indexOf(':')).toUpperCase();
+		let responseType = info.substring(info.indexOf(':') + 1);
+		console.log(symbol);
+		console.log(responseType);
 		const reponse = await fetch('https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=' + symbol + '&apikey=' + process.env.STOCKS_API_KEY);
 		const data = await response.json();
 		let dateToCheck = data["Meta Data"]["3. Last Refreshed"];
