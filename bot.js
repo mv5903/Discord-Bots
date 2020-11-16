@@ -269,7 +269,7 @@ async function getStock(info) {
 			default:
 				whatToSend = "Sorry, try again";
 		}
-		whatToSend += "(Last updated on " + date + ").";
+		whatToSend += "\n(Last updated on " + date + ").";
 		send(whatToSend);
 	} catch (e) {
 		console.error(e);
