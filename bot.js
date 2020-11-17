@@ -19,12 +19,12 @@ client.on('guildMemberAdd', member => {
 });
 
 client.on('guildMemberAdd', member => {
-	infoChannel = process.env.WELCOME_CHANNEL;
+	infoChannel = '548579154824527892';
     member.guild.channels.cache.get(infoChannel).send('**' + member.user.username + '** has joined the server! :slight_smile: '); 
 });
 
 client.on('guildMemberRemove', member => {
-	infoChannel = process.env.WELCOME_CHANNEL;
+	infoChannel = '548579154824527892';
     member.guild.channels.cache.get(infoChannel).send('**' + member.user.username + '** has left the server! :sob: ');
 });
 
