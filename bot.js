@@ -31,23 +31,15 @@ client.on('guildMemberRemove', member => {
 
 client.on('message', message => {
 
-  if (!message.content.startsWith(prefix) || message.author.bot) return;
-  const args = message.content.slice(prefix.length).split(" ");
-  const command = args.shift().toLowerCase();
-  var base = "";
-  if (command.includes('weather')) {
-  	base = command;
-  } 
-  if (command.includes('random')) {
-  	base = command;
-  }
-  if (command.includes('currency')) {
-  	base = command;
-  }
-  if (command.includes('stock')) {
-  	base = command;
-  }
-    adminRole = message.guild.roles.cache.find(role => role.name === "Assistant");
+	if (!message.content.startsWith(prefix) || message.author.bot) return;
+	const args = message.content.slice(prefix.length).split(" ");
+	const command = args.shift().toLowerCase();
+	var base = "";
+	//Commands that can receive additional arguments
+	if (command.includes('weather') || command.includes('random') || command.includes('currency') || command.includes('stock')) {
+		base = command;
+	} 
+	adminRole = message.guild.roles.cache.find(role => role.name === "Assistant");
   	console.log("Command is sending.");
   	//Commands executable by anyone with the admin role name
     if (message.member.roles.cache.has(adminRole.id)) {
@@ -97,7 +89,7 @@ client.on('message', message => {
 	    default:
 	    	sendMessage("invalid");
  		}
-    } else {
+    } else { //Commands that can be executed by anyone in the server
     	switch (command) {
 	    case 'help':
 	    	sendMessage("help");  
@@ -138,9 +130,9 @@ client.on('message', message => {
 	}
 });
 
-function sendEmbed(toSend) {
+function send(toSend) {
 	channel = client.channels.cache.get(process.env.BOT_CHANNEL);
-	channel.send(toSend);
+    channel.send(toSend);
 }
 
 function sendMessage(msg) {
@@ -166,7 +158,7 @@ function sendMessage(msg) {
 			{name: '-weather', value: 'Get weather for any zip code, for example, \"-weather10001\" will show the weather for New York City.'},
 			{name: '-website', value: 'View Matthew Vandenberg\'s website.'},
 		);
-		sendEmbed(helpEmbed);
+		send(helpEmbed);
 	} else if (msg.includes("weather")) {
 		if (msg.length != 12) {
 			send("Please check your formatting and try typing that again.");
@@ -210,10 +202,7 @@ function sendMessage(msg) {
 	send(toSend);
 }
 
-function send(toSend) {
-	channel = client.channels.cache.get(process.env.BOT_CHANNEL);
-    channel.send(toSend);
-}
+
 
 function stockInfo() {
 	const currencyEmbed = new Discord.MessageEmbed()
@@ -229,7 +218,7 @@ function stockInfo() {
 			{name: 'Dividend Amount', value: 'divamount'},
 			{name: 'Split Coefficient', value: 'splitcof'},
 		);
-	sendEmbed(currencyEmbed);
+	send(currencyEmbed);
 }
 
 async function getStock(info) {
@@ -318,7 +307,7 @@ async function currency(info) {
 				{name: 'KRW', value: 'South Korean Yuan'},
 				{name: 'PLN', value: 'Poland Zloty'},
 			);
-		sendEmbed(mapEmbed);
+		send(mapEmbed);
 		return;
 	}
 	let fromCode = (info.substring(8, 11)).toUpperCase();
@@ -376,7 +365,7 @@ async function currency(info) {
 				{name: 'Multiplier: ', value: data.rates[toCode].toFixed(3)},
 				{name: 'Converted Amount: ', value: finalPrice.toFixed(3)},
 				);
-			sendEmbed(currencyEmbed);
+			send(currencyEmbed);
 	} catch(e) {
 		send('Sorry, please check your input and try again. Valid codes can be found at https://api.exchangeratesapi.io/latest?base=USD');
 	}
@@ -418,7 +407,7 @@ async function mc() {
 				{name: 'Players Online', value: data.players.online + '/' + data.players.max},
 				{name: 'Currently Active Players', value: playersList},
 			);
-		sendEmbed(mcEmbed);
+		send(mcEmbed);
 	} catch (e) {
 		send("The server is currently offline.");
 	}
@@ -483,7 +472,7 @@ async function getWeather(zip) {
 			{name: 'Wind: ', value: response.wind.speed + ' mph at ' + response.wind.deg + '°'},
 			{name: 'Humidity: ', value: response.main.humidity + '%'},
 		);
-		sendEmbed(weatherEmbed);
+		send(weatherEmbed);
 	} catch (e) {
 		send("I couldn't find the weather for that zip code because it doesn't exist. Please try again.");
 	}
