@@ -160,7 +160,7 @@ function sendMessage(msg) {
 			{name: '-minecraft', value: 'Displays the kwikmatt server ip if you are a part of the minecraft server.'},
 			{name: '-time', value: 'Displays the current time.'},
 			{name: '-random', value: 'Generate a random number using the following scheme: \"-random(min,max)int\". Use \"int\" for integer, or \"double\" for decimal number.'},
-			{name: '-stock', value: 'Gets stock info for a given symbol. Use -stockhelp to get the info you want; be sure to follow the format -stock[symbol]:[info].'},
+			{name: '-stock', value: 'Gets stock info for a given symbol. Use -stockinfo to get the info you want; be sure to follow the format -stock[symbol]:[info].'},
 			{name: '-u', value: 'Unmute all in a voice channel (Admins only).'},
 			{name: '-uptime', value: 'Gets my uptime.'},
 			{name: '-weather', value: 'Get weather for any zip code, for example, \"-weather10001\" will show the weather for New York City.'},
