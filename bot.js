@@ -86,6 +86,9 @@ client.on('message', message => {
 	    case 'stock':
 	    	sendMessage("stock");
 	    	break;
+	    case 'letmebeclear':
+	    	sendMessage("letmebeclear");
+	    	break;
 	    default:
 	    	sendMessage("invalid");
  		}
@@ -124,6 +127,9 @@ client.on('message', message => {
 	    case 'stock':
 	    	sendMessage("stock");
 	    	break;
+	    case 'letmebeclear':
+	    	sendMessage("letmebeclear");
+	    	break;
 	    default:
 	    	sendMessage("invalid");
   		}
@@ -148,6 +154,7 @@ function sendMessage(msg) {
 			{name: '-help', value: 'Open this help message again.'},
 			{name: '-how', value: 'How was this bot created?'},
 			{name: '-info', value: 'Displays information about the Kwikmatt Server.'},
+			{name: '-letmebeclear', value: 'Obama will join your voice channel and say \'let me be clear\''},
 			{name: '-m', value: 'Mute all in a voice channel (Admins only).'},
 			{name: '-minecraft', value: 'Displays the kwikmatt server ip if you are a part of the minecraft server.'},
 			{name: '-time', value: 'Displays the current time.'},
@@ -197,6 +204,8 @@ function sendMessage(msg) {
 			getStock(msg);
 			return;
 		}
+	} else if (msg.includes('letmebe')) {
+		letMeBeClear();
 	}
 	console.log("about to send");
 	send(toSend);
@@ -488,6 +497,20 @@ function mute(message, setMute) {
   } else {
     message.reply('You need to join a voice channel first!');
   }
+}
+
+function letMeBeClear() {
+	var fileName = 'letmebeclear.mp3';
+	var voiceChannel = msg.member.voice.channel;
+    voiceChannel.join()
+        .then(connection => {
+            const dispatcher = connection.play(fileName);
+            dispatcher.on("finish", end => {
+                voiceChannel.leave();
+                deleteFile(fileName);
+            });
+        })
+        .catch(console.error);
 }
 
 client.login(process.env.BOT_TOKEN);
