@@ -145,6 +145,7 @@ function soundboard(message, command) {
 		.setTitle('Available Sounds')
 		.setDescription('Play any of the available sounds below.')
 		.addFields(
+		{name: 'avocadosfrommexico', value: 'The sound that will make you happy.'},
 		{name: 'bruh', value: 'bruh.'},
 		{name: 'letmebeclear', value: 'Obama says \"Let me be clear.\"'},
 		{name: 'itsshowtime', value: 'EDP445 shares some words of wisdom.'},	
