@@ -54,7 +54,11 @@ client.on('message', message => {
 	    	sendMessage("help");  
 	    	break;
 	    case base:
-	    	sendMessage(command);
+	    	if (base.contains('soundboard')) {
+	    		soundboard(message);
+	    	} else {
+	    		sendMessage(command);
+	    	}
 	    	break;
 	    case 'date':
 	    	sendMessage("date");
@@ -95,7 +99,11 @@ client.on('message', message => {
 	    	sendMessage("help");  
 	    	break;
 	    case base:
-	    	sendMessage(command);
+	    	if (base.contains('soundboard')) {
+	    		soundboard(message);
+	    	} else {
+	    		sendMessage(command);
+	    	}
 	    	break;
 	    case 'date':
 	    	sendMessage("date");
@@ -131,7 +139,6 @@ client.on('message', message => {
 });
 
 function soundboard(message) {
-	var voiceChannel = message.member.voice.channel;
 	if (message.contains('soundboardhelp')) {
 		const helpEmbed = new Discord.MessageEmbed()
 		.setColor('black')
@@ -144,6 +151,7 @@ function soundboard(message) {
 		);
 		send(helpEmbed);
 	} else {
+		var voiceChannel = message.member.voice.channel;
 		let filename = message.substring(10);
 		console.log(filename);
 		voiceChannel.join()
