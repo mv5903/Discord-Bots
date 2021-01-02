@@ -36,7 +36,7 @@ client.on('message', message => {
 	const command = args.shift().toLowerCase();
 	var base = "";
 	//Commands that can receive additional arguments
-	if (command.includes('weather') || command.includes('random') || command.includes('currency') || command.includes('stock')) {
+	if (command.includes('weather') || command.includes('random') || command.includes('currency') || command.includes('stock') || command.includes('soundboard')) {
 		base = command;
 	} 
 	adminRole = message.guild.roles.cache.find(role => role.name === "Assistant");
@@ -86,15 +86,6 @@ client.on('message', message => {
 	    case 'stock':
 	    	sendMessage("stock");
 	    	break;
-	    case 'letmebeclear':
-			play(message, 'letmebeclear');
-	    	break;
-	    case 'ohniggayougay':
-	 		play(message, 'ohniggayougay');
-	    	break;
-	    case 'itsshowtime':
-	    	play(message, 'itsshowtime');
-	    	break;
 	    default:
 	    	sendMessage("invalid");
  		}
@@ -133,31 +124,39 @@ client.on('message', message => {
 	    case 'stock':
 	    	sendMessage("stock");
 	    	break;
-		case 'letmebeclear':
-			play(message, 'letmebeclear');
-	    	break;
-	    case 'ohniggayougay':
-	    	play(message, 'ohniggayougay');
-	    	break;
-	    case 'itsshowtime':
-	    	play(message, 'itsshowtime');
-	    	break;
 	    default:
 	    	sendMessage("invalid");
   		}
 	}
 });
 
-function play(message, filename) {
+function soundBoard(message) {
 	var voiceChannel = message.member.voice.channel;
-	voiceChannel.join()
-	.then(connection => {
-    	const dispatcher = connection.play('audio/' + filename + '.mp3');
-    	dispatcher.on("finish", end => {
-        	voiceChannel.leave();
-    	});
-	})
-	.catch(console.error);
+	if (message.contains('soundboardhelp')) {
+		const helpEmbed = new Discord.MessageEmbed()
+		.setColor('black')
+		.setTitle('Available Sounds')
+		.setDescription('Play any of the available sounds below.')
+		.addFields(
+		{name: 'letmebeclear', value: 'Obama says \"Let me be clear.\"'},
+		{name: 'ohniggayougay', value: 'Plays the \"Oh nigga you gay\" vine.'},
+		{name: 'itsshowtime', value: 'EDP445 shares some words of wisdom.'}	
+		);
+		send(helpEmbed);
+	} else {
+		let filename = message.substring(10);
+		console.log(filename);
+		voiceChannel.join()
+		.then(connection => {
+	    	const dispatcher = connection.play('audio/' + filename + '.mp3');
+	    	dispatcher.on("finish", end => {
+	        	voiceChannel.leave();
+	    	});
+		})
+		.catch(error => sendMessage("Couldn't find that audio file. Contact Matt to request additional sounds."));
+	}
+
+	
 }
 
 function send(toSend) {
@@ -228,6 +227,8 @@ function sendMessage(msg) {
 			getStock(msg);
 			return;
 		}
+	} else if (msg.includes('soundboard')) {
+		soundboard(msg);
 	}
 	console.log("about to send");
 	send(toSend);
