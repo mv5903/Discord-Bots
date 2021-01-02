@@ -87,17 +87,14 @@ client.on('message', message => {
 	    	sendMessage("stock");
 	    	break;
 	    case 'letmebeclear':
-			var fileName = 'letmebeclear.mp3';
-			var voiceChannel = message.member.voice.channel;
-			voiceChannel.join()
-			.then(connection => {
-			const dispatcher = connection.play(fileName);
-			dispatcher.on("finish", end => {
-			    voiceChannel.leave();
-			    deleteFile(fileName);
-			});
-        	})
-        	.catch(console.error);
+			var voiceChannel = message.member.voiceChannel;
+		voiceChannel.join().then(connection =>
+		{
+		 const dispatcher = connection.playFile('letmebeclear.mp3');
+		 dispatcher.on("end", end => {
+		   voiceChannel.leave();
+		   });
+		}).catch(err => console.log(err));
 	    	break;
 	    default:
 	    	sendMessage("invalid");
@@ -137,18 +134,15 @@ client.on('message', message => {
 	    case 'stock':
 	    	sendMessage("stock");
 	    	break;
-			case 'letmebeclear':
-			var fileName = 'letmebeclear.mp3';
-			var voiceChannel = message.member.voice.channel;
-			voiceChannel.join()
-			.then(connection => {
-			const dispatcher = connection.play(fileName);
-			dispatcher.on("finish", end => {
-			    voiceChannel.leave();
-			    deleteFile(fileName);
-			});
-        	})
-        	.catch(console.error);
+		case 'letmebeclear':
+		var voiceChannel = message.member.voiceChannel;
+		voiceChannel.join().then(connection =>
+		{
+		 const dispatcher = connection.playFile('letmebeclear.mp3');
+		 dispatcher.on("end", end => {
+		   voiceChannel.leave();
+		   });
+		}).catch(err => console.log(err));
 	    	break;
 	    default:
 	    	sendMessage("invalid");
