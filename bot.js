@@ -92,6 +92,9 @@ client.on('message', message => {
 	    case 'ohniggayougay':
 	 		play(message, 'ohniggayougay');
 	    	break;
+	    case 'itsshowtime':
+	    	play(message, 'itsshowtime');
+	    	break;
 	    default:
 	    	sendMessage("invalid");
  		}
@@ -135,6 +138,9 @@ client.on('message', message => {
 	    	break;
 	    case 'ohniggayougay':
 	    	play(message, 'ohniggayougay');
+	    	break;
+	    case 'itsshowtime':
+	    	play(message, 'itsshowtime');
 	    	break;
 	    default:
 	    	sendMessage("invalid");
