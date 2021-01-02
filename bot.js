@@ -153,7 +153,7 @@ function soundboard(message, command) {
 		send(helpEmbed);
 	} else {
 		var voiceChannel = message.member.voice.channel;
-		let filename = command.substring(3);
+		let filename = command.substring(2);
 		console.log(command);
 		voiceChannel.join()
 		.then(connection => {
