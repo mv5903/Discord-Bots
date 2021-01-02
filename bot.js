@@ -97,6 +97,17 @@ client.on('message', message => {
         	})
         	.catch(console.error);
 	    	break;
+	    case 'ohniggayougay':
+	    var voiceChannel = message.member.voice.channel;
+    		voiceChannel.join()
+        	.then(connection => {
+            	const dispatcher = connection.play('ohniggayougay.mp3');
+            	dispatcher.on("finish", end => {
+                	voiceChannel.leave();
+            	});
+        	})
+        	.catch(console.error);
+	    	break;
 	    default:
 	    	sendMessage("invalid");
  		}
@@ -140,6 +151,17 @@ client.on('message', message => {
     		voiceChannel.join()
         	.then(connection => {
             	const dispatcher = connection.play('letmebeclear.mp3');
+            	dispatcher.on("finish", end => {
+                	voiceChannel.leave();
+            	});
+        	})
+        	.catch(console.error);
+	    	break;
+	    case 'ohniggayougay':
+	    var voiceChannel = message.member.voice.channel;
+    		voiceChannel.join()
+        	.then(connection => {
+            	const dispatcher = connection.play('ohniggayougay.mp3');
             	dispatcher.on("finish", end => {
                 	voiceChannel.leave();
             	});
