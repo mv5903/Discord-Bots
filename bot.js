@@ -87,14 +87,15 @@ client.on('message', message => {
 	    	sendMessage("stock");
 	    	break;
 	    case 'letmebeclear':
-			var voiceChannel = message.member.voiceChannel;
-		voiceChannel.join().then(connection =>
-		{
-		 const dispatcher = connection.playFile('letmebeclear.mp3');
-		 dispatcher.on("end", end => {
-		   voiceChannel.leave();
-		   });
-		}).catch(err => console.log(err));
+			var voiceChannel = message.member.voice.channel;
+    		voiceChannel.join()
+        	.then(connection => {
+            	const dispatcher = connection.play('letmebeclear.mp3');
+            	dispatcher.on("finish", end => {
+                	voiceChannel.leave();
+            	});
+        	})
+        	.catch(console.error);
 	    	break;
 	    default:
 	    	sendMessage("invalid");
@@ -135,14 +136,15 @@ client.on('message', message => {
 	    	sendMessage("stock");
 	    	break;
 		case 'letmebeclear':
-		var voiceChannel = message.member.voiceChannel;
-		voiceChannel.join().then(connection =>
-		{
-		 const dispatcher = connection.playFile('letmebeclear.mp3');
-		 dispatcher.on("end", end => {
-		   voiceChannel.leave();
-		   });
-		}).catch(err => console.log(err));
+		var voiceChannel = message.member.voice.channel;
+    		voiceChannel.join()
+        	.then(connection => {
+            	const dispatcher = connection.play('letmebeclear.mp3');
+            	dispatcher.on("finish", end => {
+                	voiceChannel.leave();
+            	});
+        	})
+        	.catch(console.error);
 	    	break;
 	    default:
 	    	sendMessage("invalid");
