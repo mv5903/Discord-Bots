@@ -145,9 +145,10 @@ function soundboard(message, command) {
 		.setTitle('Available Sounds')
 		.setDescription('Play any of the available sounds below.')
 		.addFields(
+		{name: 'bruh', value: 'bruh.'},
 		{name: 'letmebeclear', value: 'Obama says \"Let me be clear.\"'},
-		{name: 'ohniggayougay', value: 'Plays the \"Oh nigga you gay\" vine.'},
-		{name: 'itsshowtime', value: 'EDP445 shares some words of wisdom.'}	
+		{name: 'itsshowtime', value: 'EDP445 shares some words of wisdom.'},	
+		{name: 'ohniggayougay', value: 'Plays the \"Oh nigga you gay\" vine.'}
 		);
 		send(helpEmbed);
 	} else {
@@ -161,7 +162,7 @@ function soundboard(message, command) {
 	        	voiceChannel.leave();
 	    	});
 		})
-		.catch(error => sendMessage("Couldn't find that audio file. Contact Matt to request additional sounds."));
+		.catch(error => send("Couldn't find that audio file. Contact Matt to request additional sounds."));
 	}
 
 	
