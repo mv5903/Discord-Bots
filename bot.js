@@ -36,7 +36,7 @@ client.on('message', message => {
 	const command = args.shift().toLowerCase();
 	var base = "";
 	//Commands that can receive additional arguments
-	if (command.includes('weather') || command.includes('random') || command.includes('currency') || command.includes('stock') || command.includes('soundboard')) {
+	if (command.includes('weather') || command.includes('random') || command.includes('currency') || command.includes('stock') || command.includes('sb')) {
 		base = command;
 	} 
 	adminRole = message.guild.roles.cache.find(role => role.name === "Assistant");
@@ -54,7 +54,7 @@ client.on('message', message => {
 	    	sendMessage("help");  
 	    	break;
 	    case base:
-	    	if (base.includes('soundboard')) {
+	    	if (base.includes('sb')) {
 	    		soundboard(message, command);
 	    	} else {
 	    		sendMessage(command);
@@ -99,7 +99,7 @@ client.on('message', message => {
 	    	sendMessage("help");  
 	    	break;
 	    case base:
-	    	if (base.includes('soundboard')) {
+	    	if (base.includes('sb')) {
 	    		soundboard(message, command);
 	    	} else {
 	    		sendMessage(command);
@@ -139,7 +139,7 @@ client.on('message', message => {
 });
 
 function soundboard(message, command) {
-	if (command.includes('soundboardhelp')) {
+	if (command.includes('sbhelp')) {
 		const helpEmbed = new Discord.MessageEmbed()
 		.setColor('black')
 		.setTitle('Available Sounds')
@@ -153,7 +153,7 @@ function soundboard(message, command) {
 		send(helpEmbed);
 	} else {
 		var voiceChannel = message.member.voice.channel;
-		let filename = command.substring(10);
+		let filename = command.substring(3);
 		console.log(command);
 		voiceChannel.join()
 		.then(connection => {
@@ -186,11 +186,11 @@ function sendMessage(msg) {
 			{name: '-help', value: 'Open this help message again.'},
 			{name: '-how', value: 'How was this bot created?'},
 			{name: '-info', value: 'Displays information about the Kwikmatt Server.'},
-			{name: '-letmebeclear', value: 'Obama will join your voice channel and say \'let me be clear\''},
 			{name: '-m', value: 'Mute all in a voice channel (Admins only).'},
 			{name: '-minecraft', value: 'Displays the kwikmatt server ip if you are a part of the minecraft server.'},
 			{name: '-time', value: 'Displays the current time.'},
 			{name: '-random', value: 'Generate a random number using the following scheme: \"-random(min,max)int\". Use \"int\" for integer, or \"double\" for decimal number.'},
+			{name: '-sb', value: 'Use the soundboard to play a custom sound. Use -sb<sound>, see -sbhelp.'},
 			{name: '-stock', value: 'Gets stock info for a given symbol. Use -stockinfo to get the info you want; be sure to follow the format -stock[symbol]:[info].'},
 			{name: '-u', value: 'Unmute all in a voice channel (Admins only).'},
 			{name: '-uptime', value: 'Gets my uptime.'},
