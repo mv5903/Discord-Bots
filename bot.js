@@ -54,7 +54,7 @@ client.on('message', message => {
 	    	sendMessage("help");  
 	    	break;
 	    case base:
-	    	if (base.contains('soundboard')) {
+	    	if (base.includes('soundboard')) {
 	    		soundboard(message);
 	    	} else {
 	    		sendMessage(command);
@@ -99,7 +99,7 @@ client.on('message', message => {
 	    	sendMessage("help");  
 	    	break;
 	    case base:
-	    	if (base.contains('soundboard')) {
+	    	if (base.includes('soundboard')) {
 	    		soundboard(message);
 	    	} else {
 	    		sendMessage(command);
@@ -139,7 +139,7 @@ client.on('message', message => {
 });
 
 function soundboard(message) {
-	if (message.contains('soundboardhelp')) {
+	if (message.includes('soundboardhelp')) {
 		const helpEmbed = new Discord.MessageEmbed()
 		.setColor('black')
 		.setTitle('Available Sounds')
