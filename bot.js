@@ -87,26 +87,10 @@ client.on('message', message => {
 	    	sendMessage("stock");
 	    	break;
 	    case 'letmebeclear':
-			var voiceChannel = message.member.voice.channel;
-    		voiceChannel.join()
-        	.then(connection => {
-            	const dispatcher = connection.play('letmebeclear.mp3');
-            	dispatcher.on("finish", end => {
-                	voiceChannel.leave();
-            	});
-        	})
-        	.catch(console.error);
+			play(message, 'letmebeclear');
 	    	break;
 	    case 'ohniggayougay':
-	    var voiceChannel = message.member.voice.channel;
-    		voiceChannel.join()
-        	.then(connection => {
-            	const dispatcher = connection.play('ohniggayougay.mp3');
-            	dispatcher.on("finish", end => {
-                	voiceChannel.leave();
-            	});
-        	})
-        	.catch(console.error);
+	 		play(message, 'ohniggayougay');
 	    	break;
 	    default:
 	    	sendMessage("invalid");
@@ -147,32 +131,28 @@ client.on('message', message => {
 	    	sendMessage("stock");
 	    	break;
 		case 'letmebeclear':
-		var voiceChannel = message.member.voice.channel;
-    		voiceChannel.join()
-        	.then(connection => {
-            	const dispatcher = connection.play('letmebeclear.mp3');
-            	dispatcher.on("finish", end => {
-                	voiceChannel.leave();
-            	});
-        	})
-        	.catch(console.error);
+			play(message, 'letmebeclear');
 	    	break;
 	    case 'ohniggayougay':
-	    var voiceChannel = message.member.voice.channel;
-    		voiceChannel.join()
-        	.then(connection => {
-            	const dispatcher = connection.play('ohniggayougay.mp3');
-            	dispatcher.on("finish", end => {
-                	voiceChannel.leave();
-            	});
-        	})
-        	.catch(console.error);
+	    	play(message, 'ohniggayougay');
 	    	break;
 	    default:
 	    	sendMessage("invalid");
   		}
 	}
 });
+
+function play(message, filename) {
+	var voiceChannel = message.member.voice.channel;
+	voiceChannel.join()
+	.then(connection => {
+    	const dispatcher = connection.play(filename + '.mp3');
+    	dispatcher.on("finish", end => {
+        	voiceChannel.leave();
+    	});
+	})
+	.catch(console.error);
+}
 
 function send(toSend) {
 	channel = client.channels.cache.get(process.env.BOT_CHANNEL);
