@@ -55,7 +55,7 @@ client.on('message', message => {
 	    	break;
 	    case base:
 	    	if (base.includes('soundboard')) {
-	    		soundboard(message);
+	    		soundboard(message, command);
 	    	} else {
 	    		sendMessage(command);
 	    	}
@@ -100,7 +100,7 @@ client.on('message', message => {
 	    	break;
 	    case base:
 	    	if (base.includes('soundboard')) {
-	    		soundboard(message);
+	    		soundboard(message, command);
 	    	} else {
 	    		sendMessage(command);
 	    	}
@@ -138,8 +138,8 @@ client.on('message', message => {
 	}
 });
 
-function soundboard(message) {
-	if (message.includes('soundboardhelp')) {
+function soundboard(message, command) {
+	if (command.includes('soundboardhelp')) {
 		const helpEmbed = new Discord.MessageEmbed()
 		.setColor('black')
 		.setTitle('Available Sounds')
@@ -152,8 +152,8 @@ function soundboard(message) {
 		send(helpEmbed);
 	} else {
 		var voiceChannel = message.member.voice.channel;
-		let filename = message.substring(10);
-		console.log(filename);
+		let filename = command.substring(10);
+		console.log(command);
 		voiceChannel.join()
 		.then(connection => {
 	    	const dispatcher = connection.play('audio/' + filename + '.mp3');
