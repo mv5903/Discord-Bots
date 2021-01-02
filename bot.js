@@ -130,7 +130,7 @@ client.on('message', message => {
 	}
 });
 
-function soundBoard(message) {
+function soundboard(message) {
 	var voiceChannel = message.member.voice.channel;
 	if (message.contains('soundboardhelp')) {
 		const helpEmbed = new Discord.MessageEmbed()
