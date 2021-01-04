@@ -145,6 +145,7 @@ function soundboard(message, command) {
 		.setTitle('Available Sounds')
 		.setDescription('Play any of the available sounds below.')
 		.addFields(
+		{name: 'akbar', value: 'Allahu Akbar makes you happy.'},
 		{name: 'avocadosfrommexico', value: 'The sound that will make you happy.'},
 		{name: 'bruh', value: 'bruh.'},
 		{name: 'convert', value: 'self explantory'},
@@ -152,6 +153,7 @@ function soundboard(message, command) {
 		{name: 'itsshowtime', value: 'EDP445 shares some words of wisdom.'},
 		{name: 'letmebeclear', value: 'Obama says \"Let me be clear.\"'},
 		{name: 'ohniggayougay', value: 'Plays the \"Oh nigga you gay\" vine.'},
+		{name: 'prit', value: 'And the Jay-Z song was on.'},
 		{name: 'spongebob', value: 'Someone finds out that it\'s not actually spongebob.'}
 		);
 		send(helpEmbed);
