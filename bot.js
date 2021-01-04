@@ -150,7 +150,7 @@ function soundboard(message, command) {
 		{name: 'bruh', value: 'bruh.'},
 		{name: 'convert', value: 'self explantory'},
 		{name: 'dolphin', value: 'flight reacts dolphin sound effect'},
-		{name: 'failures', value: 'EDP445 shares some words of wisdom'}
+		{name: 'failures', value: 'EDP445 shares some words of wisdom'},
 		{name: 'itsshowtime', value: 'EDP445 shares some more words of wisdom.'},
 		{name: 'letmebeclear', value: 'Obama says \"Let me be clear.\"'},
 		{name: 'nongrs', value: 'The classic I do not associate meme.'},
