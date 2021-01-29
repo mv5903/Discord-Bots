@@ -11,21 +11,13 @@ client.once('ready', () => {
 });
 
 client.on('guildMemberAdd', member => {
-	const channel = member.guild.channels.cache.find(ch => ch.name === 'member-log');
-	console.log("Added!");
-  	// Do nothing if the channel wasn't found on this server
-  	var role= member.guild.roles.cache.find(role => role.name === "Regulars");
-	member.roles.add(role);
-});
-
-client.on('guildMemberAdd', member => {
-	infoChannel = '548579154824527892';
-    member.guild.channels.cache.get(infoChannel).send('**' + member.user.username + '** has joined the server! :slight_smile: '); 
+    member.guild.channels.cache.get('548579154824527892').send('**' + member.user.username + '** has joined the server! :slight_smile: ');
+    var role= member.guild.roles.cache.find(role => role.name === "Regulars");
+	member.roles.add(role); 
 });
 
 client.on('guildMemberRemove', member => {
-	infoChannel = '548579154824527892';
-    member.guild.channels.cache.get(infoChannel).send('**' + member.user.username + '** has left the server! :sob: ');
+    member.guild.channels.cache.get('548579154824527892').send('**' + member.user.username + '** has left the server! :sob: ');
 });
 
 
