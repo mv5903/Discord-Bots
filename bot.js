@@ -31,10 +31,10 @@ client.on('message', message => {
 	if (command.includes('weather') || command.includes('random') || command.includes('currency') || command.includes('stock') || command.includes('sb')) {
 		base = command;
 	} 
-	adminRole = message.guild.roles.cache.find(role => role.name === "Owner");
+	adminRole = '806256817851072552';
   	console.log("Command is sending.");
   	//Commands executable by anyone with the admin role name
-    if (message.member.roles.cache.has(adminRole.id)) {
+    if (message.member.roles.cache.has(adminRole)) {
     	 switch (command) {
 	    case 'm':
 	      mute(message, true);
