@@ -12,7 +12,7 @@ client.once('ready', () => {
 
 client.on('guildMemberAdd', member => {
     member.guild.channels.cache.get('548579154824527892').send('**' + member.user.username + '** has joined the server! :slight_smile: ');
-    var role= member.guild.roles.cache.find(role => role.name === "Regulars");
+    var role= member.guild.roles.cache.find(role => role.name === "People");
 	member.roles.add(role); 
 });
 
@@ -31,7 +31,7 @@ client.on('message', message => {
 	if (command.includes('weather') || command.includes('random') || command.includes('currency') || command.includes('stock') || command.includes('sb')) {
 		base = command;
 	} 
-	adminRole = message.guild.roles.cache.find(role => role.name === "Assistant");
+	adminRole = message.guild.roles.cache.find(role => role.name === "Owner");
   	console.log("Command is sending.");
   	//Commands executable by anyone with the admin role name
     if (message.member.roles.cache.has(adminRole.id)) {
