@@ -52,11 +52,15 @@ client.on('voiceStateUpdate', (oldMember, newMember) => {
 });
 
 function allowIntoVC(member, isAdding) {
-	
+
 	try {
 		let voiceChannels = member.guild.channels.cache.forEach((channel) => {
 			let channelOwnerID = channel.name;
 			if (member.author.id == channelOwnerID.substring(channelOwnerID.indexOf("(") + 1, channelOwnerID.indexOf(")"))) {
+				if (channel.members.size == 0) {
+					send("This channel is not currently active. Please create one and then try this command again.");
+					return;
+				}
 				let currentPerms = channel.permissionOverwrites;
 				let perms = [];
 				if (isAdding) {
@@ -72,6 +76,7 @@ function allowIntoVC(member, isAdding) {
 					})
 				}
 				channel.overwritePermissions(perms);
+				member.react(':white_check_mark:');
 				return;
 			}
 		})
