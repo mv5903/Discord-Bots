@@ -32,6 +32,7 @@ client.on('voiceStateUpdate', (oldMember, newMember) => {
 		.then((channel) => {
 			channel.setUserLimit(10)
 			newMember.setChannel(channel);
+			console.log(channel);
 		})
 	}
 	let voiceChannels = newMember.guild.channels.cache.forEach((channel) => {
