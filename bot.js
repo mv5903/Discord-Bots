@@ -2,7 +2,6 @@ const Discord = require('discord.js');
 const weather = require('openweather-apis');
 const fetch = require('node-fetch');
 const client = new Discord.Client();
-
 const prefix = '-';
 
 client.once('ready', () => {
