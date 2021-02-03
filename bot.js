@@ -256,6 +256,7 @@ function sendMessage(msg) {
 		.setTitle('Help')
 		.setDescription('Hi! I am kwikmatt\'s Discord bot! Here is the list of commands that I can do: ')
 		.addFields(
+			{name: '-allow', value: 'Allow someone into your private voice channel. Usage: -allow @name'},
 			{name: '-currency', value: 'Get current currency exchange information, formatted as \"-currency[from code][to code][price]\", example: \"-currencyUSDCAD10.68\" Use -currencycodes for a list of codes.'},
 			{name: '-date', value: 'Displays the current date.'},
 			{name: '-help', value: 'Open this help message again.'},
@@ -265,6 +266,7 @@ function sendMessage(msg) {
 			{name: '-minecraft', value: 'Displays the kwikmatt server ip if you are a part of the minecraft server.'},
 			{name: '-time', value: 'Displays the current time.'},
 			{name: '-random', value: 'Generate a random number using the following scheme: \"-random(min,max)int\". Use \"int\" for integer, or \"double\" for decimal number.'},
+			{name: '-remove', value: 'Remove someone from your private voice channel. Usage: -remove @name'},
 			{name: '-sb', value: 'Use the soundboard to play a custom sound. Use -sb<sound>, see -sbhelp.'},
 			{name: '-stock', value: 'Gets stock info for a given symbol. Use -stockinfo to get the info you want; be sure to follow the format -stock[symbol]:[info].'},
 			{name: '-u', value: 'Unmute all in a voice channel (Admins only).'},
