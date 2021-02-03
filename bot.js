@@ -21,11 +21,15 @@ client.on('guildMemberRemove', member => {
 });
 
 client.on('voiceStateUpdate', (oldMember, newMember) => {
-	let creator = oldMember.voiceChannel;
-	guid.channels.create(creator.user.username + "\'s private channel", {reason: 'private channel'})
-	.then(console.log)
-	.catch(console.error);
-
+	let creator = newMember;
+	if (creator.channel.name === 'create voice channel') {
+		creator.guild.channels.create(newMember.user.username + "\'s private vc", {
+			type = 'voice',
+			parent = 'CATEGORY_ID'
+		}).then(vc => {
+			creator.setChannel(vc);
+		})
+	}
 });
 
 client.on('message', message => {
