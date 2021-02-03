@@ -22,21 +22,18 @@ client.on('guildMemberRemove', member => {
 
 client.on('voiceStateUpdate', (oldMember, newMember) => {
 	//.id is user that joins, .channelID is channel id
-	console.log(oldMember);
 	console.log(newMember);
-	let oldChannel = oldMember.channelID;
 	let newChannel = newMember.channelID;
-	console.log(oldChannel);
 	console.log(newChannel);
 	if (newChannel === '806345597161308170') {
 		console.log('channel created');
-		message.guild.channels.create(name, {
-			type: 'voice'
+		newMember.guild.channels.create('Private vc', {
+			type: 'voice',
+			parent: '806506130737463309'
 		})
 		.then((channel) => {
-			const categoryId = '806506130737463309'
-			channel.setParent(categoryId)
 			channel.setUserLimit(10)
+			newMember.setChannel(channel);
 		})
 	}
 });
