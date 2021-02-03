@@ -21,10 +21,11 @@ client.on('guildMemberRemove', member => {
 });
 
 client.on('voiceStateUpdate', (oldMember, newMember) => {
+	//.id is user that joins, .channelID is channel id
 	console.log(oldMember);
 	console.log(newMember);
-	let oldChannel = oldMember.channelId;
-	let newChannel = newMember.channelId;
+	let oldChannel = oldMember.channelID;
+	let newChannel = newMember.channelID;
 	console.log(oldChannel);
 	console.log(newChannel);
 	if (newChannel === '806345597161308170') {
