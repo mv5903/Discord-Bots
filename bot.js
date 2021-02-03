@@ -76,7 +76,7 @@ function allowIntoVC(member, isAdding) {
 					})
 				}
 				channel.overwritePermissions(perms);
-				let toDisconnect = member.mentions.users.first();
+				let toDisconnect = client.users.cache.get(member.mentions.users.first().id);
 				toDisconnect.setVoiceChannel(null);
 				send(':white_check_mark:');
 				return;
