@@ -100,12 +100,12 @@ client.on('message', message => {
   	console.log("Command is sending.");
   	if (command.includes('allow')) {
   		allowIntoVC(message, true);
-  		member.react(':white_check_mark:');
+  		message.react(':white_check_mark:');
   		return;
   	}
   	if (command.includes('remove')) {
   		allowIntoVC(message, false);
-  		member.react(':white_check_mark:');
+  		message.react(':white_check_mark:');
   		return;
   	}
 
