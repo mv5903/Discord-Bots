@@ -76,6 +76,7 @@ function allowIntoVC(member, isAdding) {
 					})
 				}
 				channel.overwritePermissions(perms);
+				member.mentions.users.first().disconnect();
 				send(':white_check_mark:');
 				return;
 			}
