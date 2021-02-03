@@ -21,12 +21,12 @@ client.on('guildMemberRemove', member => {
 });
 
 client.on('voiceStateUpdate', (oldMember, newMember) => {
-	console.log(oldMember);
-	console.log(newMember);
-	console.log(oldMember.voiceChannel);
-	console.log(newMember.voiceChannel);
-	let oldChannel = oldMember.voiceChannel.id;
-	let newChannel = newMember.voiceChannel.id;
+	console.log('OLD MEMBER' + oldMember);
+	console.log('NEW MEMBER' + newMember);
+	console.log('OM VC' + oldMember.voiceChannel);
+	console.log('NM VC' + newMember.voiceChannel);
+	let oldChannel = oldMember.id;
+	let newChannel = newMember.id;
 	console.log(oldChannel);
 	console.log(newChannel);
 	if (newChannel === '806345597161308170') {
