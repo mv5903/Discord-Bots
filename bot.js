@@ -77,6 +77,7 @@ function allowIntoVC(member, isAdding) {
 					let person = member.mentions.users.first().id;
 					member.guild.member(person).voice.setChannel(null);
 				}
+				channel.overwritePermissions(perms);
 				send(':white_check_mark:');
 				return;
 			}
