@@ -57,7 +57,13 @@ function allowIntoVC(member, isAdding) {
 		let voiceChannels = member.guild.channels.cache.forEach((channel) => {
 			let channelOwnerID = channel.name;
 			if (member.author.id == channelOwnerID.substring(channelOwnerID.indexOf("(") + 1, channelOwnerID.indexOf(")"))) {
-				channel.permissionOverwrites.push({id: member.mentions.users.first().id, allow: 'CONNECT'});
+				let currentPerms = channel.permissionOverwrites;
+				let perms = [];
+				currentPerms.forEach((permission) => {
+					perms.push(permission);
+				})
+				perms.push({id: member.mentions.users.first().id, allow: 'CONNECT'})
+				channel.overwritePermissions(perms);
 				return;
 			}
 		})
