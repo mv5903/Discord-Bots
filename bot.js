@@ -24,6 +24,7 @@ client.on('voiceStateUpdate', (oldMember, newMember) => {
 	let oldChannel = oldMember.voiceChannel ? oldMember.voiceChannel.id : null;
 	let newChannel = newMember.voiceChannel ? newMember.voiceChannel.id : null;
 	if (newChannel == '806345597161308170') {
+		console.log('channel created');
 		message.guild.channels.create(name, {
 			type: 'voice'
 		})
