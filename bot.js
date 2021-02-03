@@ -77,12 +77,12 @@ client.on('message', message => {
 	} 
 	adminRole = '806256817851072552';
   	console.log("Command is sending.");
-  	if (command.includes('allow') {
+  	if (command.includes('allow')) {
   		allowIntoVC(message, command.substring(command.indexOf(":") + 1), true);
   	}
-  	if (command.includes('remove') {
+  	if (command.includes('remove')) {
   		allowIntoVC(message, command.substring(command.indexOf(":") + 1), false);
-  	})
+  	}
 
   	//Commands executable by anyone with the admin role name
     if (message.member.roles.cache.has(adminRole)) {
