@@ -21,13 +21,16 @@ client.on('guildMemberRemove', member => {
 });
 
 client.on('voiceStateUpdate', (oldMember, newMember) => {
-	let creator = newMember;
-	if (creator.channel.name === 'create voice channel') {
-		creator.guild.channels.create(newMember.user.username + "\'s private vc", {
-			type = 'voice',
-			parent = 'CATEGORY_ID'
-		}).then(vc => {
-			creator.setChannel(vc);
+	let oldChannel = oldMember.voiceChannel ? oldMember.voiceChannel.id : null;
+	let newChannel = newChannel.voiceChannel ? newMember.voiceChannel.id : null;
+	if (newChannel == '806345597161308170') {
+		message.guild.channels.create(name, {
+			type: 'voice'
+		})
+		.then((channel) => {
+			const categoryId = '806506130737463309'
+			channel.setParent(categoryId)
+			channel.setUserLimit(10)
 		})
 	}
 });
