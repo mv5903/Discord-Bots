@@ -21,8 +21,8 @@ client.on('guildMemberRemove', member => {
 });
 
 client.on('voiceStateUpdate', (oldMember, newMember) => {
-	let oldChannel = oldMember.voiceChannel ? oldMember.voiceChannel.id : null;
-	let newChannel = newMember.voiceChannel ? newMember.voiceChannel.id : null;
+	let oldChannel = oldMember.voiceChannel.id;
+	let newChannel = newMember.voiceChannel.id;
 	console.log(oldChannel);
 	console.log(newChannel);
 	if (newChannel === '806345597161308170') {
