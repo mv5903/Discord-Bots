@@ -30,7 +30,7 @@ client.on('voiceStateUpdate', (oldMember, newMember) => {
 			parent: '806506130737463309',
 			permissionsOverwrites: [
 				{
-					id: guild.roles.everyone.id,
+					id: newMember.guild.roles.everyone.id,
 					deny: ['VIEW_CHANNEL'],
 				},
 				{
