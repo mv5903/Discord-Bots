@@ -52,6 +52,7 @@ client.on('voiceStateUpdate', (oldMember, newMember) => {
 });
 
 function allowIntoVC(member, isAdding) {
+	
 	try {
 		let voiceChannels = member.guild.channels.cache.forEach((channel) => {
 			let channelOwnerID = channel.name;
