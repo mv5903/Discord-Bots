@@ -20,6 +20,13 @@ client.on('guildMemberRemove', member => {
     member.guild.channels.cache.get('548579154824527892').send('**' + member.user.username + '** has left the server! :sob: ');
 });
 
+client.on('voiceStateUpdate', (oldMember, newMember) => {
+	let creator = oldMember.voiceChannel;
+	guid.channels.create(creator.user.username + "\'s private channel", {reason: 'private channel'})
+	.then(console.log)
+	.catch(console.error);
+
+});
 
 client.on('message', message => {
 
