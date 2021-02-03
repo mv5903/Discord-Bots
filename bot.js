@@ -34,7 +34,7 @@ client.on('voiceStateUpdate', (oldMember, newMember) => {
 			newMember.setChannel(channel);
 		})
 	}
-	let voiceChannels = newMember.guid.channels.cache.forEach((channel) => {
+	let voiceChannels = newMember.guild.channels.cache.forEach((channel) => {
 		console.log(channel);
 	})
 });
