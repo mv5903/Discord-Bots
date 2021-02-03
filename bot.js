@@ -90,6 +90,8 @@ function allowIntoVC(member, isAdding) {
 function renameChannel(message) {
 	let original = message.content.substring(6, message.content.indexOf(":"));
 	let newName = message.content.substring(message.content.indexOf(":") + 1);
+	console.log(original);
+	console.log(newName);
 	try {
 		message.guild.channels.cache.forEach((channel) => {
 			if (channel.name == original && channel.parentID == '806255530174971946') {
