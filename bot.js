@@ -88,7 +88,7 @@ function allowIntoVC(member, isAdding) {
 }
 
 function renameChannel(message) {
-	let original = message.content.substring(6, message.content.indexOf(":"));
+	let original = message.content.substring(7, message.content.indexOf(":"));
 	let newName = message.content.substring(message.content.indexOf(":") + 1);
 	console.log(original);
 	console.log(newName);
