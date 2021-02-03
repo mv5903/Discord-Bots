@@ -76,7 +76,8 @@ function allowIntoVC(member, isAdding) {
 					})
 				}
 				channel.overwritePermissions(perms);
-				member.mentions.users.first().disconnect();
+				let toDisconnect = member.mentions.users.first();
+				toDisconnect.setVoiceChannel(null);
 				send(':white_check_mark:');
 				return;
 			}
