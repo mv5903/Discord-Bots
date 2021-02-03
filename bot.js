@@ -74,9 +74,9 @@ function allowIntoVC(member, isAdding) {
 							perms.push(permission);
 						}
 					})
+					let person = member.mentions.users.first().id;
+					member.guild.member(person).voice.setChannel(null);
 				}
-				let person = member.mentions.users.first().id;
-				member.guild.member(person).voice.setChannel(null);
 				send(':white_check_mark:');
 				return;
 			}
