@@ -94,7 +94,7 @@ function renameChannel(message) {
 	console.log(newName);
 	try {
 		message.guild.channels.cache.forEach((channel) => {
-			if (channel.name == original && channel.parentID == '806255530174971946') {
+			if (channel.name === original) {
 				channel.name = newName;
 			}
 		})
