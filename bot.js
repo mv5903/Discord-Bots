@@ -61,7 +61,7 @@ function allowIntoVC(member, isAdding) {
 			return;
 		}
 	})
-	send("You are not the owner of a channel.");
+	send("You are not the owner of a channel!");
 }
 
 client.on('message', message => {
