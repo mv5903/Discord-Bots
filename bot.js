@@ -53,25 +53,30 @@ client.on('voiceStateUpdate', (oldMember, newMember) => {
 
 function allowIntoVC(member, isAdding) {
 	try {
-		console.log(member.author);
 		let voiceChannels = member.guild.channels.cache.forEach((channel) => {
 			let channelOwnerID = channel.name;
 			if (member.author.id == channelOwnerID.substring(channelOwnerID.indexOf("(") + 1, channelOwnerID.indexOf(")"))) {
 				let currentPerms = channel.permissionOverwrites;
 				let perms = [];
-				currentPerms.forEach((permission) => {
-					perms.push(permission);
-				})
-				perms.push({id: member.mentions.users.first().id, allow: 'CONNECT'})
+				if (isAdding) {
+					currentPerms.forEach((permission) => {
+						perms.push(permission);
+					})
+					perms.push({id: member.mentions.users.first().id, allow: 'CONNECT'})
+				} else {
+					currentPerms.forEach((permission) => {
+						if (permission.id != member.mentions.users.first().id) {
+							perms.push(permission);
+						}
+					})
+				}
 				channel.overwritePermissions(perms);
 				return;
 			}
 		})
-		send("You are not the owner of a channel!");
 	} catch (e) {
-		send("Something went wrong.")
+		send("Something went wrong. Check your input and try again.");
 		console.error(e);
-		
 	}
 }
 
@@ -88,9 +93,11 @@ client.on('message', message => {
   	console.log("Command is sending.");
   	if (command.includes('allow')) {
   		allowIntoVC(message, true);
+  		return;
   	}
   	if (command.includes('remove')) {
   		allowIntoVC(message, false);
+  		return;
   	}
 
   	//Commands executable by anyone with the admin role name
