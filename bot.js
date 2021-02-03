@@ -87,6 +87,20 @@ function allowIntoVC(member, isAdding) {
 	}
 }
 
+function renameChannel(message) {
+	let original = message.content.substring(6, message.content.indexOf(":"));
+	let newName = message.content.substring(message.content.indexOf(":") + 1);
+	try {
+		message.guild.channels.cache.forEach((channel) => {
+			if (channel.name == original && channel.parentID == '806255530174971946') {
+				channel.name = newName;
+			}
+		})
+	} catch (e) {
+		send("Sorry, that channel was not found. Check your input and try again.");
+	}
+}
+
 client.on('message', message => {
 	if (!message.content.startsWith(prefix) || message.author.bot) return;
 	const args = message.content.slice(prefix.length).split(" ");
@@ -106,6 +120,10 @@ client.on('message', message => {
   	if (command.includes('remove')) {
   		allowIntoVC(message, false);
   		message.react('✔️');
+  		return;
+  	}
+  	if (command.includes('rename')) {
+  		renameChannel(message);
   		return;
   	}
 
@@ -270,8 +288,9 @@ function sendMessage(msg) {
 			{name: '-time', value: 'Displays the current time.'},
 			{name: '-random', value: 'Generate a random number using the following scheme: \"-random(min,max)int\". Use \"int\" for integer, or \"double\" for decimal number.'},
 			{name: '-remove', value: 'Remove someone from your private voice channel. Usage: -remove @name'},
+			{name; '-rename', value: 'Rename a channel in the server. Note: you need to be a part of los hombres to do this. Usage: -rename[original channel]:[new name] without the brackets.'},
 			{name: '-sb', value: 'Use the soundboard to play a custom sound. Use -sb<sound>, see -sbhelp.'},
-			{name: '-stock', value: 'Gets stock info for a given symbol. Use -stockinfo to get the info you want; be sure to follow the format -stock[symbol]:[info].'},
+			{name: '-stock', value: 'Gets stock info for a given symbol. Use -stockinfo to get the info you want; be sure to follow the format -stock[symbol]:[info] without the brackets.'},
 			{name: '-u', value: 'Unmute all in a voice channel (Admins only).'},
 			{name: '-uptime', value: 'Gets my uptime.'},
 			{name: '-weather', value: 'Get weather for any zip code, for example, \"-weather10001\" will show the weather for New York City.'},
