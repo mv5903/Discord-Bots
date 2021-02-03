@@ -54,14 +54,14 @@ client.on('voiceStateUpdate', (oldMember, newMember) => {
 });
 
 function allowIntoVC(member, isAdding) {
-	let channelOwnerID = member.guild.cache.channel.name;
-	channelOwnerID = channelOwnerID.substring(channelOwnerID.indexOf("(") + 1, channelOwnerID.indexOf(")"));
-	console.log(channelOwnerID);
-	if (channelOwnerID == message.author.id) {
-		channel.permissionOverwrites.push({id: message.mentions.users.first().id, allow: 'CONNECT'});
-	} else {
-		send("You are not the owner of the channel.");
-	}
+	let voiceChannels = member.guild.channels.cache.forEach((channel) => {
+		let channelOwnerID = channel.name;
+		if (member.author.channelID.toString() == channelOwnerID.substring(channelOwnerID.indexOf("(") + 1, channelOwnerID.indexOf(")"))) {
+			channel.permissionOverwrites.push({id: message.mentions.users.first().id, allow: 'CONNECT'});
+			return;
+		}
+	})
+	send("You are not the owner of a channel.");
 }
 
 client.on('message', message => {
