@@ -37,7 +37,7 @@ client.on('voiceStateUpdate', (oldMember, newMember) => {
 	}
 	let voiceChannels = newMember.guild.channels.cache.forEach((channel) => {
 		if (channel.parentID === '806506130737463309') {
-			console.log(channel.guild.members.cache.size);
+			console.log(channel.members.size);
 		}
 	})
 });
