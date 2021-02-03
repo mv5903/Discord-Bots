@@ -22,7 +22,7 @@ client.on('guildMemberRemove', member => {
 
 client.on('voiceStateUpdate', (oldMember, newMember) => {
 	let oldChannel = oldMember.voiceChannel ? oldMember.voiceChannel.id : null;
-	let newChannel = newChannel.voiceChannel ? newMember.voiceChannel.id : null;
+	let newChannel = newMember.voiceChannel ? newMember.voiceChannel.id : null;
 	if (newChannel == '806345597161308170') {
 		message.guild.channels.create(name, {
 			type: 'voice'
