@@ -89,11 +89,16 @@ function allowIntoVC(member, isAdding) {
 function renameChannel(message) {
 	let original = message.content.substring(7, message.content.indexOf(":"));
 	let newName = message.content.substring(message.content.indexOf(":") + 1);
-	console.log(original);
-	console.log(newName);
+	let bannedList = ['announcements', 'info', 'bot', 'general', 'create voice channel'];
+	bannedList.forEach((name) => {
+		if (name === newName) {
+			send("Sorry, you can't change the name of this channel.");
+			return;
+		}
+	})
 	try {
 		message.guild.channels.cache.forEach((channel) => {
-			if (channel.name == original && channel.parentID == '806255530174971946') {
+			if (channel.name == original) {
 				channel.edit({name: newName}).then(updated => console.log('The channel ' + original + ' has been changed to ' + newName + '.')).catch(console.error);
 			}
 		})
