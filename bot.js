@@ -76,7 +76,7 @@ function allowIntoVC(member, isAdding) {
 					})
 				}
 				channel.overwritePermissions(perms);
-				member.react(':white_check_mark:');
+				send(':white_check_mark:');
 				return;
 			}
 		})
