@@ -53,12 +53,11 @@ client.on('voiceStateUpdate', (oldMember, newMember) => {
 	})
 });
 
-function allowIntoVC(member, whoToAllow, isAdding) {
-	let voiceChannel = member.channelID;
-	let channelOwnerID = member.guild.channel.name.toString();
+function allowIntoVC(member, isAdding) {
+	let channelOwnerID = member.guild.cache.channel.name;
 	channelOwnerID = channelOwnerID.substring(channelOwnerID.indexOf("(") + 1, channelOwnerID.indexOf(")"));
 	console.log(channelOwnerID);
-	if (channelOwnerID == member.id) {
+	if (channelOwnerID == message.author.id) {
 		channel.permissionOverwrites.push({id: message.mentions.users.first().id, allow: 'CONNECT'});
 	} else {
 		send("You are not the owner of the channel.");
@@ -78,10 +77,10 @@ client.on('message', message => {
 	adminRole = '806256817851072552';
   	console.log("Command is sending.");
   	if (command.includes('allow')) {
-  		allowIntoVC(message, command.substring(command.indexOf(":") + 1), true);
+  		allowIntoVC(message, true);
   	}
   	if (command.includes('remove')) {
-  		allowIntoVC(message, command.substring(command.indexOf(":") + 1), false);
+  		allowIntoVC(message, false);
   	}
 
   	//Commands executable by anyone with the admin role name
