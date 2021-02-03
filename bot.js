@@ -22,12 +22,10 @@ client.on('guildMemberRemove', member => {
 
 client.on('voiceStateUpdate', (oldMember, newMember) => {
 	//.id is user that joins, .channelID is channel id
-	console.log(newMember);
 	let newChannel = newMember.channelID;
-	console.log(newChannel);
 	if (newChannel === '806345597161308170') {
 		console.log('channel created');
-		newMember.guild.channels.create(client.users.cache.get(newMember.id).username + '\'s private vc', {
+		newMember.guild.channels.create(client.users.cache.get(newMember.id).username + '\'s vc', {
 			type: 'voice',
 			parent: '806506130737463309'
 		})
@@ -36,6 +34,9 @@ client.on('voiceStateUpdate', (oldMember, newMember) => {
 			newMember.setChannel(channel);
 		})
 	}
+	let voiceChannels = newMember.guid.channels.cache.forEach((channel) => {
+		console.log(channel);
+	})
 });
 
 client.on('message', message => {
