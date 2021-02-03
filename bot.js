@@ -22,6 +22,13 @@ client.on('guildMemberRemove', member => {
 
 client.on('voiceStateUpdate', (oldMember, newMember) => {
 	//.id is user that joins, .channelID is channel id
+	let voiceChannels = newMember.guild.channels.cache.forEach((channel) => {
+		if (channel.parentID === '806506130737463309') {
+			if (channel.members.size == 0) {
+				channel.delete();
+			}
+		}
+	})
 	let newChannel = newMember.channelID;
 	if (newChannel === '806345597161308170') {
 		console.log('channel created');
@@ -44,13 +51,6 @@ client.on('voiceStateUpdate', (oldMember, newMember) => {
 			newMember.setChannel(channel);
 		})
 	}
-	let voiceChannels = newMember.guild.channels.cache.forEach((channel) => {
-		if (channel.parentID === '806506130737463309') {
-			if (channel.members.size == 0) {
-				channel.delete();
-			}
-		}
-	})
 });
 
 function allowIntoVC(member, isAdding) {
