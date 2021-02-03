@@ -27,7 +27,7 @@ client.on('voiceStateUpdate', (oldMember, newMember) => {
 	console.log(newChannel);
 	if (newChannel === '806345597161308170') {
 		console.log('channel created');
-		newMember.guild.channels.create('Private vc', {
+		newMember.guild.channels.create(client.users.get(newMember.id) + '\'s private vc', {
 			type: 'voice',
 			parent: '806506130737463309'
 		})
