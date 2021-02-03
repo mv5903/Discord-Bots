@@ -67,7 +67,6 @@ function allowIntoVC(member, isAdding) {
 		send("Something went wrong.")
 		console.error(e);
 	}
-	
 }
 
 client.on('message', message => {
