@@ -5,7 +5,7 @@ const client = new Discord.Client();
 const prefix = '-';
 
 client.once('ready', () => {
-  console.log('Kwikmatt bot is online!');
+  console.log('Discord bot is online!');
   client.user.setActivity("-help for commands!"); 
 });
 
@@ -94,8 +94,7 @@ function renameChannel(message) {
 	console.log(newName);
 	try {
 		message.guild.channels.cache.forEach((channel) => {
-			if (channel.parentID != '806255530174971946') continue;
-			if (channel.name == original) {
+			if (channel.name == original && channel.parentID == '806255530174971946') {
 				channel.edit({name: newName}).then(updated => console.log(original + ' has been changed to ' + newName)).catch(console.error);
 			}
 		})
