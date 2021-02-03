@@ -75,8 +75,10 @@ function allowIntoVC(member, isAdding) {
 						}
 					})
 				}
+				let person = member.mentions.users.first().id;
+				person = client.users.cache.get(person);
+				person.setVoiceChannel(null);
 				channel.overwritePermissions(perms);
-				client.users.cache.get(member.mentions.users.first()).setVoiceChannel(null);
 				send(':white_check_mark:');
 				return;
 			}
