@@ -29,7 +29,7 @@ client.on('voiceStateUpdate', (oldMember, newMember) => {
 	})
 	let newChannel = newMember.channelID;
 	if (newChannel === '806345597161308170') {
-		console.log('channel created');
+		console.log('A private channel for ' + client.users.cache.get(newMember.id).username + ' has been created.');
 		newMember.guild.channels.create(client.users.cache.get(newMember.id).username + '\'s vc (' + newMember.id + ')', {
 			type: 'voice',
 			parent: '806506130737463309',
@@ -52,7 +52,6 @@ client.on('voiceStateUpdate', (oldMember, newMember) => {
 });
 
 function allowIntoVC(member, isAdding) {
-
 	try {
 		let voiceChannels = member.guild.channels.cache.forEach((channel) => {
 			let channelOwnerID = channel.name;
@@ -95,7 +94,7 @@ function renameChannel(message) {
 	try {
 		message.guild.channels.cache.forEach((channel) => {
 			if (channel.name == original && channel.parentID == '806255530174971946') {
-				channel.edit({name: newName}).then(updated => console.log(original + ' has been changed to ' + newName)).catch(console.error);
+				channel.edit({name: newName}).then(updated => console.log('The channel ' + original + ' has been changed to ' + newName + '.')).catch(console.error);
 			}
 		})
 	} catch (e) {
@@ -113,7 +112,6 @@ client.on('message', message => {
 		base = command;
 	} 
 	adminRole = '806256817851072552';
-  	console.log("Command is sending.");
   	if (command.includes('allow')) {
   		allowIntoVC(message, true);
   		message.react('✔️');
@@ -227,6 +225,7 @@ client.on('message', message => {
 });
 
 function soundboard(message, command) {
+	console.log("A command has been played.");
 	if (command.includes('sbhelp')) {
 		const helpEmbed = new Discord.MessageEmbed()
 		.setColor('black')
@@ -360,11 +359,12 @@ function stockInfo() {
 			{name: 'Dividend Amount', value: 'divamount'},
 			{name: 'Split Coefficient', value: 'splitcof'},
 		);
+	console.log('Stock info has been requested.');
 	send(currencyEmbed);
 }
 
 async function getStock(info) {
-	
+	console.log('A stock has been requested.');
 	try {
 		let symbol = info.substring(5, info.indexOf(':')).toUpperCase();
 		let responseType = info.substring(info.indexOf(':') + 1);
@@ -410,6 +410,7 @@ async function getStock(info) {
 }
 
 async function currency(info) {
+	console.log('Currency info has been requested.');
 	if (info === 'currencycodes') {
 		const mapEmbed = new Discord.MessageEmbed()
 			.setColor('800000')
@@ -511,12 +512,10 @@ async function currency(info) {
 	} catch(e) {
 		send('Sorry, please check your input and try again. Valid codes can be found at https://api.exchangeratesapi.io/latest?base=USD');
 	}
-	
-
-
 }
 
 async function mc() {
+	console.log('Minecraft server information has been requested.');
 	const response = await fetch('https://api.mcsrvstat.us/2/mattvandenberg.com');
 	let data = await response.json();
 	var status = data.online;
@@ -553,10 +552,7 @@ async function mc() {
 	} catch (e) {
 		send("The server is currently offline.");
 	}
-	
-
 }
-
 
 function convertSeconds(seconds) {
 	var numdays = Math.floor(seconds / 86400);
@@ -567,6 +563,7 @@ function convertSeconds(seconds) {
 }
 
 function getRandom(n) {
+	console.log("A random number has been requested.");
 	if (n.endsWith("double")) {
 		var commaIndex = n.indexOf(",");
 		var minNumber = parseFloat(n.substring(7, commaIndex));
@@ -592,12 +589,13 @@ function formatAMPM(date) {
   var ampm = hours >= 12 ? 'pm' : 'am';
   hours = hours % 12;
   hours = hours ? hours : 12; // the hour '0' should be '12'
-  minutes = minutes < 10 ? '0'+minutes : minutes;
+  minutes = minutes < 10 ? '0'+ minutes : minutes;
   var strTime = hours + ':' + minutes + ' ' + ampm;
   return "It is " + strTime;
 }
 
 async function getWeather(zip) {
+	console.log("Weather information has been requested.");
 	const weath = await fetch('http://api.openweathermap.org/data/2.5/weather?zip=' + zip + ',us&appid=' + process.env.WEATHER_API_KEY + '&units=imperial');
 	let response = await weath.json();
 	try {
@@ -622,14 +620,15 @@ async function getWeather(zip) {
 }
 
 function mute(message, setMute) {
-  if (message.member.voice.channel) {
-    let channel = message.guild.channels.cache.get(message.member.voice.channel.id);
-    for (const [memberID, member] of channel.members) {
-      member.voice.setMute(setMute);
-    }
-  } else {
-    message.reply('You need to join a voice channel first!');
-  }
+	console.log('Muted command requested.');
+	if (message.member.voice.channel) {
+    	let channel = message.guild.channels.cache.get(message.member.voice.channel.id);
+    	for (const [memberID, member] of channel.members) {
+    		member.voice.setMute(setMute);
+    	}
+    } else {
+    	message.reply('You need to join a voice channel first!');
+  	}
 }
 
 client.login(process.env.BOT_TOKEN);
