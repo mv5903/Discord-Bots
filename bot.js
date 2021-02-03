@@ -25,7 +25,7 @@ client.on('voiceStateUpdate', (oldMember, newMember) => {
 	let newChannel = newMember.channelID;
 	if (newChannel === '806345597161308170') {
 		console.log('channel created');
-		newMember.guild.channels.create(client.users.cache.get(newMember.id).username + '\'s vc', {
+		newMember.guild.channels.create(client.users.cache.get(newMember.id).username + '\'s vc (' + newMember.id + ')', {
 			type: 'voice',
 			parent: '806506130737463309',
 			permissionOverwrites: [
@@ -53,6 +53,18 @@ client.on('voiceStateUpdate', (oldMember, newMember) => {
 	})
 });
 
+function allowIntoVC(member, whoToAllow, isAdding) {
+	let voiceChannel = member.channelID;
+	let channelOwnerID = member.guild.channel.name.toString();
+	channelOwnerID = channelOwnerID.substring(channelOwnerID.indexOf("(") + 1, channelOwnerID.indexOf(")"));
+	console.log(channelOwnerID);
+	if (channelOwnerID == member.id) {
+		channel.permissionOverwrites.push({id: message.mentions.users.first().id, allow: 'CONNECT'});
+	} else {
+		send("You are not the owner of the channel.");
+	}
+}
+
 client.on('message', message => {
 
 	if (!message.content.startsWith(prefix) || message.author.bot) return;
@@ -65,6 +77,13 @@ client.on('message', message => {
 	} 
 	adminRole = '806256817851072552';
   	console.log("Command is sending.");
+  	if (command.includes('allow') {
+  		allowIntoVC(message, command.substring(command.indexOf(":") + 1), true);
+  	}
+  	if (command.includes('remove') {
+  		allowIntoVC(message, command.substring(command.indexOf(":") + 1), false);
+  	})
+
   	//Commands executable by anyone with the admin role name
     if (message.member.roles.cache.has(adminRole)) {
     	 switch (command) {
