@@ -71,6 +71,7 @@ function allowIntoVC(member, isAdding) {
 	} catch (e) {
 		send("Something went wrong.")
 		console.error(e);
+		
 	}
 }
 
