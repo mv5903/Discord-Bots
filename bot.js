@@ -27,14 +27,21 @@ client.on('voiceStateUpdate', (oldMember, newMember) => {
 		console.log('channel created');
 		newMember.guild.channels.create(client.users.cache.get(newMember.id).username + '\'s vc', {
 			type: 'voice',
-			parent: '806506130737463309'
+			parent: '806506130737463309',
+			permissionOverwrites: [
+				{
+					id: newMember.guild.id,
+					deny: ['CONNECT'],
+				},
+				{
+					id: newMember.id,
+					allow: ['CONNECT'],
+				},
+			],
 		})
 		.then((channel) => {
 			channel.setUserLimit(10);
 			newMember.setChannel(channel);
-			let members = newMember.guild.members.cache.forEach((member) => {
-				console.log(member.id);
-			})
 		})
 	}
 	let voiceChannels = newMember.guild.channels.cache.forEach((channel) => {
