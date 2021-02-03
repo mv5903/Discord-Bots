@@ -20,7 +20,6 @@ client.on('guildMemberRemove', member => {
 });
 
 client.on('voiceStateUpdate', (oldMember, newMember) => {
-	//.id is user that joins, .channelID is channel id
 	let voiceChannels = newMember.guild.channels.cache.forEach((channel) => {
 		if (channel.parentID === '806506130737463309') {
 			if (channel.members.size == 0) {
