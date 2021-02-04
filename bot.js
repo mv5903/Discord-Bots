@@ -67,11 +67,6 @@ client.on('voiceStateUpdate', (oldMember, newMember) => {
 
 // Member sends a message that contains the current prefix (-)
 client.on('message', message => {
-	if (message.channel.id != botChannelID) {
-		channel = client.channels.cache.get(message.channel.id);
-    	channel.send('<@' + message.author.id + '>, Please use the #bot channel to interact with the bot.');
-    	return;
-	}
 	if (!message.content.startsWith(prefix) || message.author.bot) return;
 	const args = message.content.slice(prefix.length).split(" ");
 	const command = args.shift().toLowerCase();
