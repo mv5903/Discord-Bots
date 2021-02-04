@@ -2,37 +2,51 @@ const Discord = require('discord.js');
 const weather = require('openweather-apis');
 const fetch = require('node-fetch');
 const client = new Discord.Client();
-const prefix = '-';
 
+const prefix = '-';
+const createVoiceChannelID = '806345597161308170';
+const infoChannelID = '548579154824527892';
+const botChannelID = '762754228464517171';
+const privateChannelCategoryID = '806506130737463309';
+
+// Bot login
+client.login(process.env.BOT_TOKEN);
+
+// Initial connect to Discord
 client.once('ready', () => {
   console.log('Discord bot is online!');
   client.user.setActivity("-help for commands!"); 
 });
 
+// Member joins the server
 client.on('guildMemberAdd', member => {
-    member.guild.channels.cache.get('548579154824527892').send('**' + member.user.username + '** has joined the server! :slight_smile: ');
-    var role= member.guild.roles.cache.find(role => role.name === "People");
+    member.guild.channels.cache.get(infoChannelID).send('**' + member.user.username + '** has joined the server! :slight_smile: ');
+    var role = member.guild.roles.cache.find(role => role.name === "People");
 	member.roles.add(role); 
 });
 
+
+// Member leaves the server
 client.on('guildMemberRemove', member => {
-    member.guild.channels.cache.get('548579154824527892').send('**' + member.user.username + '** has left the server! :sob: ');
+    member.guild.channels.cache.get(infoChannelID).send('**' + member.user.username + '** has left the server! :sob: ');
 });
 
+
+// Member joins or leaves a voice channel
 client.on('voiceStateUpdate', (oldMember, newMember) => {
 	let voiceChannels = newMember.guild.channels.cache.forEach((channel) => {
-		if (channel.parentID === '806506130737463309') {
+		if (channel.parentID === privateChannelCategoryID) {
 			if (channel.members.size == 0) {
 				channel.delete();
 			}
 		}
 	})
 	let newChannel = newMember.channelID;
-	if (newChannel === '806345597161308170') {
+	if (newChannel === createVoiceChannelID) {
 		console.log('A private channel for ' + client.users.cache.get(newMember.id).username + ' has been created.');
 		newMember.guild.channels.create(client.users.cache.get(newMember.id).username + '\'s vc (' + newMember.id + ')', {
 			type: 'voice',
-			parent: '806506130737463309',
+			parent: privateChannelCategoryID,
 			permissionOverwrites: [
 				{
 					id: newMember.guild.id,
@@ -51,68 +65,7 @@ client.on('voiceStateUpdate', (oldMember, newMember) => {
 	}
 });
 
-function allowIntoVC(member, isAdding) {
-	try {
-		let voiceChannels = member.guild.channels.cache.forEach((channel) => {
-			let channelOwnerID = channel.name;
-			if (member.author.id == channelOwnerID.substring(channelOwnerID.indexOf("(") + 1, channelOwnerID.indexOf(")"))) {
-				if (channel.members.size == 0) {
-					send("This channel is not currently active. Please create one and then try this command again.");
-					return;
-				}
-				let currentPerms = channel.permissionOverwrites;
-				let perms = [];
-				if (isAdding) {
-					currentPerms.forEach((permission) => {
-						perms.push(permission);
-					})
-					perms.push({id: member.mentions.users.first().id, allow: 'CONNECT'})
-				} else {
-					currentPerms.forEach((permission) => {
-						if (permission.id != member.mentions.users.first().id) {
-							perms.push(permission);
-						}
-					})
-					let person = member.mentions.users.first().id;
-					member.guild.member(person).voice.setChannel(null);
-				}
-				channel.overwritePermissions(perms);
-				return;
-			}
-		})
-	} catch (e) {
-		send("Something went wrong. Check your input and try again.");
-		console.error(e);
-	}
-}
-
-function renameChannel(message) {
-	let original = message.content.substring(7, message.content.indexOf(":"));
-	let newName = message.content.substring(message.content.indexOf(":") + 1);
-	let bannedList = ['announcements', 'info', 'bot', 'general', 'create voice channel'];
-	try {
-		bannedList.forEach((name) => {
-			if (name === original) {
-				send("Sorry, you can't change the name of this channel.");
-				return;
-				throw "Can't change a forbidden channel";
-			}
-			if (name === newName) {
-				send("Sorry, you can't change " + original + "\' name because there is another channel that is named this already.");
-				return;
-				throw "Duplicate name change.";
-			}
-		})
-		message.guild.channels.cache.forEach((channel) => {
-			if (channel.name == original) {
-				channel.edit({name: newName}).then(updated => console.log('The channel ' + original + ' has been changed to ' + newName + '.')).catch(console.error);
-			}
-		})
-	} catch (e) {
-		send("Sorry, that channel was not found. Check your input and try again.");
-	}
-}
-
+// Member sends a message that contains the current prefix (-)
 client.on('message', message => {
 	if (!message.content.startsWith(prefix) || message.author.bot) return;
 	const args = message.content.slice(prefix.length).split(" ");
@@ -122,7 +75,6 @@ client.on('message', message => {
 	if (command.includes('weather') || command.includes('random') || command.includes('currency') || command.includes('stock') || command.includes('sb')) {
 		base = command;
 	} 
-	adminRole = '806256817851072552';
   	if (command.includes('allow')) {
   		allowIntoVC(message, true);
   		message.react('✔️');
@@ -137,16 +89,19 @@ client.on('message', message => {
   		renameChannel(message);
   		return;
   	}
-
-  	//Commands executable by anyone with the admin role name
+  	//Commands executable only by admins
+  	adminRole = '806256817851072552';
     if (message.member.roles.cache.has(adminRole)) {
-    	 switch (command) {
-	    case 'm':
-	      mute(message, true);
-	      break;
-	    case 'u':
-	      mute(message, false);
-	      break;
+    	switch (command) {
+			case 'm':
+    			mute(message, true);
+    			break;
+			case 'u':
+    			mute(message, false);
+    			break;
+    	}
+    }
+	switch (command) {
 	    case 'help':
 	    	sendMessage("help");  
 	    	break;
@@ -189,105 +144,23 @@ client.on('message', message => {
 	    	break;
 	    default:
 	    	sendMessage("invalid");
- 		}
-    } else { //Commands that can be executed by anyone in the server
-    	switch (command) {
-	    case 'help':
-	    	sendMessage("help");  
-	    	break;
-	    case base:
-	    	if (base.includes('sb')) {
-	    		soundboard(message, command);
-	    	} else {
-	    		sendMessage(command);
-	    	}
-	    	break;
-	    case 'date':
-	    	sendMessage("date");
-	    	break;
-	    case 'time':
-	    	sendMessage("time");
-	    	break;
-	    case 'info':
-	    	sendMessage("info");
-	    	break;
-	    case 'uptime':
-	    	sendMessage("uptime");
-	    	break;
-	    case 'minecraft':
-	    	sendMessage("status");
-	    	break;
-	    case 'how':
-	    	send("This bot was created by <@401505856870678529> using the Discord.js dependency in the JavaScript programming language. Want more commands? Please dm <@401505856870678529>, he's always looking for suggestions!");
-	    	break;
-	    case 'website':
-	    	send("View Matthew Vandeneberg's website at http://" + process.env.WEBSITE);
-	    	break;
-    	case 'currency':
-	    	sendMessage("currency");
-	    	break;
-	    case 'stock':
-	    	sendMessage("stock");
-	    	break;
-	    default:
-	    	sendMessage("invalid");
-  		}
 	}
 });
 
-function soundboard(message, command) {
-	console.log("A command has been played.");
-	if (command.includes('sbhelp')) {
-		const helpEmbed = new Discord.MessageEmbed()
-		.setColor('black')
-		.setTitle('Available Sounds')
-		.setDescription('Play any of the available sounds below.')
-		.addFields(
-		{name: 'akbar', value: 'Allahu Akbar makes you happy.'},
-		{name: 'avocadosfrommexico', value: 'The sound that will make you happy.'},
-		{name: 'bruh', value: 'bruh.'},
-		{name: 'convert', value: 'self explantory'},
-		{name: 'dolphin', value: 'flight reacts dolphin sound effect'},
-		{name: 'dontpull', value: 'flight reacts dont pull ahhhhhhhhh'},
-		{name: 'failures', value: 'EDP445 shares some words of wisdom'},
-		{name: 'itsshowtime', value: 'EDP445 shares some more words of wisdom.'},
-		{name: 'letmebeclear', value: 'Obama says \"Let me be clear.\"'},
-		{name: 'nongrs', value: 'The classic I do not associate meme.'},
-		{name: 'ohniggayougay', value: 'Plays the \"Oh nigga you gay\" vine.'},
-		{name: 'prit', value: 'And the Jay-Z song was on.'},
-		{name: 'spongebob', value: 'Someone finds out that it\'s not actually spongebob.'},
-		{name: 'whoa', value: 'Peter says whoa. A lot of times.'}
-		);
-		send(helpEmbed);
-	} else {
-		var voiceChannel = message.member.voice.channel;
-		let filename = command.substring(2);
-		console.log(command);
-		voiceChannel.join()
-		.then(connection => {
-	    	const dispatcher = connection.play('audio/' + filename + '.mp3');
-	    	dispatcher.on("finish", end => {
-	        	voiceChannel.leave();
-	    	});
-		})
-		.catch(error => send("Couldn't find that audio file. Contact Matt to request additional sounds."));
-	}
-
-	
-}
-
+// Sends message to the bot channel.
 function send(toSend) {
 	channel = client.channels.cache.get(process.env.BOT_CHANNEL);
     channel.send(toSend);
 }
 
+// Will call the respective function based on the entered command.
 function sendMessage(msg) {
 	var toSend;
 	if (msg === "help") {
 		const helpEmbed = new Discord.MessageEmbed()
 		.setColor('001aff')
 		.setTitle('Help')
-		.setDescription('Hi! I am kwikmatt\'s Discord bot! Here is the list of commands that I can do: ')
+		.setDescription('Hi! I am matt\'s Discord bot! Here is the list of commands that I can do: ')
 		.addFields(
 			{name: '-allow', value: 'Allow someone into your private voice channel. Usage: -allow @name'},
 			{name: '-currency', value: 'Get current currency exchange information, formatted as \"-currency[from code][to code][price]\", example: \"-currencyUSDCAD10.68\" Use -currencycodes for a list of codes.'},
@@ -350,12 +223,119 @@ function sendMessage(msg) {
 	} else if (msg.includes('soundboard')) {
 		soundboard(msg);
 	}
-	console.log("about to send");
 	send(toSend);
 }
 
+// Bot will join a voice channel, play a sound as indicated by the message, and then leave the voice channel
+function soundboard(message, command) {
+	console.log("A command has been played.");
+	if (command.includes('sbhelp')) {
+		const helpEmbed = new Discord.MessageEmbed()
+		.setColor('black')
+		.setTitle('Available Sounds')
+		.setDescription('Play any of the available sounds below.')
+		.addFields(
+		{name: 'akbar', value: 'Allahu Akbar makes you happy.'},
+		{name: 'avocadosfrommexico', value: 'The sound that will make you happy.'},
+		{name: 'bruh', value: 'bruh.'},
+		{name: 'convert', value: 'self explantory'},
+		{name: 'dolphin', value: 'flight reacts dolphin sound effect'},
+		{name: 'dontpull', value: 'flight reacts dont pull ahhhhhhhhh'},
+		{name: 'failures', value: 'EDP445 shares some words of wisdom'},
+		{name: 'itsshowtime', value: 'EDP445 shares some more words of wisdom.'},
+		{name: 'letmebeclear', value: 'Obama says \"Let me be clear.\"'},
+		{name: 'nongrs', value: 'The classic I do not associate meme.'},
+		{name: 'ohniggayougay', value: 'Plays the \"Oh nigga you gay\" vine.'},
+		{name: 'prit', value: 'And the Jay-Z song was on.'},
+		{name: 'spongebob', value: 'Someone finds out that it\'s not actually spongebob.'},
+		{name: 'whoa', value: 'Peter says whoa. A lot of times.'}
+		);
+		send(helpEmbed);
+	} else {
+		var voiceChannel = message.member.voice.channel;
+		let filename = command.substring(2);
+		console.log(command);
+		voiceChannel.join()
+		.then(connection => {
+	    	const dispatcher = connection.play('audio/' + filename + '.mp3');
+	    	dispatcher.on("finish", end => {
+	        	voiceChannel.leave();
+	    	});
+		})
+		.catch(error => send("Couldn't find that audio file. Contact Matt to request additional sounds."));
+	}
+}
 
+// Ensures that the person that requested the ability to join a voice channel is in fact the owner of the channel, then adds a permission
+// to their voice channel so that the person that they @mention in the message can connect to that voice channel.
+function allowIntoVC(message, isAdding) {
+	try {
+		let voiceChannels = message.guild.channels.cache.forEach((channel) => {
+			let channelOwnerID = channel.name;
+			if (message.author.id == channelOwnerID.substring(channelOwnerID.indexOf("(") + 1, channelOwnerID.indexOf(")"))) {
+				if (channel.members.size == 0) {
+					send("This channel is not currently active. Please create one and then try this command again.");
+					return;
+				}
+				let currentPerms = channel.permissionOverwrites;
+				let perms = [];
+				if (isAdding) {
+					currentPerms.forEach((permission) => {
+						perms.push(permission);
+					})
+					perms.push({id: message.mentions.users.first().id, allow: 'CONNECT'})
+				} else {
+					currentPerms.forEach((permission) => {
+						if (permission.id != message.mentions.users.first().id) {
+							perms.push(permission);
+						}
+					})
+					let person = message.mentions.users.first().id;
+					message.guild.member(person).voice.setChannel(null);
+				}
+				channel.overwritePermissions(perms);
+				return;
+			}
+		})
+	} catch (e) {
+		send("Something went wrong. Check your input and try again.");
+		console.error(e);
+	}
+}
 
+// Renames any channel that is not a reserved channel (such as info, bot, etc. because they are bot sensitive).
+function renameChannel(message) {
+	if (message.channel.id != botChannelID) {
+		channel = client.channels.cache.get(message.channel.id);
+    	channel.send('<@' + message.author.id + '>, Please use the #bot channel to interact with the bot.');
+	}
+	let original = message.content.substring(7, message.content.indexOf(":"));
+	let newName = message.content.substring(message.content.indexOf(":") + 1);
+	let bannedList = ['announcements', 'info', 'bot', 'general', 'create voice channel'];
+	try {
+		bannedList.forEach((name) => {
+			if (name === original) {
+				send("Sorry, you can't change the name of this channel.");
+				return;
+				throw "Can't change a forbidden channel";
+			}
+			if (name === newName) {
+				send("Sorry, you can't change " + original + "\' name because there is another channel that is named this already.");
+				return;
+				throw "Duplicate name change.";
+			}
+		})
+		message.guild.channels.cache.forEach((channel) => {
+			if (channel.name == original) {
+				channel.edit({name: newName}).then(updated => console.log('The channel ' + original + ' has been changed to ' + newName + '.')).catch(console.error);
+			}
+		})
+	} catch (e) {
+		send("Sorry, that channel was not found. Check your input and try again.");
+	}
+}
+
+// Sends an embed with available stock info that the bot can retrieve.
 function stockInfo() {
 	const currencyEmbed = new Discord.MessageEmbed()
 		.setColor('800000')
@@ -374,6 +354,7 @@ function stockInfo() {
 	send(currencyEmbed);
 }
 
+// Sends an embed with the requested information about a stock.
 async function getStock(info) {
 	console.log('A stock has been requested.');
 	try {
@@ -420,6 +401,7 @@ async function getStock(info) {
 	
 }
 
+// Sends an embed with the available country codes for currency exchange. Otherwise, it will convert between the requested currencies.
 async function currency(info) {
 	console.log('Currency info has been requested.');
 	if (info === 'currencycodes') {
@@ -525,6 +507,7 @@ async function currency(info) {
 	}
 }
 
+// Retrieves Matt's Minecraft server information.
 async function mc() {
 	console.log('Minecraft server information has been requested.');
 	const response = await fetch('https://api.mcsrvstat.us/2/mattvandenberg.com');
@@ -565,14 +548,7 @@ async function mc() {
 	}
 }
 
-function convertSeconds(seconds) {
-	var numdays = Math.floor(seconds / 86400);
-	var numhours = Math.floor((seconds % 86400) / 3600);
-	var numminutes = Math.floor(((seconds % 86400) % 3600) / 60);
-	var numseconds = ((seconds % 86400) % 3600) % 60;
-	return numdays + " days, " + numhours + " hours, " + numminutes + " minutes, and " + (numseconds.toFixed(0)) + " seconds";
-}
-
+// Retrieves a random number, either an integer or double as requested by the message.
 function getRandom(n) {
 	console.log("A random number has been requested.");
 	if (n.endsWith("double")) {
@@ -594,6 +570,16 @@ function getRandom(n) {
 	}
 }
 
+// Used for the date command.
+function convertSeconds(seconds) {
+	var numdays = Math.floor(seconds / 86400);
+	var numhours = Math.floor((seconds % 86400) / 3600);
+	var numminutes = Math.floor(((seconds % 86400) % 3600) / 60);
+	var numseconds = ((seconds % 86400) % 3600) % 60;
+	return numdays + " days, " + numhours + " hours, " + numminutes + " minutes, and " + (numseconds.toFixed(0)) + " seconds";
+}
+
+// Used for the date command.
 function formatAMPM(date) {
   var hours = date.getHours();
   var minutes = date.getMinutes();
@@ -605,6 +591,7 @@ function formatAMPM(date) {
   return "It is " + strTime;
 }
 
+// Gets all weather information from a specified zip code.
 async function getWeather(zip) {
 	console.log("Weather information has been requested.");
 	const weath = await fetch('http://api.openweathermap.org/data/2.5/weather?zip=' + zip + ',us&appid=' + process.env.WEATHER_API_KEY + '&units=imperial');
@@ -630,6 +617,7 @@ async function getWeather(zip) {
 	
 }
 
+// Mutes or unmutes all members of the current voice channel, as indicated by the boolean parameter setMute.
 function mute(message, setMute) {
 	console.log('Muted command requested.');
 	if (message.member.voice.channel) {
@@ -641,5 +629,3 @@ function mute(message, setMute) {
     	message.reply('You need to join a voice channel first!');
   	}
 }
-
-client.login(process.env.BOT_TOKEN);
