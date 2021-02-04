@@ -76,13 +76,15 @@ client.on('message', message => {
 		base = command;
 	} 
   	if (command.includes('allow')) {
-  		allowIntoVC(message, true);
-  		message.react('✔️');
+  		let emoji = allowIntoVC(message, true) ? '✔️' : '❌'; 
+  		message.react(emoji);
+  		if (emoji == '❌') send("You are not the owner of any channel.");
   		return;
   	}
   	if (command.includes('remove')) {
-  		allowIntoVC(message, false);
-  		message.react('✔️');
+  		let emoji = allowIntoVC(message, false) ? '✔️' : '❌'; 
+  		message.react(emoji);
+  		if (emoji == '❌') send("You are not the owner of any channel.");
   		return;
   	}
   	if (command.includes('rename')) {
@@ -102,6 +104,8 @@ client.on('message', message => {
     	}
     }
 	switch (command) {
+		case base:
+			sendMessage(base);
 	    case 'help':
 	    	sendMessage("help");  
 	    	break;
@@ -247,9 +251,10 @@ function allowIntoVC(message, isAdding) {
 					message.guild.member(person).voice.setChannel(null);
 				}
 				channel.overwritePermissions(perms);
-				return;
+				return true;
 			}
 		})
+		return false;
 	} catch (e) {
 		send("Something went wrong. Check your input and try again.");
 		console.error(e);
