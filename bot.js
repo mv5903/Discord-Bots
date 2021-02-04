@@ -105,13 +105,6 @@ client.on('message', message => {
 	    case 'help':
 	    	sendMessage("help");  
 	    	break;
-	    case base:
-	    	if (base.includes('sb')) {
-	    		soundboard(message, command);
-	    	} else {
-	    		sendMessage(command);
-	    	}
-	    	break;
 	    case 'date':
 	    	sendMessage("date");
 	    	break;
@@ -224,46 +217,6 @@ function sendMessage(msg) {
 		soundboard(msg);
 	}
 	send(toSend);
-}
-
-// Bot will join a voice channel, play a sound as indicated by the message, and then leave the voice channel
-function soundboard(message, command) {
-	console.log("A command has been played.");
-	if (command.includes('sbhelp')) {
-		const helpEmbed = new Discord.MessageEmbed()
-		.setColor('black')
-		.setTitle('Available Sounds')
-		.setDescription('Play any of the available sounds below.')
-		.addFields(
-		{name: 'akbar', value: 'Allahu Akbar makes you happy.'},
-		{name: 'avocadosfrommexico', value: 'The sound that will make you happy.'},
-		{name: 'bruh', value: 'bruh.'},
-		{name: 'convert', value: 'self explantory'},
-		{name: 'dolphin', value: 'flight reacts dolphin sound effect'},
-		{name: 'dontpull', value: 'flight reacts dont pull ahhhhhhhhh'},
-		{name: 'failures', value: 'EDP445 shares some words of wisdom'},
-		{name: 'itsshowtime', value: 'EDP445 shares some more words of wisdom.'},
-		{name: 'letmebeclear', value: 'Obama says \"Let me be clear.\"'},
-		{name: 'nongrs', value: 'The classic I do not associate meme.'},
-		{name: 'ohniggayougay', value: 'Plays the \"Oh nigga you gay\" vine.'},
-		{name: 'prit', value: 'And the Jay-Z song was on.'},
-		{name: 'spongebob', value: 'Someone finds out that it\'s not actually spongebob.'},
-		{name: 'whoa', value: 'Peter says whoa. A lot of times.'}
-		);
-		send(helpEmbed);
-	} else {
-		var voiceChannel = message.member.voice.channel;
-		let filename = command.substring(2);
-		console.log(command);
-		voiceChannel.join()
-		.then(connection => {
-	    	const dispatcher = connection.play('audio/' + filename + '.mp3');
-	    	dispatcher.on("finish", end => {
-	        	voiceChannel.leave();
-	    	});
-		})
-		.catch(error => send("Couldn't find that audio file. Contact Matt to request additional sounds."));
-	}
 }
 
 // Ensures that the person that requested the ability to join a voice channel is in fact the owner of the channel, then adds a permission
