@@ -67,6 +67,10 @@ client.on('voiceStateUpdate', (oldMember, newMember) => {
 
 // Member sends a message that contains the current prefix (-)
 client.on('message', message => {
+	if (message.channel.id != botChannelID) {
+		channel = client.channels.cache.get(message.channel.id);
+    	channel.send('<@' + message.author.id + '>, Please use the #bot channel to interact with the bot.');
+	}
 	if (!message.content.startsWith(prefix) || message.author.bot) return;
 	const args = message.content.slice(prefix.length).split(" ");
 	const command = args.shift().toLowerCase();
@@ -305,10 +309,6 @@ function allowIntoVC(message, isAdding) {
 
 // Renames any channel that is not a reserved channel (such as info, bot, etc. because they are bot sensitive).
 function renameChannel(message) {
-	if (message.channel.id != botChannelID) {
-		channel = client.channels.cache.get(message.channel.id);
-    	channel.send('<@' + message.author.id + '>, Please use the #bot channel to interact with the bot.');
-	}
 	let original = message.content.substring(7, message.content.indexOf(":"));
 	let newName = message.content.substring(message.content.indexOf(":") + 1);
 	let bannedList = ['announcements', 'info', 'bot', 'general', 'create voice channel'];
