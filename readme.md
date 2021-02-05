@@ -1,7 +1,9 @@
 ## Welcome to My All-Purpose Discord Bot  
 
 #### Using this bot, you can make it perform a wide variety of tasks! Here are a list of commands that I have implemented for my Discord bot:  
+
 <br>
+
 * -allow
 	* Grant access to a private voice channel, which adds permission to the voice channel for the @mention to connect. Note: You must be the private voice channel creator in order to do this.
 * -currency
