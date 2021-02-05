@@ -171,7 +171,6 @@ function sendMessage(msg) {
 			{name: '-random', value: 'Generate a random number using the following scheme: \"-random(min,max)int\". Use \"int\" for integer, or \"double\" for decimal number.'},
 			{name: '-remove', value: 'Remove someone from your private voice channel. Usage: -remove @name'},
 			{name: '-rename', value: 'Rename a channel in the server. Note: you need to be a part of los hombres to do this. Usage: -rename[original channel]:[new name] without the brackets.'},
-			{name: '-sb', value: 'Use the soundboard to play a custom sound. Use -sb<sound>, see -sbhelp.'},
 			{name: '-stock', value: 'Gets stock info for a given symbol. Use -stockinfo to get the info you want; be sure to follow the format -stock[symbol]:[info] without the brackets.'},
 			{name: '-u', value: 'Unmute all in a voice channel (Admins only).'},
 			{name: '-uptime', value: 'Gets my uptime.'},

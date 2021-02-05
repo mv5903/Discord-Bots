@@ -1,7 +1,9 @@
 ## Welcome to My All-Purpose Discord Bot  
 
-Using this bot, you can make it perform a wide variety of tasks! Here are a list of commands that I have implemented for my Discord bot:  
+#### Using this bot, you can make it perform a wide variety of tasks! Here are a list of commands that I have implemented for my Discord bot:  
 <br>
+* -allow
+	* Grant access to a private voice channel, which adds permission to the voice channel for the @mention to connect. Note: You must be the private voice channel creator in order to do this.
 * -currency
 	* Get current currency exchange information, formatted as "-currency[from code][to code][price]", example: "-currencyUSDCAD10.68" Use -currencycodes for a list of codes.
 * -date
@@ -20,6 +22,12 @@ Using this bot, you can make it perform a wide variety of tasks! Here are a list
 	* Displays the current time.
 * -random
 	* Generate a random number using the following scheme: "-random(min,max)int". Use "int" for integer, or "double" for decimal number.
+* -remove
+	* Remove connection permission from the @mention to the private voice channel, and disconnect from the voice channel if they are currently in it. Note: You must be the private voice channel owner in order to do this.
+* -rename
+	* Rename any voice channel within our friend group's channels. Granting the edit permission to the role would also allow creation and deletion of channels, so this was the best option for renaming.
+* -stock
+	* Gets stock info for a given symbol. Use -stockinfo to get the info you want; be sure to follow the format -stock[symbol]:[info] without the brackets.
 * -u
 	* Unmute all in a voice channel (Admins only).
 * -uptime
