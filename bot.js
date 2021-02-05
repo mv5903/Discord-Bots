@@ -78,13 +78,13 @@ client.on('message', message => {
   	if (command.includes('allow')) {
   		let emoji = allowIntoVC(message, true) ? '✔️' : '❌'; 
   		message.react(emoji);
-  		if (emoji == '❌') send("You are not the owner of any channel.");
+  		if (emoji === '❌') send("You are not the owner of any channel.");
   		return;
   	}
   	if (command.includes('remove')) {
   		let emoji = allowIntoVC(message, false) ? '✔️' : '❌'; 
   		message.react(emoji);
-  		if (emoji == '❌') send("You are not the owner of any channel.");
+  		if (emoji === '❌') send("You are not the owner of any channel.");
   		return;
   	}
   	if (command.includes('rename')) {
