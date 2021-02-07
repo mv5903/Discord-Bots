@@ -665,7 +665,7 @@ function mute(message, setMute) {
 //Send daily updates to my server
 function scheduleJobs() {
 	let morning = new cron.CronJob('0 ' + (herokuOffset+8) + ' * * *', morningUpdate);
-	let afternoon = new cron.CronJob('0 ' + (herokuOffset+13) + ' * * *', afternoonUpdate);
+	let afternoon = new cron.CronJob('5 ' + (herokuOffset+13) + ' * * *', afternoonUpdate);
 	let evening = new cron.CronJob('0 ' + (herokuOffset+17) + ' * * *', eveningUpdate);
 	morning.start();
 	afternoon.start();
@@ -754,7 +754,7 @@ async function getUpdate(type) {
             },
             fields : theFields
 		}
-        client.chennels.cache.get(dailyUpdateChannelID).send({embed: dailyUpdateEmbed});
+        client.channels.cache.get(dailyUpdateChannelID).send({embed: dailyUpdateEmbed});
 	} catch (e) {
         console.error(e);
     }
