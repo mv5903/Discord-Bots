@@ -328,7 +328,12 @@ function stockInfo() {
 async function getStock(info) {
 	console.log('A stock has been requested.');
 	try {
-		let symbol = info.substring(5, info.indexOf(':')).toUpperCase();
+		let symbol = '';
+		if (info.contains(':')) {
+			symbol = info.substring(5, info.indexOf(':')).toUpperCase();
+		} else {
+			symbol = info.substring(5);
+		}
 		let responseType = info.substring(info.indexOf(':') + 1);
 		const response = await fetch('https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=' + symbol + '&apikey=' + process.env.STOCKS_API_KEY);
 		const data = await response.json();
@@ -384,6 +389,7 @@ async function getStock(info) {
 			}
 			send({embed: stockEmbedOne});
 			send({embed: stockEmbedTwo});
+			return;
 		} else {
 			switch (responseType) {
 				case 'open':
@@ -415,6 +421,7 @@ async function getStock(info) {
 			}
 			whatToSend += "\n(Last updated on " + date + ").";
 			send(whatToSend);
+			return;
 		}
 	} catch (e) {
 		console.error(e);
