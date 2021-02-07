@@ -20,7 +20,7 @@ client.once('ready', () => {
 	scheduleJobs();
 	client.user.setActivity("-help for commands!"); 
 	var date = new Date();
-	console.log(date);
+	console.log(date.getHours());
 });
 
 // Member joins the server
