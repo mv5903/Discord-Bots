@@ -10,7 +10,7 @@ const infoChannelID = '548579154824527892';
 const botChannelID = '762754228464517171';
 const privateChannelCategoryID = '806506130737463309';
 const dailyUpdateChannelID = '807718470787399730';
-
+const herokuOffset = 5;
 // Bot login
 client.login(process.env.BOT_TOKEN);
 
@@ -19,8 +19,6 @@ client.once('ready', () => {
 	console.log('Discord bot is online!');
 	scheduleJobs();
 	client.user.setActivity("-help for commands!"); 
-	var date = new Date();
-	console.log(date.getHours());
 });
 
 // Member joins the server
@@ -666,9 +664,9 @@ function mute(message, setMute) {
 
 //Send daily updates to my server
 function scheduleJobs() {
-	let morning = new cron.CronJob('0 8 * * *', morningUpdate);
-	let afternoon = new cron.CronJob('0 13 * * *', afternoonUpdate);
-	let evening = new cron.CronJob('0 17 * * *', eveningUpdate);
+	let morning = new cron.CronJob('0 ' + (herokuOffset+8) + ' * * *', morningUpdate);
+	let afternoon = new cron.CronJob('0 ' + (herokuOffset+13) + ' * * *', afternoonUpdate);
+	let evening = new cron.CronJob('0 ' + (herokuOffset+17) + ' * * *', eveningUpdate);
 	morning.start();
 	afternoon.start();
 	evening.start();
