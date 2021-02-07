@@ -143,11 +143,11 @@ client.on('message', message => {
 	    	sendMessage("stock");
 			break;
 		case 'subscribe':
-			let theRole = message.member.roles.cache.find(role => role.name === 'Daily Update Sub');
+			let theRole = message.guild.roles.cache.find(role => role.name === 'Daily Update Sub');
 			message.guild.members.cache.get(message.author.id).roles.add(theRole);
 			break;
 		case 'unsubscribe':
-			let thatRole = message.member.roles.cache.find(role => role.name === 'Daily Update Sub');
+			let thatRole = message.guild.roles.cache.find(role => role.name === 'Daily Update Sub');
 			try {
 				message.guild.members.cache.get(message.author.id).roles.remove(thatRole);
 			} catch (e) {
