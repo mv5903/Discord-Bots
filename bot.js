@@ -143,12 +143,16 @@ client.on('message', message => {
 	    	sendMessage("stock");
 			break;
 		case 'subscribe':
-			let role = message.member.roles.cache.find(role => role.name === 'Daily Update Sub');
-			if (role) message.guild.members.cache.get(message.author.id).roles.add(role);
+			let theRole = message.member.roles.cache.find(role => role.name === 'Daily Update Sub');
+			if (theRole) message.guild.members.cache.get(message.author.id).roles.add(role);
 			break;
 		case 'unsubscribe':
-			let role = message.member.roles.cache.find(role => role.name === 'Daily Update Sub');
-			if (role) message.guild.members.cache.get(message.author.id).roles.remove(role);
+			let theRole = message.member.roles.cache.find(role => role.name === 'Daily Update Sub');
+			try {
+				if (theRole) message.guild.members.cache.get(message.author.id).roles.remove(role);
+			} catch (e) {
+				console.error(e);
+			}
 			break;
 	    default:
 	    	sendMessage("invalid");
