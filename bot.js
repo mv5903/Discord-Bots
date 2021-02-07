@@ -381,7 +381,7 @@ async function getStock(info) {
 			const stockEmbedOne = {
 				color: '03fc3d',
 				title: 'Extended Stock Information for ' + infoData.Name + ' (' + symbol.toUpperCase() + '):',
-				description: 'Below is the data for the stock you requested, pulled from [Alpha Vantage](https://www.alphavantage.co/): ',
+				description: 'Below is the data for the stock you requested, pulled from [Alpha Vantage](https://www.alphavantage.co/). This data was last updated on ' + data["Meta Data"]["3. Last Refreshed"] + '. Note that if all data below displays as undefined, [Alpha Vantage](https://www.alphavantage.co/) probably doesn\'t have any data for the company. If you feel like this could be a mistake, please look it up manually on [Alpha Vantage](https://www.alphavantage.co/) before consulting the server owner.',
 				fields: theFields
 			}
 			const stockEmbedTwo = {
