@@ -429,6 +429,10 @@ async function getStock(info) {
 	}
 }
 
+function isCapital(c) {
+    return c.toUpperCase() === c && !Number.isInteger(Number.parseInt(c));
+}
+
 // Sends an embed with the available country codes for currency exchange. Otherwise, it will convert between the requested currencies.
 async function currency(info) {
 	console.log('Currency info has been requested.');
