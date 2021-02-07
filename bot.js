@@ -754,7 +754,7 @@ async function getUpdate(type) {
             },
             fields : theFields
 		}
-        cleint.chennels.cache.get(dailyUpdateChannelID).send({embed: dailyUpdateEmbed});
+        client.chennels.cache.get(dailyUpdateChannelID).send({embed: dailyUpdateEmbed});
 	} catch (e) {
         console.error(e);
     }
