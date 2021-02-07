@@ -19,6 +19,8 @@ client.once('ready', () => {
 	console.log('Discord bot is online!');
 	scheduleJobs();
 	client.user.setActivity("-help for commands!"); 
+	var date = new Date();
+	console.log(date);
 });
 
 // Member joins the server
