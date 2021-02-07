@@ -329,7 +329,7 @@ async function getStock(info) {
 	console.log('A stock has been requested.');
 	try {
 		let symbol = '';
-		if (info.contains(':')) {
+		if (info.includes(':')) {
 			symbol = info.substring(5, info.indexOf(':')).toUpperCase();
 		} else {
 			symbol = info.substring(5);
