@@ -2,20 +2,23 @@ const Discord = require('discord.js');
 const weather = require('openweather-apis');
 const fetch = require('node-fetch');
 const client = new Discord.Client();
+const cron = require('cron');
 
 const prefix = '-';
 const createVoiceChannelID = '806345597161308170';
 const infoChannelID = '548579154824527892';
 const botChannelID = '762754228464517171';
 const privateChannelCategoryID = '806506130737463309';
+const dailyUpdateChannelID = '807718470787399730';
 
 // Bot login
 client.login(process.env.BOT_TOKEN);
 
 // Initial connect to Discord
 client.once('ready', () => {
-  console.log('Discord bot is online!');
-  client.user.setActivity("-help for commands!"); 
+	console.log('Discord bot is online!');
+	scheduleJobs();
+	client.user.setActivity("-help for commands!"); 
 });
 
 // Member joins the server
@@ -138,7 +141,15 @@ client.on('message', message => {
 	    	break;
 	    case 'stock':
 	    	sendMessage("stock");
-	    	break;
+			break;
+		case 'subscribe':
+			let role = message.member.roles.cache.find(role => role.name === 'Daily Update Sub');
+			if (role) message.guild.members.cache.get(message.author.id).roles.add(role);
+			break;
+		case 'unsubscribe':
+			let role = message.member.roles.cache.find(role => role.name === 'Daily Update Sub');
+			if (role) message.guild.members.cache.get(message.author.id).roles.remove(role);
+			break;
 	    default:
 	    	sendMessage("invalid");
 	}
@@ -170,9 +181,11 @@ function sendMessage(msg) {
 			{name: '-time', value: 'Displays the current time.'},
 			{name: '-random', value: 'Generate a random number using the following scheme: \"-random(min,max)int\". Use \"int\" for integer, or \"double\" for decimal number.'},
 			{name: '-remove', value: 'Remove someone from your private voice channel. Usage: -remove @name'},
+			{name: '-subscribe', value: 'Subscribe to view the weather and news updates delivered in the morning, afternoon, and evening to <#' + dailyUpdateChannelID + '>.'},
 			{name: '-rename', value: 'Rename a channel in the server. Note: you need to be a part of los hombres to do this. Usage: -rename[original channel]:[new name] without the brackets.'},
 			{name: '-stock', value: 'Gets stock info for a given symbol. Use -stockinfo to get the info you want; be sure to follow the format -stock[symbol]:[info] without the brackets.'},
 			{name: '-u', value: 'Unmute all in a voice channel (Admins only).'},
+			{name: '-unsubscribe', value: 'Use this command if you no long want to view the daily updates from <#' + dailyUpdateChannelID + '>.'},
 			{name: '-uptime', value: 'Gets my uptime.'},
 			{name: '-weather', value: 'Get weather for any zip code, for example, \"-weather10001\" will show the weather for New York City.'},
 			{name: '-website', value: 'View Matthew Vandenberg\'s website.'},
@@ -315,43 +328,94 @@ async function getStock(info) {
 		let responseType = info.substring(info.indexOf(':') + 1);
 		const response = await fetch('https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=' + symbol + '&apikey=' + process.env.STOCKS_API_KEY);
 		const data = await response.json();
+		const infoResponse = await fetch('https://www.alphavantage.co/query?function=OVERVIEW&symbol=' + symbol + '&apikey=' + process.env.STOCKS_API_KEY);
+    	const infoData = await infoResponse.json();
 		let date = data["Meta Data"]["3. Last Refreshed"];
 		let whatToSend = "";
-		switch (responseType) {
-			case 'open':
-				whatToSend = "The open price for " + symbol + " is " + data["Time Series (Daily)"][date]["1. open"] + ".";
-				break;
-			case 'close':
-				whatToSend = "The close price for " + symbol + " is " + data["Time Series (Daily)"][date]["4. close"] + ".";
-				break;
-			case 'high':
-				whatToSend = "The high price for " + symbol + " is " + data["Time Series (Daily)"][date]["2. high"] + ".";
-				break;
-			case 'low':
-				whatToSend = "The low price for " + symbol + " is " + data["Time Series (Daily)"][date]["3. low"] + ".";
-				break;
-			case 'adjclose':
-				whatToSend = "The Adjusted Close price for " + symbol + " is " + data["Time Series (Daily)"][date]["5. adjusted close"] + ".";
-				break;
-			case 'volume':
-				whatToSend = "The volume price for " + symbol + " is " + data["Time Series (Daily)"][date]["6. volume"] + ".";
-				break;
-			case 'divamount':
-				whatToSend = "The dividend amount for " + symbol + " is " + data["Time Series (Daily)"][date]["7. dividend amount"] + ".";
-				break;
-			case 'splitcof':
-				whatToSend = "The split coefficient for " + symbol + " is " + data["Time Series (Daily)"][date]["8. split coefficient"] + ".";
-				break;
-			default:
-				whatToSend = "Sorry, try again";
+		if (!info.includes(':')) {
+			let theFields = [];
+			let dailyInfo = ['1. open', '4. close', '3. low', '2. high', '5. adjusted close', '6. volume', '7. dividend amount'];
+			let infoToGrab = ['Name', 'AssetType', 'Industry', 'Sector', 'FullTimeEmployees', 'Exchange', 'Country', 'Currency', 'EPS', 'RevenuePerShareTTM', 'MarketCapitalization', 'ProfitMargin', 'QuarterlyEarningsGrowthYOY', 'QuarterlyRevenueGrowthYOY', '52WeekHigh', '52WeekLow', '50DayMovingAverage', '200DayMovingAverage', 'SharesFloat', 'SharesShort', 'PayoutRatio', 'LastSplitFactor', 'LastSplitDate'];
+			for (var i = 0; i < dailyInfo.length; i++) {
+				let temp = dailyInfo[i].substring(3);
+				let newTemp = '';
+				for (var j = 0; j < temp.length; j++) {
+					if (j == 0 || (j >= 1 && temp.charAt(j-1) == ' ')) {
+						newTemp+=temp.charAt(j).toUpperCase();
+					} else {
+						newTemp+=temp.charAt(j);
+					} 
+				}
+				newTemp += ':';
+				theFields.push({name: newTemp, value: data["Time Series (Daily)"][date][dailyInfo[i]], inline: true});
+			}
+			theFields.push({name: '\u200B', value: '\u200B'});
+			for (var i = 0; i < infoToGrab.length; i++) {
+				let temp = '';
+				for (var j = 0; j < infoToGrab[i].length; j++) {
+					if (isCapital(infoToGrab[i].charAt(j))) {
+						if (i <= infoToGrab.length - 1 && isCapital(infoToGrab[i].charAt(j+1)) && isCapital(infoToGrab[i].charAt(j-1))) {
+							temp+=infoToGrab[i].charAt(j);
+						} else {
+							temp+=' ' + infoToGrab[i].charAt(j);
+						}
+					} else {
+						temp+=infoToGrab[i].charAt(j);
+					}
+				}
+				temp+=': ';
+				theFields.push({name: temp, value: infoData[infoToGrab[i]], inline: true});
+			}
+			let moreFields = theFields.slice(25);
+			let theFields = theFields.slice(0, 24);
+			const stockEmbedOne = {
+				color: '03fc3d',
+				title: 'Extended Stock Information for ' + infoData.Name + ' (' + symbol + '):',
+				description: 'Below is the data for the stock you requested, pulled from [Alpha Vantage](https://www.alphavantage.co/): ',
+				fields: theFields
+			}
+			const stockEmbedTwo = {
+				color: '03fc3d',
+				fields: moreFields
+			}
+			send({embed: stockEmbedOne});
+			send({embed: stockEmbedTwo});
+		} else {
+			switch (responseType) {
+				case 'open':
+					whatToSend = "The open price for " + symbol + " is " + data["Time Series (Daily)"][date]["1. open"] + ".";
+					break;
+				case 'close':
+					whatToSend = "The close price for " + symbol + " is " + data["Time Series (Daily)"][date]["4. close"] + ".";
+					break;
+				case 'high':
+					whatToSend = "The high price for " + symbol + " is " + data["Time Series (Daily)"][date]["2. high"] + ".";
+					break;
+				case 'low':
+					whatToSend = "The low price for " + symbol + " is " + data["Time Series (Daily)"][date]["3. low"] + ".";
+					break;
+				case 'adjclose':
+					whatToSend = "The Adjusted Close price for " + symbol + " is " + data["Time Series (Daily)"][date]["5. adjusted close"] + ".";
+					break;
+				case 'volume':
+					whatToSend = "The volume price for " + symbol + " is " + data["Time Series (Daily)"][date]["6. volume"] + ".";
+					break;
+				case 'divamount':
+					whatToSend = "The dividend amount for " + symbol + " is " + data["Time Series (Daily)"][date]["7. dividend amount"] + ".";
+					break;
+				case 'splitcof':
+					whatToSend = "The split coefficient for " + symbol + " is " + data["Time Series (Daily)"][date]["8. split coefficient"] + ".";
+					break;
+				default:
+					whatToSend = "Sorry, try again";
+			}
+			whatToSend += "\n(Last updated on " + date + ").";
+			send(whatToSend);
 		}
-		whatToSend += "\n(Last updated on " + date + ").";
-		send(whatToSend);
 	} catch (e) {
 		console.error(e);
 		send("Couldn't retrieve stock info, check your input and try again.");
 	}
-	
 }
 
 // Sends an embed with the available country codes for currency exchange. Otherwise, it will convert between the requested currencies.
@@ -480,7 +544,6 @@ async function mc() {
 	} catch(e) {
 		playersList = "No one is online!";
 	}
-	
 	try {
 		var website = process.env.WEBSITE;
 		var version = data.version;
@@ -581,4 +644,116 @@ function mute(message, setMute) {
     } else {
     	message.reply('You need to join a voice channel first!');
   	}
+}
+
+//Send daily updates to my server
+function scheduleJobs() {
+	let morning = new cron.CronJob('0 8 * * *', morningUpdate);
+	let afternoon = new cron.CronJob('0 13 * * *', afternoonUpdate);
+	let evening = new cron.CronJob('0 17 * * *', eveningUpdate);
+	morning.start();
+	afternoon.start();
+	evening.start();
+}
+
+function morningUpdate() {
+	getUpdate(0);
+}
+function afternoonUpdate() {
+	getUpdate(1);
+}
+function eveningUpdate() {
+	getUpdate(2);
+}
+async function getUpdate(type) {
+    let zip = '08854';
+	const weath = await fetch('http://api.openweathermap.org/data/2.5/weather?zip=' + zip + ',us&appid=' + process.env.WEATHER_API_KEY + '&units=imperial');
+    let weatherData = await weath.json();
+    let url = 'http://newsapi.org/v2/top-headlines?sortBy=popularity&country=us&apiKey=' + process.env.NEWS_API_KEY;
+	const newsResponse = await fetch(url);
+    const newsData = await newsResponse.json();
+	try {
+        let theFields = [
+            {
+                name: '\u200B',
+                value: '\u200B',
+            },
+            {
+                name: 'Weather for ' + weatherData.name + ': ',
+                value: '\u200B'
+            },
+            {
+                name: 'Current Description: ',
+                value: weatherData.weather[0].main,
+                inline: true
+            },
+            {
+                name: 'Current Feels Like: ',
+                value: weatherData.main.feels_like + '°F',
+                inline: true
+            },
+            {
+                name: 'Current Temperature: ',
+                value: (weatherData.main.temp).toFixed(1) + '°F',
+                inline: true
+            },
+            {
+                name: 'Today\'s Low: ',
+                value: (weatherData.main.temp_min).toFixed(1) + '°F',
+                inline: true
+            },
+            {
+                name: 'Today\'s High: ',
+                value: (weatherData.main.temp_max).toFixed(1) + '°F',
+                inline: true
+            },
+            {
+                name: 'Current Wind: ',
+                value: weatherData.wind.speed + ' mph at ' + weatherData.wind.deg + '°',
+                inline: true
+            },
+            {
+                name: 'Humidity: ',
+                value: weatherData.main.humidity + '%',
+                inline: true
+            },
+            {
+                name: '\u200B',
+                value: '\u200B'
+            }
+        ];
+        for (var i = 0; i < 10; i++) {
+            if (i == 0) {
+                theFields.push({name: 'Top News Headlines: ', value: '[' + newsData.articles[i].title + '](' + newsData.articles[i].url + ')\n\n'});
+            } else {
+                theFields.push({name: '\u200B', value: '[' + newsData.articles[i].title + '](' + newsData.articles[i].url + ')\n\n'});
+            }
+        }
+		const dailyUpdateEmbed = {
+            color: '00f7ff',
+            title: getUpdateTitle(type),
+            description: 'Here is your update. Weather data provided by [openweathermap](https://openweathermap.org/) and news data provided by [newsapi](https://newsapi.org/).\n',
+            thumbnail: {
+                url: 'http://openweathermap.org/img/wn/' + weatherData.weather[0].icon + '@2x.png'
+            },
+            fields : theFields
+		}
+        cleint.chennels.cache.get(dailyUpdateChannelID).send({embed: dailyUpdateEmbed});
+	} catch (e) {
+        console.error(e);
+    }
+}
+function getUpdateTitle(time) {
+	let theDate = '';
+	let today = new Date(new Date().toLocaleString('en-US', {timezone: "America/New_York"}));
+	let weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+	let months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+	if (time == 0) {
+		theDate += 'Morning Update for ';
+	} else if (time == 1) {
+		theDate += 'Afternoon Update for ';
+	} else if (time == 2) {
+		theDate += 'Evening Update for ';
+	}
+	return theDate + weekdays[today.getDay()] + ', ' + months[today.getMonth()] + ' ' + today.getDate() + ', ' + today.getFullYear() + '.';
 }
