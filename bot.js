@@ -144,12 +144,12 @@ client.on('message', message => {
 			break;
 		case 'subscribe':
 			let theRole = message.member.roles.cache.find(role => role.name === 'Daily Update Sub');
-			if (theRole) message.guild.members.cache.get(message.author.id).roles.add(theRole);
+			message.guild.members.cache.get(message.author.id).roles.add(theRole);
 			break;
 		case 'unsubscribe':
 			let thatRole = message.member.roles.cache.find(role => role.name === 'Daily Update Sub');
 			try {
-				if (thatRole) message.guild.members.cache.get(message.author.id).roles.remove(thatRole);
+				message.guild.members.cache.get(message.author.id).roles.remove(thatRole);
 			} catch (e) {
 				console.error(e);
 			}
