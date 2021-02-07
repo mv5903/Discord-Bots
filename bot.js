@@ -371,7 +371,7 @@ async function getStock(info) {
 				theFields.push({name: temp, value: infoData[infoToGrab[i]], inline: true});
 			}
 			let moreFields = theFields.slice(25);
-			let theFields = theFields.slice(0, 24);
+			theFields = theFields.slice(0, 24);
 			const stockEmbedOne = {
 				color: '03fc3d',
 				title: 'Extended Stock Information for ' + infoData.Name + ' (' + symbol + '):',
