@@ -109,6 +109,7 @@ client.on('message', message => {
 	switch (command) {
 		case base:
 			sendMessage(base);
+			break;
 	    case 'help':
 	    	sendMessage("help");  
 	    	break;
