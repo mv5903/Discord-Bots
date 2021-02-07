@@ -380,7 +380,7 @@ async function getStock(info) {
 			theFields = theFields.slice(0, 25);
 			const stockEmbedOne = {
 				color: '03fc3d',
-				title: 'Extended Stock Information for ' + infoData.Name + ' (' + symbol + '):',
+				title: 'Extended Stock Information for ' + infoData.Name + ' (' + symbol.toUpperCase() + '):',
 				description: 'Below is the data for the stock you requested, pulled from [Alpha Vantage](https://www.alphavantage.co/): ',
 				fields: theFields
 			}
