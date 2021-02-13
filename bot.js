@@ -94,6 +94,10 @@ client.on('message', message => {
   		renameChannel(message);
   		return;
   	}
+  	if (command.includes('weather')) {
+  		getWeather(command.substring(7), message);
+  		return;
+  	}
   	//Commands executable only by admins
   	adminRole = '806256817851072552';
     if (message.member.roles.cache.has(adminRole)) {
@@ -147,10 +151,6 @@ client.on('message', message => {
 			let theRole = message.guild.roles.cache.find(role => role.name === 'Daily Update Sub');
 			message.guild.members.cache.get(message.author.id).roles.add(theRole);
 			send('<@' + message.author.id + '>, you have successfully been subscribed to <#' + dailyUpdateChannelID + '>. Look out for updates at 8am, 1pm, and 5pm daily!');
-			break;
-		case 'weather':
-			command = command.substring(7);
-			getWeather(zip, message);
 			break;
 		case 'unsubscribe':
 			let thatRole = message.guild.roles.cache.find(role => role.name === 'Daily Update Sub');
