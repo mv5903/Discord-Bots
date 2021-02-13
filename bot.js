@@ -146,11 +146,13 @@ client.on('message', message => {
 		case 'subscribe':
 			let theRole = message.guild.roles.cache.find(role => role.name === 'Daily Update Sub');
 			message.guild.members.cache.get(message.author.id).roles.add(theRole);
+			send('<@' + message.author.id + '>, you have successfully been subscribed to <#' + dailyUpdateChannelID + '>. Look out for updates at 8am, 1pm, and 5pm daily!');
 			break;
 		case 'unsubscribe':
 			let thatRole = message.guild.roles.cache.find(role => role.name === 'Daily Update Sub');
 			try {
 				message.guild.members.cache.get(message.author.id).roles.remove(thatRole);
+				send('<@' + message.author.id + '>, you have successfully been unsubscribed from <#' + dailyUpdateChannelID + '>. You will no longer receive updates.');
 			} catch (e) {
 				console.error(e);
 			}
@@ -202,7 +204,7 @@ function sendMessage(msg) {
 			return;
 		}
 		var zip = msg.substring(7);
-		getWeather(zip);
+		getWeather(zip, msg);
 		return;
 	} else if (msg === "date") {
 		var usaTime = new Date().toLocaleString("en-US", {timeZone: "America/New_York"});
@@ -259,7 +261,9 @@ function allowIntoVC(message, isAdding) {
 						perms.push(permission);
 					})
 					perms.push({id: message.mentions.users.first().id, allow: ['CONNECT', 'VIEW_CHANNEL']});
-					send('<@' + message.mentions.users.first().id + '>, <@' + message.author.id + '> has allowed you into their voice channel. Please join ' + channel.name + '.')
+					let channelName = channel.name;
+					channelName = channelName.substring(0, channelName.indexOf('('));
+					send('<@' + message.mentions.users.first().id + '>, <@' + message.author.id + '> has allowed you into their voice channel. Please join ' + channelName + '.')
 				} else {
 					currentPerms.forEach((permission) => {
 						if (permission.id != message.mentions.users.first().id) {
@@ -313,18 +317,18 @@ function renameChannel(message) {
 // Sends an embed with available stock info that the bot can retrieve.
 function stockInfo() {
 	const currencyEmbed = new Discord.MessageEmbed()
-		.setColor('800000')
-		.setTitle('Stock Info Codes')
-		.addFields(
-			{name: 'Open', value: 'open'},
-			{name: 'Close', value: 'close'},
-			{name: 'High', value: 'high'},
-			{name: 'Low', value: 'low'},
-			{name: 'Adjusted Close', value: 'adjclose'},
-			{name: 'Volume', value: 'volume'},
-			{name: 'Dividend Amount', value: 'divamount'},
-			{name: 'Split Coefficient', value: 'splitcof'},
-		);
+	.setColor('800000')
+	.setTitle('Stock Info Codes')
+	.addFields(
+		{name: 'Open', value: 'open'},
+		{name: 'Close', value: 'close'},
+		{name: 'High', value: 'high'},
+		{name: 'Low', value: 'low'},
+		{name: 'Adjusted Close', value: 'adjclose'},
+		{name: 'Volume', value: 'volume'},
+		{name: 'Dividend Amount', value: 'divamount'},
+		{name: 'Split Coefficient', value: 'splitcof'},
+	);
 	console.log('Stock info has been requested.');
 	send(currencyEmbed);
 }
@@ -628,7 +632,7 @@ function formatAMPM(date) {
 }
 
 // Gets all weather information from a specified zip code.
-async function getWeather(zip) {
+async function getWeather(zip, message) {
 	console.log("Weather information has been requested.");
 	const weath = await fetch('http://api.openweathermap.org/data/2.5/weather?zip=' + zip + ',us&appid=' + process.env.WEATHER_API_KEY + '&units=imperial');
 	let response = await weath.json();
@@ -646,6 +650,33 @@ async function getWeather(zip) {
 			{name: 'Wind: ', value: response.wind.speed + ' mph at ' + response.wind.deg + '°'},
 			{name: 'Humidity: ', value: response.main.humidity + '%'},
 		);
+		try {
+			if (response.main.temp < 32) {
+				message.react('🥶');
+			} else if (response.main.temp > 85) {
+				message.react('😓');
+			}
+			let id = response.weather[0].id.toString().charAt(0);
+			var emoji;
+			if (id === '2') {
+				emoji = '🌩️';
+			} else if (id === '3') {
+				emoji = '☔';
+			} else if (id === '5') {
+				emoji = '🌧️';
+			} else if (id === '6') {
+				emoji = '❄️';
+			} else if (id === '7') {
+				emoji = '🌫️';
+			} else if (response.weather[0].id.toString() === '800') {
+				emoji = '🌞';
+			} else if (id === '8') {
+				emoji = '☁️';
+			}
+			message.react(emoji);
+		} catch (e) {
+			console.log("Something went wrong while reacting.");
+		}
 		send(weatherEmbed);
 	} catch (e) {
 		send("I couldn't find the weather for that zip code because it doesn't exist. Please try again.");
