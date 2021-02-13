@@ -268,9 +268,11 @@ function allowIntoVC(message, isAdding) {
 					message.guild.member(person).voice.setChannel(null);
 				}
 				channel.overwritePermissions(perms);
+				console.log("true");
 				return true;
 			}
 		})
+		console.log("false");
 		return false;
 	} catch (e) {
 		send("Something went wrong. Check your input and try again.");
@@ -294,7 +296,7 @@ function renameChannel(message) {
 				return;
 			}
 			if (name === newName) {
-				send("Sorry, you can't change " + original + "\' name because there is another channel that is named this already.");
+				send("Sorry, you can't change " + original + "\'s name because another channel has this name already.");
 				return;
 			}
 		})
