@@ -288,16 +288,14 @@ function renameChannel(message) {
 			if (name === original) {
 				send("Sorry, you can't change the name of this channel.");
 				return;
-				throw "Can't change a forbidden channel";
 			}
 			if (name === newName) {
 				send("Sorry, you can't change " + original + "\' name because there is another channel that is named this already.");
 				return;
-				throw "Duplicate name change.";
 			}
 		})
 		message.guild.channels.cache.forEach((channel) => {
-			if (channel.name == original) {
+			if (channel.name === original) {
 				channel.edit({name: newName}).then(updated => console.log('The channel ' + original + ' has been changed to ' + newName + '.')).catch(console.error);
 			}
 		})
