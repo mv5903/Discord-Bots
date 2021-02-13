@@ -53,11 +53,11 @@ client.on('voiceStateUpdate', (oldMember, newMember) => {
 			permissionOverwrites: [
 				{
 					id: newMember.guild.id,
-					deny: ['CONNECT'],
+					deny: ['CONNECT', 'VIEW_CHANNEL'],
 				},
 				{
 					id: newMember.id,
-					allow: ['CONNECT'],
+					allow: ['CONNECT', 'VIEW_CHANNEL'],
 				},
 			],
 		})
@@ -258,7 +258,7 @@ function allowIntoVC(message, isAdding) {
 					currentPerms.forEach((permission) => {
 						perms.push(permission);
 					})
-					perms.push({id: message.mentions.users.first().id, allow: 'CONNECT'})
+					perms.push({id: message.mentions.users.first().id, allow: ['CONNECT', 'VIEW_CHANNEL']});
 					send('<@' + message.mentions.users.first().id + '>, <@' + message.author.id + '> has allowed you into their voice channel. Please join ' + channel.name + '.')
 				} else {
 					currentPerms.forEach((permission) => {
