@@ -282,6 +282,10 @@ function allowIntoVC(message, isAdding) {
 function renameChannel(message) {
 	let original = message.content.substring(7, message.content.indexOf(":"));
 	let newName = message.content.substring(message.content.indexOf(":") + 1);
+	if (newName.length > 15) {
+		send("The new channel name you chose exceeds the 15 character limit. Please choose another name.");
+		return;
+	}
 	let bannedList = ['announcements', 'info', 'bot', 'general', 'create voice channel'];
 	try {
 		bannedList.forEach((name) => {
