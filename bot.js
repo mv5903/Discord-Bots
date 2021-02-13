@@ -676,6 +676,7 @@ async function getWeather(zip, message) {
 			message.react(emoji);
 		} catch (e) {
 			console.log("Something went wrong while reacting.");
+			console.log(e);
 		}
 		send(weatherEmbed);
 	} catch (e) {
