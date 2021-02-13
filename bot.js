@@ -75,7 +75,7 @@ client.on('message', message => {
 	const command = args.shift().toLowerCase();
 	var base = "";
 	//Commands that can receive additional arguments
-	if (command.includes('weather') || command.includes('random') || command.includes('currency') || command.includes('stock') || command.includes('sb')) {
+	if (command.includes('random') || command.includes('currency') || command.includes('stock') || command.includes('sb')) {
 		base = command;
 	} 
   	if (command.includes('allow')) {
@@ -147,6 +147,10 @@ client.on('message', message => {
 			let theRole = message.guild.roles.cache.find(role => role.name === 'Daily Update Sub');
 			message.guild.members.cache.get(message.author.id).roles.add(theRole);
 			send('<@' + message.author.id + '>, you have successfully been subscribed to <#' + dailyUpdateChannelID + '>. Look out for updates at 8am, 1pm, and 5pm daily!');
+			break;
+		case 'weather':
+			command = command.substring(7);
+			getWeather(zip, message);
 			break;
 		case 'unsubscribe':
 			let thatRole = message.guild.roles.cache.find(role => role.name === 'Daily Update Sub');
