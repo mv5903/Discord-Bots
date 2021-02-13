@@ -243,6 +243,7 @@ function sendMessage(msg) {
 // Ensures that the person that requested the ability to join a voice channel is in fact the owner of the channel, then adds a permission
 // to their voice channel so that the person that they @mention in the message can connect to that voice channel.
 function allowIntoVC(message, isAdding) {
+	let success = false;
 	try {
 		let voiceChannels = message.guild.channels.cache.forEach((channel) => {
 			let channelOwnerID = channel.name;
@@ -268,12 +269,10 @@ function allowIntoVC(message, isAdding) {
 					message.guild.member(person).voice.setChannel(null);
 				}
 				channel.overwritePermissions(perms);
-				console.log("true");
-				return true;
+				success = true;
 			}
 		})
-		console.log("false");
-		return false;
+		return success;
 	} catch (e) {
 		send("Something went wrong. Check your input and try again.");
 		console.error(e);
