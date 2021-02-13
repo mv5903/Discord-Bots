@@ -259,6 +259,7 @@ function allowIntoVC(message, isAdding) {
 						perms.push(permission);
 					})
 					perms.push({id: message.mentions.users.first().id, allow: 'CONNECT'})
+					send('<@' + message.mentions.users.first().id + '>, <@' + message.author.id + '> has allowed you into their voice channel. Please join ' + channel.name + '.')
 				} else {
 					currentPerms.forEach((permission) => {
 						if (permission.id != message.mentions.users.first().id) {
