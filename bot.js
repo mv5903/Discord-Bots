@@ -823,11 +823,11 @@ async function getMovieData(msg) {
 	let request = msg.content;
 	console.log('Movie Request: ' + request);
 	let searchTerm = request.substring(6);
-	searchTerm = searchTerm.replace(/_/g, ' ');
-	console.log(searchTerm);
-
+	searchTerm = searchTerm.replace(/_/g, '%20');
 	try {
-		let response = await fetch('https://yts.mx/api/v2/list_movies.json?order_by=asc&query_term=' + searchTerm);
+		let link = 'https://yts.mx/api/v2/list_movies.json?order_by=asc&query_term=' + searchTerm;
+		console.log(link);
+		let response = await fetch(link);
 		let data = await response.json();
 		let temp = data['data']['movies'][0];
 		//create embed
