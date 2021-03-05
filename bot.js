@@ -869,14 +869,15 @@ async function getMovieData(msg) {
 				value: temp['summary']
 			},
 		];
-		fields.push({name: 'Torrent Links (Direct Download)', value: '\u200B'});
+		fields.push({name: '\u200B', value: '\u200B'});
+		fields.push({name: 'Torrent Links (Direct Download)', value: ''});
 		for (var i = 0; i < temp['torrents'].length; i++) {
 			fields.push({name: '\u200B', value: '[' + temp['torrents'][i]['quality'] + ' (' + temp['torrents'][i]['size'] + ')](' + temp['torrents'][i]['url'] + ')'});
 		}
 		const movieEmbed = new Discord.MessageEmbed()
 			.setColor('black')
 			.setTitle(temp['title'])
-			.setThumbnail(temp['small_cover_image'])
+			.setThumbnail(temp['medium_cover_image'])
 			.addFields(fields);
 			send(movieEmbed);
 	} catch (e) {
