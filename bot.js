@@ -827,17 +827,8 @@ async function getMovieData(msg) {
 		let response = await fetch('https://yts.mx/api/v2/list_movies.json?order_by=asc&query_term=' + searchTerm);
 		let data = await response.json();
 		let temp = data['data']['movies'][0];
-		//get torrent list
-		let tors = '';
-		for (var i = 0; i < temp['torrents'].length; i++) {
-			tors
-		}
 		//create embed
-		const movieEmbed = new Discord.MessageEmbed()
-			.setColor('black')
-			.setTitle(temp['title'])
-			.setThumbnail(temp['small_cover_image'])
-			.addFields(
+		let fields = [
 			{
 				name: 'Year: ',
 				value: temp['year'],
@@ -875,9 +866,18 @@ async function getMovieData(msg) {
 			},
 			{
 				name: 'Summary',
-				value: temp['Summary']
+				value: temp['summary']
 			},
-			);
+		];
+		fields.push({name: 'Torrent Links (Direct Download)', value: '\u200B'});
+		for (var i = 0; i < temp['torrents'].length; i++) {
+			fields.push({name: '\u200B', value: '[' + temp['torrents'][i]['quality'] + ' (' + temp['torrents'][i]['size'] + ')](' + temp['torrents'][i]['url'] + ')'});
+		}
+		const movieEmbed = new Discord.MessageEmbed()
+			.setColor('black')
+			.setTitle(temp['title'])
+			.setThumbnail(temp['small_cover_image'])
+			.addFields(theFields);
 			send(movieEmbed);
 	} catch (e) {
 		console.log(e);
