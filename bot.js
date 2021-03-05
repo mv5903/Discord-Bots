@@ -823,8 +823,9 @@ async function getMovieData(msg) {
 	let request = msg.content;
 	console.log('Movie Request: ' + request);
 	let searchTerm = request.substring(6);
-	searchTerm.split('_').join(' ');
+	searchTerm = searchTerm.replace(/_/g, ' ');
 	console.log(searchTerm);
+
 	try {
 		let response = await fetch('https://yts.mx/api/v2/list_movies.json?order_by=asc&query_term=' + searchTerm);
 		let data = await response.json();
