@@ -98,6 +98,10 @@ client.on('message', message => {
   		getWeather(command.substring(7), message);
   		return;
   	}
+	if (command.includes('movie')) {
+		getMovieData(message);
+		return;
+	}
   	//Commands executable only by admins
   	adminRole = '806256817851072552';
     if (message.member.roles.cache.has(adminRole)) {
@@ -189,6 +193,7 @@ function sendMessage(msg) {
 			{name: '-info', value: 'Displays information about the Kwikmatt Server.'},
 			{name: '-m', value: 'Mute all in a voice channel (Admins only).'},
 			{name: '-minecraft', value: 'Displays the kwikmatt server ip if you are a part of the minecraft server.'},
+			{name: '-movie', value: 'Display Movie Information. Usage: -movie[title]'},
 			{name: '-time', value: 'Displays the current time.'},
 			{name: '-random', value: 'Generate a random number using the following scheme: \"-random(min,max)int\". Use \"int\" for integer, or \"double\" for decimal number.'},
 			{name: '-remove', value: 'Remove someone from your private voice channel. Usage: -remove @name'},
@@ -812,4 +817,69 @@ function getUpdateTitle(time) {
 		theDate += 'Evening Update for ';
 	}
 	return theDate + weekdays[today.getDay()] + ', ' + months[today.getMonth()] + ' ' + today.getDate() + ', ' + today.getFullYear() + '.';
+}
+
+async function getMovieData(msg) {
+	let request = msg.content;
+	console.log('Request: ' + request);
+	let searchTerm = request.substring(5);
+	try {
+		let response = await fetch('https://yts.mx/api/v2/list_movies.json?order_by=asc&query_term=' + searchTerm);
+		let data = await response.json();
+		let temp = data['data']['movies'][0];
+		//get torrent list
+		let tors = '';
+		for (var i = 0; i < temp['torrents'].length; i++) {
+			tors
+		}
+		//create embed
+		const movieEmbed = new Discord.MessageEmbed()
+			.setColor('black')
+			.setTitle(temp['title'])
+			.setThumbnail(temp['small_cover_image'])
+			.addFields(
+			{
+				name: 'Year: ',
+				value: temp['year'],
+				inline: true
+			},
+			{
+				name: 'Genre: ',
+				value: temp['genres'][0],
+				inline: true
+			},
+			{
+				name: 'Stars: ',
+				value: temp['rating'] + '/10',
+				inline: true
+			},
+			{
+				name: 'Runtime: ',
+				value: temp['runtime'] + ' mins',
+				inline: true
+			},
+			{
+				name: 'Rating: ',
+				value: temp['mpa_rating'] ? temp['mpa_rating'] : 'Not Available',
+				inline: true
+			},
+			{
+				name: 'Language: ',
+				value: temp['language'],
+				inline: true
+			},
+			{
+				name: 'YouTube Trailer: ',
+				value: '[Click Here](https://www.youtube.com/watch?v=' + temp['yt_trailer_code'] + ')',
+				inline: true
+			},
+			{
+				name: 'Description',
+				value: temp['description']
+			},
+			);
+			send(movieEmbed);
+	} catch (e) {
+		console.log(e);
+	}
 }
