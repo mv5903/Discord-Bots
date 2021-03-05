@@ -870,7 +870,7 @@ async function getMovieData(msg) {
 			},
 		];
 		fields.push({name: '\u200B', value: '\u200B'});
-		fields.push({name: 'Torrent Links (Direct Download)', value: ''});
+		fields.push({name: 'Torrent Links (Direct Download)', value: '\u200B'});
 		for (var i = 0; i < temp['torrents'].length; i++) {
 			fields.push({name: '\u200B', value: '[' + temp['torrents'][i]['quality'] + ' (' + temp['torrents'][i]['size'] + ')](' + temp['torrents'][i]['url'] + ')'});
 		}
