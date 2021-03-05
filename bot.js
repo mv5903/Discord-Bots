@@ -884,6 +884,7 @@ async function getMovieData(msg) {
 			.addFields(fields);
 			send(movieEmbed);
 	} catch (e) {
+		send('Couldn\'t find a movie with the name "' + searchTerm + '". Please try another. If you believe this is a mistake, contact matt.');
 		console.log(e);
 	}
 }
