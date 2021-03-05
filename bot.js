@@ -822,7 +822,7 @@ function getUpdateTitle(time) {
 async function getMovieData(msg) {
 	let request = msg.content;
 	console.log('Request: ' + request);
-	let searchTerm = request.substring(5);
+	let searchTerm = request.substring(6);
 	try {
 		let response = await fetch('https://yts.mx/api/v2/list_movies.json?order_by=asc&query_term=' + searchTerm);
 		let data = await response.json();
