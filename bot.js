@@ -877,6 +877,8 @@ async function getMovieData(msg) {
 		for (var i = 0; i < temp['torrents'].length; i++) {
 			fields.push({name: '\u200B', value: '[' + temp['torrents'][i]['quality'] + ' (' + temp['torrents'][i]['size'] + ')](' + temp['torrents'][i]['url'] + ')'});
 		}
+		fields.push({name: '\u200B', value: '[View on YTS.MX](' + temp['url'] + ')'});
+		fields.push({name: '\u200B', value: '[More on IMDB](https://imdb.com/title/' + temp['imdb_code'] + '/)'});
 		const movieEmbed = new Discord.MessageEmbed()
 			.setColor('black')
 			.setTitle(temp['title'])
