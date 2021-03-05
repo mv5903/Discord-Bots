@@ -877,7 +877,7 @@ async function getMovieData(msg) {
 			.setColor('black')
 			.setTitle(temp['title'])
 			.setThumbnail(temp['small_cover_image'])
-			.addFields(theFields);
+			.addFields(fields);
 			send(movieEmbed);
 	} catch (e) {
 		console.log(e);
