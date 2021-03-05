@@ -874,8 +874,8 @@ async function getMovieData(msg) {
 				inline: true
 			},
 			{
-				name: 'Description',
-				value: temp['description']
+				name: 'Summary',
+				value: temp['Summary']
 			},
 			);
 			send(movieEmbed);
