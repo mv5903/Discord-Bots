@@ -856,7 +856,7 @@ async function getMovieData(msg) {
 			},
 			{
 				name: 'Language: ',
-				value: temp['language'],
+				value: getLang(temp['language']),
 				inline: true
 			},
 			{
@@ -877,10 +877,97 @@ async function getMovieData(msg) {
 		const movieEmbed = new Discord.MessageEmbed()
 			.setColor('black')
 			.setTitle(temp['title'])
-			.setThumbnail(temp['medium_cover_image'])
+			.setThumbnail(temp['large_cover_image'])
 			.addFields(fields);
 			send(movieEmbed);
 	} catch (e) {
 		console.log(e);
 	}
+}
+
+function getLang(langCode) {
+    var lang = "" + langCode;
+    lang.replace("af", "Afrikaans");
+    lang.replace("ar", "Arabic");
+    lang.replace("az", "Azeri");
+    lang.replace("be", "Belarusian");
+    lang.replace("bg", "Bulgarian");
+    lang.replace("bs", "Bosnian");
+    lang.replace("ca", "Catalan");
+    lang.replace("cs", "Czech");
+    lang.replace("cy", "Welsh");
+    lang.replace("da", "Danish");
+    lang.replace("de", "German");
+    lang.replace("dv", "Divehi");
+    lang.replace("el", "Greek");
+    lang.replace("en", "English");
+    lang.replace("eo", "Esperanto");
+    lang.replace("es", "Spanish");
+    lang.replace("et", "Estonian");
+    lang.replace("eu", "Basque");
+    lang.replace("fa", "Farsi");
+    lang.replace("fi", "Finnish");
+    lang.replace("fo", "Faroese");
+    lang.replace("fr", "French");
+    lang.replace("gl", "Galician");
+    lang.replace("gu", "Gujarati");
+    lang.replace("he", "Hebrew");
+    lang.replace("hi", "Hindi");
+    lang.replace("hr", "Croatian");
+    lang.replace("hu", "Hungarian");
+    lang.replace("hy", "Armenian");
+    lang.replace("id", "Indonesian");
+    lang.replace("is", "Icelandic");
+    lang.replace("it", "Italian");
+    lang.replace("ja", "Japanese");
+    lang.replace("ka", "Georgian");
+    lang.replace("kk", "Kazakh");
+    lang.replace("kn", "Kannada");
+    lang.replace("ko", "Korean");
+    lang.replace("kok", "Konkani");
+    lang.replace("ky", "Kyrgyz");
+    lang.replace("lt", "Lithuanian");
+    lang.replace("lv", "Latvian");
+    lang.replace("mi", "Maori");
+    lang.replace("mk", "Macedonian");
+    lang.replace("mn", "Mongolian");
+    lang.replace("mr", "Marathi");
+    lang.replace("ms", "Malay");
+    lang.replace("mt", "Maltese");
+    lang.replace("nb", "Norwegian");
+    lang.replace("nl", "Dutch");
+    lang.replace("nn", "Norwegian");
+    lang.replace("ns", "Northern Sotho");
+    lang.replace("pa", "Punjabi");
+    lang.replace("pl", "Polish");
+    lang.replace("ps", "Pashto");
+    lang.replace("pt", "Portuguese");
+    lang.replace("qu", "Quechua");
+    lang.replace("ro", "Romanian");
+    lang.replace("ru", "Russian");
+    lang.replace("sa", "Sanskrit");
+    lang.replace("se", "Sami");
+    lang.replace("sk", "Slovak");
+    lang.replace("sl", "Slovenian");
+    lang.replace("sq", "Albanian");
+    lang.replace("sr", "Serbian");
+    lang.replace("sv", "Swedish");
+    lang.replace("sw", "Swahili");
+    lang.replace("syr", "Syriac");
+    lang.replace("ta", "Tamil");
+    lang.replace("te", "Telugu");
+    lang.replace("th", "Thai");
+    lang.replace("tl", "Tagalog");
+    lang.replace("tn", "Tswana");
+    lang.replace("tr", "Turkish");
+    lang.replace("tt", "Tatar");
+    lang.replace("ts", "Tsonga");
+    lang.replace("uk", "Ukrainian");
+    lang.replace("ur", "Urdu");
+    lang.replace("uz", "Uzbek");
+    lang.replace("vi", "Vietnamese");
+    lang.replace("xh", "Xhosa");
+    lang.replace("zh", "Chinese");
+    lang.replace("zu", "Zulu");
+    return lang;
 }
