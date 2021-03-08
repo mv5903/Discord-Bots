@@ -560,7 +560,7 @@ async function currency(info) {
 // Retrieves Matt's Minecraft server information.
 async function mc() {
 	console.log('Minecraft server information has been requested.');
-	const response = await fetch('https://api.mcsrvstat.us/2/mattvandenberg.com');
+	const response = await fetch('https://api.mcsrvstat.us/2/kwikmatt.ddns.net');
 	let data = await response.json();
 	var status = data.online;
 	var state = "";
