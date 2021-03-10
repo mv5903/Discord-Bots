@@ -19,6 +19,17 @@
 
 * -currency
 	* Get current currency exchange information, formatted as "-currency[from code][to code][price]", example: "-currencyUSDCAD10.68" Use -currencycodes for a list of codes.
+
+<p align="center">
+	Currency Codes:
+	<br><br>
+	<img src="readmeImages/currencyCodes.png">
+	<br><br>
+	Example Usage:
+	<br><br>
+	<img src="readmeImages/currencyUsage.png">
+</p>
+
 * -date
 	* Displays the current date.
 * -help
