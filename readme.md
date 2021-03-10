@@ -7,11 +7,7 @@
 * -allow
 	* Grant access to a private voice channel, which adds permission to the voice channel for the @mention to connect. The person that will then be allowed into the voice channel is granted the ability to view and connect to the channel. Note: You must be the private voice channel creator in order to do this.
 
-<div style="display:block;margin-left:auto;margin-right:auto;text-align:center;width:50%;">
-<img src="readmeImages/allow.png">
-<br>
-<img src="readmeImages/allowPerms.png">
-</div>
+!![Allow Image](readmeImages/allow.png)
 
 * -currency
 	* Get current currency exchange information, formatted as "-currency[from code][to code][price]", example: "-currencyUSDCAD10.68" Use -currencycodes for a list of codes.
@@ -46,4 +42,10 @@
 * -website
 	* View Matthew Vandenberg's website.
 <br>  
-The possibilities are endless! I use Heroku to host my bot, so that when I make a change to my bot.js file and commit the changes to GitHub, it will automatically restart to bot to reflect the new changes!h
+The possibilities are endless! I use Heroku to host my bot, so that when I make a change to my bot.js file and commit the changes to GitHub, it will automatically restart to bot to reflect the new changes!
+
+
+img[src*='#center'] {
+	display: block;
+	margin: auto;
+}
