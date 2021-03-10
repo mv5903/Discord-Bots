@@ -36,17 +36,24 @@
 <p align="center">
 	Example Usage:
 	<br><br>
-	<img src="readmeImages/data.png">
+	<img src="readmeImages/date.png">
 </p>
 
-* -help
-	* Open this help message again.
-* -how
+* Help
+	* Open the help dialog to see which commands are available to use.
+* How
 	* How was this bot created?
-* -info
-	* Displays information about the Kwikmatt Server.
-* -m
-	* Mute all in a voice channel (Admins only).
+* Info
+	* Displays information about Matt's server.
+* Mute
+	* (-m) Mute all in a voice channel (Admins only). See u command for unmuting all in a voice channel.
+
+<p align="center">
+	Example Usage:
+	<br><br>
+	<img src="readmeImages/mute.png">
+</p>
+
 * -minecraft
 	* Displays the kwikmatt Minecraft server information.
 * -time
@@ -59,8 +66,15 @@
 	* Rename any voice channel within our friend group's channels. Granting the edit permission to the role would also allow creation and deletion of channels, so this was the best option for renaming.
 * -stock
 	* Gets stock info for a given symbol. Use -stockinfo to get the info you want; be sure to follow the format -stock[symbol]:[info] without the brackets.
-* -u
-	* Unmute all in a voice channel (Admins only).
+* Unmute
+	* (-u) Unmute all in a voice channel (Admins only).
+
+<p align="center">
+	Example Usage:
+	<br><br>
+	<img src="readmeImages/unmute.png">
+</p>
+
 * -uptime
 	* Gets my uptime.
 * -weather
