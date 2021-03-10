@@ -9,12 +9,11 @@
 
 <p align="center">
 	Command Usage Example:
-	<br>
+	<br><br>
 	<img src="readmeImages/allow.png">
-	<br>
-	<br>
+	<br><br>
 	Permission Changes:
-	<br>
+	<br><br>
 	<img src="readmeImages/allowPerms.png">
 </p>
 
