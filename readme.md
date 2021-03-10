@@ -9,6 +9,10 @@
 
 ![Allow Image](readmeImages/allow.png#center)
 
+
+<img style="float: right;" src="readmeImages/allow.png">
+
+
 * -currency
 	* Get current currency exchange information, formatted as "-currency[from code][to code][price]", example: "-currencyUSDCAD10.68" Use -currencycodes for a list of codes.
 * -date
@@ -43,9 +47,3 @@
 	* View Matthew Vandenberg's website.
 <br>  
 The possibilities are endless! I use Heroku to host my bot, so that when I make a change to my bot.js file and commit the changes to GitHub, it will automatically restart to bot to reflect the new changes!
-
-
-img[src*='#center'] {
-	display: block;
-	margin: auto;
-}
