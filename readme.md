@@ -7,7 +7,7 @@
 * -allow
 	* Grant access to a private voice channel, which adds permission to the voice channel for the @mention to connect. The person that will then be allowed into the voice channel is granted the ability to view and connect to the channel. Note: You must be the private voice channel creator in order to do this.
 
-<div style="text-align:center;">
+<div style="display:block;margin-left:auto;margin-right:auto;text-align:center;width:50%;">
 <img src="readmeImages/allow.png">
 <br>
 <img src="readmeImages/allowPerms.png">
