@@ -8,11 +8,11 @@
 	* Grant access to a private voice channel, which adds permission to the voice channel for the @mention to connect. The person that will then be allowed into the voice channel is granted the ability to view and connect to the channel. Note: You must be the private voice channel creator in order to do this.
 
 <p align="center">
-	<p>Command Usage Example:</p>
+	Command Usage Example:
 	<img src="readmeImages/allow.png">
 	<br>
 	<br>
-	<p>Permission Changes:</p>
+	Permission Changes:
 	<img src="readmeImages/allowPerms.png">
 </p>
 
