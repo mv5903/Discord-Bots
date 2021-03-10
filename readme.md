@@ -4,7 +4,7 @@
 
 <br>
 
-* -allow
+* Allow
 	* Grant access to a private voice channel, which adds permission to the voice channel for the @mention to connect. The person that will then be allowed into the voice channel is granted the ability to view and connect to the channel. Note: You must be the private voice channel creator in order to do this.
 
 <p align="center">
@@ -17,8 +17,8 @@
 	<img src="readmeImages/allowPerms.png">
 </p>
 
-* -currency
-	* Get current currency exchange information, formatted as "-currency[from code][to code][price]", example: "-currencyUSDCAD10.68" Use -currencycodes for a list of codes.
+* Currency
+	* Get current currency exchange information, formatted as "-currency[from code][to code][price]". Use -currencycodes for a list of codes.
 
 <p align="center">
 	Currency Codes:
@@ -30,8 +30,15 @@
 	<img src="readmeImages/currencyUsage.png">
 </p>
 
-* -date
+* Date
 	* Displays the current date.
+
+<p align="center">
+	Example Usage:
+	<br><br>
+	<img src="readmeImages/data.png">
+</p>
+
 * -help
 	* Open this help message again.
 * -how
