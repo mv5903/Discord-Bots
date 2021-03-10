@@ -49,14 +49,23 @@
 	* (-m) Mute all in a voice channel (Admins only). See u command for unmuting all in a voice channel.
 
 <p align="center">
-	Example Usage:
+	What Happens:
 	<br><br>
 	<img src="readmeImages/mute.png">
 </p>
 
-* -minecraft
-	* Displays the kwikmatt Minecraft server information.
-* -time
+* Minecraft
+	* Displays Matt's Minecraft server information. You can easily replace this server link yourself.
+* Movie
+	* Displays information about any movie. Use underscores (_) for spaces in movie titles.
+
+<p align="center">
+	Example Usage:
+	<br><br>
+	<img src="readmeImages/movie.png">
+</p>
+
+* Time
 	* Displays the current time.
 * -random
 	* Generate a random number using the following scheme: "-random(min,max)int". Use "int" for integer, or "double" for decimal number.
@@ -70,7 +79,7 @@
 	* (-u) Unmute all in a voice channel (Admins only).
 
 <p align="center">
-	Example Usage:
+	What Happens:
 	<br><br>
 	<img src="readmeImages/unmute.png">
 </p>
