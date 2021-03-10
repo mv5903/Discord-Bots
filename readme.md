@@ -21,11 +21,11 @@
 	* Get current currency exchange information, formatted as "-currency[from code][to code][price]". Use -currencycodes for a list of codes.
 
 <p align="center">
-	Currency Codes:
+	<strong>Currency Codes:</strong>
 	<br><br>
 	<img src="readmeImages/currencyCodes.png">
 	<br><br>
-	Example Usage:
+	<strong>Example Usage:</strong>
 	<br><br>
 	<img src="readmeImages/currencyUsage.png">
 </p>
@@ -34,7 +34,7 @@
 	* Displays the current date.
 
 <p align="center">
-	Example Usage:
+	<strong>Example Usage:</strong>
 	<br><br>
 	<img src="readmeImages/date.png">
 </p>
@@ -49,7 +49,7 @@
 	* (-m) Mute all in a voice channel (Admins only). See u command for unmuting all in a voice channel.
 
 <p align="center">
-	What Happens:
+	<strong>What Happens:</strong>
 	<br><br>
 	<img src="readmeImages/mute.png">
 </p>
@@ -60,7 +60,7 @@
 	* Displays information about any movie. Use underscores (_) for spaces in movie titles.
 
 <p align="center">
-	Example Usage:
+	<strong>Example Usage:</strong>
 	<br><br>
 	<img src="readmeImages/movie.png">
 </p>
@@ -71,7 +71,7 @@
 	* Generate a random number using the following scheme: "-random(min,max)int". Use "int" for integer, or "double" for decimal number.
 
 <p align="center">
-	Example Usage:
+	<strong>Example Usage:</strong>
 	<br><br>
 	<img src="readmeImages/random.png">
 </p>
@@ -84,7 +84,7 @@
 	* Gets stock info for a given symbol. Use -stockinfo to get the info you want; be sure to follow the format -stock[symbol]:[info] without the brackets.
 
 <p align="center">
-	Example Usage:
+	<strong>Example Usage:</strong>
 	<br><br>
 	<img src="readmeImages/stock.png">
 </p>
@@ -93,7 +93,7 @@
 	* (-u) Unmute all in a voice channel (Admins only).
 
 <p align="center">
-	What Happens:
+	<strong>What Happens:</strong>
 	<br><br>
 	<img src="readmeImages/unmute.png">
 </p>
@@ -104,7 +104,7 @@
 	* Get weather for any zip code, for example, "-weather10001" will show the weather for New York City.
 
 <p align="center">
-	What Happens:
+	<strong>What Happens:</strong>
 	<br><br>
 	<img src="readmeImages/weather.png">
 </p>
