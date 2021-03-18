@@ -577,6 +577,7 @@ async function mc() {
 	} catch(e) {
 		playersList = "No one is online!";
 	}
+	
 	try {
 		var website = process.env.WEBSITE;
 		var version = data.version;
