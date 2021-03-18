@@ -15,6 +15,6 @@
     "ffmpeg-static": "^4.2.7",
     "node-fetch": "2.6.1",
     "openweather-apis": "4.3.1",
-    "request": "2.81.0"
+    "request": "^2.88.2"
   }
 }
