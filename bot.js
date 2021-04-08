@@ -222,8 +222,11 @@ function sendMessage(msg) {
 		var dayOfWeek = weekday[today.getDay()];
 		toSend = "Today is " + dayOfWeek + ", " + (today.getMonth()+1) + "-" + today.getDate() + "-" + today.getFullYear() + "."
 	} else if (msg === "time") {
-		var usaTime = new Date().toLocaleString("en-US", {timeZone: "America/New_York"});
-		toSend = formatAMPM(new Date(usaTime));
+		var easternTime = new Date().toLocaleString("en-US", {timeZone: "America/New_York"});
+		var pacificTime = new Date().toLocaleString("en-US", {timeZone: "America/Los_Angeles"});
+		var easternConverted = formatAMPM(new Date(easternTime));
+		var pacificConverted = formatAMPM(new Date(pacificTime));
+		toSend = "It is " + easternConverted + " EST/" + pacificConverted + " PST.";
 	} else if (msg === "info") {
 		toSend = "Welcome to the kwikmatt Server. In this server, we talk and play many different games! If you have any questions, please contact <@401505856870678529>.";
 	} else if (msg === "invalid") {
@@ -636,8 +639,8 @@ function formatAMPM(date) {
   hours = hours % 12;
   hours = hours ? hours : 12; // the hour '0' should be '12'
   minutes = minutes < 10 ? '0'+ minutes : minutes;
-  var strTime = hours + ':' + minutes + ' ' + ampm;
-  return "It is " + strTime;
+  var strTime = hours + ':' + minutes + '' + ampm;
+  return "" + strTime;
 }
 
 // Gets all weather information from a specified zip code.
