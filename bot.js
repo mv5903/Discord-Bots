@@ -91,7 +91,7 @@ client.on('message', message => {
   		return;
   	}
   	if (command.includes('rename')) {
-  		renameChannel(message);
+  		//renameChannel(message);
   		return;
   	}
   	if (command.includes('weather')) {
