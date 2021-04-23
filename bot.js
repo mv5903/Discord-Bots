@@ -226,7 +226,7 @@ function sendMessage(msg) {
 		var pacificTime = new Date().toLocaleString("en-US", {timeZone: "America/Los_Angeles"});
 		var easternConverted = formatAMPM(new Date(easternTime));
 		var pacificConverted = formatAMPM(new Date(pacificTime));
-		toSend = "It is " + easternConverted + " EST/" + pacificConverted + " PST.";
+		toSend = "It is " + easternConverted + " ET/" + pacificConverted + " PT.";
 	} else if (msg === "info") {
 		toSend = "Welcome to the kwikmatt Server. In this server, we talk and play many different games! If you have any questions, please contact <@401505856870678529>.";
 	} else if (msg === "invalid") {
