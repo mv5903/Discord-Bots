@@ -122,11 +122,11 @@ client.on('message', message => {
 			client.channels.cache.get('846383787532484653').name = 'OMG: 1';
 			break;
 		case 'omg':
-			let name = client.channels.cache.get('846383787532484653').name.toString();
+			let name = client.channels.cache.get('846383787532484653').name;
 			console.log(name);
 			let newName = 'OMG: ' + ((parseInt(name.substring(5))) + 1);
-			console.log(parseInt(newName.substring(5)));
-			client.channels.cache.get('846383787532484653').edit({name: newName}).then(updated => console.log('Changed')).catch(console.error);
+			client.channels.cache.get('846383787532484653').name = newName;
+			//client.channels.cache.get('846383787532484653').edit({name: newName}).then(updated => console.log('Changed')).catch(console.error);
 	    	break;
 	    case 'help':
 	    	sendMessage("help");  
