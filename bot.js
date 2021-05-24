@@ -118,10 +118,15 @@ client.on('message', message => {
 		case base:
 			sendMessage(base);
 			break;
+		case 'omgreset':
+			client.channels.cache.get('846383787532484653').name = 'OMG: 0';
+			break;
 		case 'omg':
 			let name = client.channels.cache.get('846383787532484653').name.toString();
 			let newName = 'OMG:' + (parseInt(name.substring(5)) + 1).toString();
-			client.channels.cache.get('846383787532484653').edit({name: newName}).then(updated => console.log('The channel ' + original + ' has been changed to ' + newName + '.')).catch(console.error);
+			console.log(parseInt(name.substring(5)));
+			client.channels.cache.get('846383787532484653').edit({name: newName}).then(updated => console.log('Changed')).catch(console.error);
+	    	break;
 	    case 'help':
 	    	sendMessage("help");  
 	    	break;
