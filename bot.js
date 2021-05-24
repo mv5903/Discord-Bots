@@ -118,6 +118,10 @@ client.on('message', message => {
 		case base:
 			sendMessage(base);
 			break;
+		case 'omg':
+			let name = client.channels.cache.get('846383787532484653').name.toString();
+			let newName = (parseInt(name.substring(5)) + 1).toString();
+			client.channels.cache.get('846383787532484653').edit({name: newName}).then(updated => console.log('The channel ' + original + ' has been changed to ' + newName + '.')).catch(console.error);
 	    case 'help':
 	    	sendMessage("help");  
 	    	break;
