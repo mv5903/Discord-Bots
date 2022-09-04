@@ -1,20 +1,31 @@
 {
-  "name": "MattsDiscordBot",
-  "description": "Example",
+  "name": "discord-bot",
   "version": "1.0.0",
+  "description": "<br>",
   "main": "bot.js",
   "scripts": {
-    "start": "node bot.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mv5903/Discord-Bot.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mv5903/Discord-Bot/issues"
+  },
+  "homepage": "https://github.com/mv5903/Discord-Bot#readme",
   "dependencies": {
-    "@discordjs/opus": "^0.3.3",
-    "avconv": "^3.1.0",
-    "cron": "^1.8.2",
-    "discord.js": "12.4.0",
-    "ffmpeg": "0.0.4",
-    "ffmpeg-static": "^4.2.7",
-    "node-fetch": "2.6.1",
-    "openweather-apis": "4.3.1",
-    "request": "^2.88.2"
-  }
+    "@keyv/mongo": "^2.1.6",
+    "discord.js": "^14.3.0",
+    "dotenv": "^16.0.1",
+    "keyv": "^4.4.1",
+    "moment": "^2.29.4",
+    "moment-timezone": "^0.5.37",
+    "momment": "^0.0.1",
+    "node-fetch": "^3.2.10",
+    "ts-node": "^10.9.1"
+  },
+  "type": "module"
 }

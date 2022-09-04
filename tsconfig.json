@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+        "target": "es6",
+        "module": "es6",
+        "sourceMap": true,
+        "skipLibCheck": true,
+        "moduleResolution": "node",
+        "allowSyntheticDefaultImports": true,
+        "useUnknownInCatchVariables": false
+    },
+    "ts-node": {
+        "esm": true
+    },
+}
