@@ -1,6 +1,7 @@
 const BOT_TOKEN = process.env.BOT_TOKEN;
 const CLIENT_ID = process.env.CLIENT_ID;
 export const WEATHER_API_KEY = process.env.WEATHER_API_KEY;
+console.log(BOT_TOKEN)
 // *********************************************************************************************************************
 import { REST, Routes } from 'discord.js';
 import { BotTimeCommand, BotDateCommand, BotWeatherCommand, BotRandomCommand, BotUserPrefences } from './commands/MattBotCommands.js';
