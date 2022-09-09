@@ -9,7 +9,7 @@ on:
 jobs:
   deploy:
     name: Deploy to EC2 on master branch push
-    runs-on: amazon-linux
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout the files
