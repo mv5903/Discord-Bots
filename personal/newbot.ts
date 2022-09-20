@@ -19,9 +19,9 @@ const COMMANDS : BotSlashCommand[] = [
 const rest = new REST({ version: '10' }).setToken(BOT_TOKEN);
 ( async () => {
     try {
-        console.log("Starting bot with / command prefix");
+        console.log("PERSONAL_BOT: Starting bot with / command prefix");
         await rest.put(Routes.applicationGuildCommands(CLIENT_ID, '401786060704710667'), { body:  COMMANDS.map(command => command.getSlashCommand()) });
-        console.log("Successfully reloaded application / commands");
+        console.log("PERSONAL_BOT: Successfully reloaded application / commands");
     } catch (error) {
         console.error(error);
     }
