@@ -1,0 +1,19 @@
+{
+  "name": "discord-bots",
+  "version": "1.0.0",
+  "description": "All Discord Bots for myself and Clients",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mv5903/Discord-Bot.git"
+  },
+  "author": "Matthew Vandenberg",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mv5903/Discord-Bot/issues"
+  },
+  "homepage": "https://github.com/mv5903/Discord-Bot#readme"
+}
