@@ -1,0 +1,24 @@
+{
+  "name": "mirror-bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "mirrorbot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mv5903/mirror-bot.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mv5903/mirror-bot/issues"
+  },
+  "homepage": "https://github.com/mv5903/mirror-bot#readme",
+  "type": "module",
+  "dependencies": {
+    "discord.js": "^14.3.0",
+    "dotenv": "^16.0.1"
+  }
+}

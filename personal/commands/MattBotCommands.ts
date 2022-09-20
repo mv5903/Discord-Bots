@@ -4,6 +4,7 @@ import { BotSlashCommand } from "./BotSlashCommand.js";
 import { BotWeatherCommand } from "./BotWeatherCommand.js";
 import { BotRandomCommand } from "./BotRandomCommand.js";
 import { BotUserPrefences } from "./BotUserPreferences.js";
+import { BotCurrencyCommand } from "./BotCurrencyCommand.js";
 
 // All the commands that the bot will have
 export {
@@ -12,5 +13,6 @@ export {
     BotSlashCommand,
     BotWeatherCommand,
     BotRandomCommand,
-    BotUserPrefences
+    BotUserPrefences,
+    BotCurrencyCommand
 }

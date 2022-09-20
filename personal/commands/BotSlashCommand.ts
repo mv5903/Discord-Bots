@@ -1,5 +1,9 @@
 import { SlashCommandBuilder } from "discord.js";
 
+/**
+ * Basic slash command abstract class. All commands should extend this class.
+ * @author Matt
+ */
 export abstract class BotSlashCommand {
     public name: string;
     public description: string;
@@ -25,4 +29,12 @@ export abstract class BotSlashCommand {
      * @param interaction The interaction object from Discord, fired when the command is used
      */
     abstract execute(interaction: any) : void;
+
+    /**
+     * Runs whenever a user types into a command that has autocomplete enabled.
+     * @param interaction The interaction object from Discord, fired when the autocomplete content is changed
+     */
+    autocomplete(interaction: any) : void {
+        return;
+    }
 }
