@@ -15,5 +15,10 @@
   "bugs": {
     "url": "https://github.com/mv5903/Discord-Bot/issues"
   },
-  "homepage": "https://github.com/mv5903/Discord-Bot#readme"
+  "homepage": "https://github.com/mv5903/Discord-Bot#readme",
+  "dependencies": {
+    "discord.js": "^14.3.0",
+    "moment-timezone": "^0.5.37",
+    "node-fetch": "^3.2.10"
+  }
 }
