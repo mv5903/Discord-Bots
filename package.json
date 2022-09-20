@@ -19,6 +19,7 @@
   "dependencies": {
     "discord.js": "^14.3.0",
     "moment-timezone": "^0.5.37",
-    "node-fetch": "^3.2.10"
+    "node-fetch": "^3.2.10",
+    "ts-node": "^10.9.1"
   }
 }
