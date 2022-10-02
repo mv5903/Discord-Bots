@@ -1,0 +1,2 @@
+when paid add back 
+& node clients/mirrorbot-sanat/bot.js

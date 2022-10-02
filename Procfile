@@ -1,1 +1,1 @@
-worker: ts-node personal/newbot.ts & node clients/mirrorbot-sanat/bot.js
+worker: ts-node personal/newbot.ts
