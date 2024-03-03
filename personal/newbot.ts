@@ -1,8 +1,11 @@
+import dotenv from 'dotenv';
+dotenv.config();
+
 const BOT_TOKEN = process.env.BOT_TOKEN;
 const CLIENT_ID = '762752067856760852';
 export const WEATHER_API_KEY = process.env.WEATHER_API_KEY;
 // *********************************************************************************************************************
-import { InteractionType, REST, Routes } from 'discord.js';
+import { EmbedBuilder, InteractionType, REST, Routes, TextChannel } from 'discord.js';
 import { BotTimeCommand, BotDateCommand, BotWeatherCommand, BotRandomCommand, BotUserPrefences, BotCurrencyCommand } from './commands/MattBotCommands.js';
 
 // All the commands that the bot will have
@@ -19,9 +22,9 @@ const COMMANDS : BotSlashCommand[] = [
 const rest = new REST({ version: '10' }).setToken(BOT_TOKEN);
 ( async () => {
     try {
-        console.log("PERSONAL_BOT: Starting bot with / command prefix");
-        await rest.put(Routes.applicationGuildCommands(CLIENT_ID, '401786060704710667'), { body:  COMMANDS.map(command => command.getSlashCommand()) });
-        console.log("PERSONAL_BOT: Successfully reloaded application / commands");
+        //console.log("PERSONAL_BOT: Starting bot with / command prefix");
+        //await rest.put(Routes.applicationGuildCommands(CLIENT_ID, '1213951678399914054'), { body:  COMMANDS.map(command => command.getSlashCommand()) });
+        //console.log("PERSONAL_BOT: Successfully reloaded application / commands");
     } catch (error) {
         console.error(error);
     }
@@ -32,8 +35,11 @@ import { Client, GatewayIntentBits } from 'discord.js';
 import { BotSlashCommand } from './commands/BotSlashCommand.js';
 export const client = new Client({ intents: GatewayIntentBits.Guilds });
 
+let serverActive = false;
+
 client.on('ready', () => { 
     console.log(`Logged in as ${client.user!.tag}!`)
+    client.user!.setActivity(serverActive ? "Server online" : "Server offline");
 });
 
 client.on('interactionCreate', async (interaction) => {
@@ -53,7 +59,7 @@ client.on('interactionCreate', async (interaction) => {
         }
     })
 })
-
+console.log('bot token: ' + BOT_TOKEN);
 client.login(BOT_TOKEN);
 
 /**
@@ -70,3 +76,45 @@ export function hasRole(id: string, interaction: any) : boolean {
         return false;
     }
 }
+
+const interval = 1000 * 5;
+
+let statusMessage = null;
+
+async function checkMCServerStatus() {
+    const response = await fetch("https://api.mcsrvstat.us/3/home.mattvandenberg.com");
+    if (!response.ok) {
+        serverActive = false;
+        return;
+    }
+    
+    const data = await response.json();
+    if (!data) {
+        serverActive = false;
+        return;
+    }
+
+    serverActive = data.online;
+    client.user!.setActivity(serverActive ? "Server online" : "Server offline");
+    let botChannel = client.channels.cache.get('1213951678399914054') as TextChannel;
+    if (!botChannel) return console.error("Channel not found.");
+    statusMessage = await botChannel.messages.fetch("1213960743771447347");
+    
+    let serverEmbed = new EmbedBuilder()
+            .setTitle(`Mathias Minecraft Server Status`)
+            .setColor(serverActive ? '#00ff00' : '#ff0000')
+            .setDescription((serverActive ? 'Online' : 'Offline') + ` (Last checked: ${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()})`)
+            .addFields(
+                {name: 'IP: ', value: "home.mattvandenberg.com", inline: false},
+                {name: 'MOTD: ', value: data.motd.clean[0], inline: false},
+                {name: `${data.players.online}/${data.players.max} Players: `, value: (data.players.online > 0 && data.players.list.map(player => `-${player.name}`).join("\n")), inline: false},
+                {name: 'Version: ', value: data.version, inline: false},
+            );
+
+    statusMessage.edit({embeds: [serverEmbed] });
+
+}
+
+setInterval(() => {
+    checkMCServerStatus();
+}, interval);
